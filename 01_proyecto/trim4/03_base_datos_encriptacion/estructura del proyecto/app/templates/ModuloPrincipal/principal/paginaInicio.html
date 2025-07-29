@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ModuloPrincipal/principal/paginaInicio.css') }}">
+</head>
+<body>
+    <!--Navbar-->
+    <div class="container-fluid">
+
+
+    <nav class="navbar fixed-top bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{url_for('templates',filename='ModuloPrincipal/principal/paginaInicio.html')}}">InnovationFussion</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="{{url_for('templates'),filename='ModuloPrincipal/principal/paginaInicio.html'}}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Calzado
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url_for('templates'),filename='ModuloPrincipal/catalogo/CatalogoZapato.html'}}">Mujer</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{url_for('templates'),filename='ModuloPrincipal/catalogo/CatalogoZapato.html'}}">Hombre</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{url_for('templates'),filename='ModuloPrincipal/catalogo/CatalogoZapato.html'}}">Niño</a></li>
+            </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Bolso
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url_for('templates'),filename='ModuloPrincipal/catalogo/Catalogobolsos.html'}}">Mujer</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{url_for('templates'),filename='ModuloPrincipal/catalogo/Catalogobolsos.html'}}">Hombre</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{url_for('templates'),filename='ModuloPrincipal/catalogo/Catalogobolsos.html'}}">Niño</a></li>
+            </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Novedades
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url_for('templates'),filename='ModuloPrincipal/catalogo/CatalogoZapato.html'}}">Mujer</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{url_for('templates'),filename='ModuloPrincipal/catalogo/CatalogoZapato.html'}}">Hombre</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{url_for('templates'),filename='ModuloPrincipal/catalogo/CatalogoZapato.html'}}">Niño</a></li>
+            </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Descuento
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url_for('templates'),filename='ModuloPrincipal/catalogo/CatalogoZapato.html'}}">Mujer</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{url_for('templates'),filename='ModuloPrincipal/catalogo/CatalogoZapato.html'}}">Hombre</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{url_for('templates'),filename='ModuloPrincipal/catalogo/CatalogoZapato.html'}}">Niño</a></li>
+            </ul>
+            </li>
+
+
+
+<!--persona perfil-->
+            <li class="nav-item">
+            <a class="nav-link" href="#">
+                <i class="bi bi-person-fill"></i>
+            </a>
+            </li>
+
+<!--Favoritos-->
+            <li class="nav-item">
+            <a class="nav-link" href="{{url_for('templates'),filename='ModuloPrincipal/seccionusuario/favoritos.html'}}">
+                <i class="bi bi-heart-fill"></i>
+            </a>
+            </li>
+
+<!--pedidos-->
+            <li class="nav-item">
+            <a class="nav-link" href="{{url_for('templates'),filename='ModuloPrincipal/seccionusuario/favoritos.html'}}">
+                <i class="bi bi-boxes"></i>
+            </a>
+            </li>            
+
+<!--Carrito-->
+ 
+            <li class="nav-item">
+            <a class="nav-link" href="{{url_for('templates'),filename='ModuloPrincipal/calcular el total de la compra/calcularcompra.html'}}">
+                <i class="bi bi-cart-fill"></i>
+            </a>
+            </li>
+
+
+
+        </ul>
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        </div>
+    </div>
+    </nav>
+
+
+    </div>
+
+
+<!--NAVBAR-->
+
+
+<!--banner-->
+
+<div class="container-fluid">
+
+
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img href="{{url_for('static'),filename='uploads/ModuloPrincipal/oferta1.jpeg'}}" class="d-block w-100" alt="#">
+    </div>
+    <div class="carousel-item">
+      <img href="{{url_for('static'),filename='uploads/ModuloPrincipal/oferta2.jpeg'}}" class="d-block w-100" alt="#">
+    </div>
+    <div class="carousel-item">
+      <img href="{{url_for('static'),filename='uploads/ModuloPrincipal/oferta3.jpg'}}" class="d-block w-100" alt="#">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+                                    <!--Catalogo-->
+
+<div class="container-fluid">
+
+
+        <!--fila1-->
+    <div class="row">
+
+
+
+
+        <h1 class="text-center text-white m-4">Compra por estilos de calzado</h1>
+
+            <!--fila2-->
+            <div class="row">
+
+
+
+    <!--Imagen 1-->
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+
+                    <div class="card text-center" style="width: 18rem;">
+                    <img href="{{url_for('static'),filename='uploads/ModuloPrincipal/botas1.jpeg'}}"  class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Zapato</h5>
+                        <p class="card-text text-center">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+                        <a href="{{url_for('templates'),filename='calcular el total de la compra/calcularcompra.html'}}" class="btn custom-btn">Carrito</a> 
+                        <a href="{{url_for('templates'),filename='ModuloPrincipal/productos/producto.html'}}" class="btn custom-btn ">ver</a>
+                    </div>
+                    </div>
+
+                </div>
+
+
+
+    <!--Imagen 2-->
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+
+                    <div class="card text-center" style="width: 18rem;">
+                    <img href="{{url_for('static'),filename='uploads/ModuloPrincipal/botas2.jpeg'}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Zapato</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+                        <a href="{{url_for('templates'),filename='calcular el total de la compra/calcularcompra.html'}}" class="btn custom-btn">Carrito</a> 
+                        <a href="{{url_for('templates'),filename='ModuloPrincipal/productos/producto.html'}}" class="btn custom-btn ">ver</a>
+                    </div>
+                    </div>
+
+                </div>
+
+
+                
+    <!--Imagen 3-->
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+
+                    <div class="card text-center" style="width: 18rem;">
+                    <img src="../../principal/img/botas3.jpeg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Zapato</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+                        <a href="{{url_for('templates'),filename='calcular el total de la compra/calcularcompra.html'}}" class="btn custom-btn">Carrito</a> 
+                        <a href="{{url_for('templates'),filename='ModuloPrincipal/productos/producto.html'}}" class="btn custom-btn ">ver</a>
+                    </div>
+                    </div>
+
+                </div>
+
+
+                
+    <!--Imagen 4-->
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+
+                    <div class="card text-center" style="width: 18rem;">
+                    <img src="../../principal/img/im11.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Zapato</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+                        <a href="{{url_for('templates'),filename='calcular el total de la compra/calcularcompra.html'}}" class="btn custom-btn">Carrito</a> 
+                        <a href="{{url_for('templates'),filename='ModuloPrincipal/productos/producto.html'}}" class="btn custom-btn ">ver</a>
+                    </div>
+                    </div>
+                
+                </div>
+
+            </div>
+
+
+
+
+                <!--fila3-->
+
+    <h1 class="text-center text-white m-4">Compra por estilos de bolsos</h1>
+
+            <!--fila3-->
+            <div class="row">
+
+
+
+    <!--Imagen 1-->
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+
+                    <div class="card text-center" style="width: 18rem;">
+                    <img src="../../principal/img/im13.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Bolso</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+                        <a href="{{url_for('templates'),filename='calcular el total de la compra/calcularcompra.html'}}" class="btn custom-btn">Carrito</a> 
+                        <a href="{{url_for('templates'),filename='ModuloPrincipal/productos/producto.html'}}" class="btn custom-btn ">ver</a>
+                    </div>
+                    </div>
+
+                </div>
+
+
+    <!--Imagen 2-->
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+
+                    <div class="card text-center" style="width: 18rem;">
+                    <img src="../../principal/img/im14.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Bolso</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+                        <a href="{{url_for('templates'),filename='calcular el total de la compra/calcularcompra.html'}}" class="btn custom-btn">Carrito</a> 
+                        <a href="{{url_for('templates'),filename='ModuloPrincipal/productos/producto.html'}}" class="btn custom-btn ">ver</a>
+                    </div>
+                    </div>
+
+                </div>
+
+
+                
+    <!--Imagen 3-->
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+
+                    <div class="card text-center" style="width: 18rem;">
+                    <img src="../../principal/img/im15.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Bolso</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+                        <a href="{{url_for('templates'),filename='calcular el total de la compra/calcularcompra.html'}}" class="btn custom-btn">Carrito</a> 
+                        <a href="{{url_for('templates'),filename='ModuloPrincipal/productos/producto.html'}}" class="btn custom-btn ">ver</a>
+                    </div>
+                    </div>
+
+                </div>
+
+
+                
+    <!--Imagen 4-->
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+
+                    <div class="card text-center" style="width: 18rem;">
+                    <img src="../../principal/img/im17.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Bolso</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+                        <a href="{{url_for('templates'),filename='calcular el total de la compra/calcularcompra.html'}}" class="btn custom-btn">Carrito</a> 
+                        <a href="{{url_for('templates'),filename='ModuloPrincipal/productos/producto.html'}}" class="btn custom-btn ">ver</a>
+                    </div>
+                    </div>
+                
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+                                    <!--FOOTER-->
+<footer class="bg-dark text-white">
+    <div class="container-fluid">
+
+
+        <div class="row finPag" >
+
+<!--FILA 1-->
+            <div class="col-12">
+
+
+                <div class="row finPag">
+
+                    <div class="col-4">
+                        <h4 class="text-center">Sobre Nosotros</h4>
+                        <ul class="list-unstyled">
+                            <li class="text-center"><a href="#" class="text-white text-decoration-none">innovation Fusion</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div class="col-4">
+                        <h4 class="text-center">Contacto</h4>
+                        <ul class="list-unstyled">
+                            <li class="text-center"><a href="#" class="text-white text-decoration-none">innovationFusion@gmail.com</a></li>
+                            <li class="text-center"><a href="#" class="text-white text-decoration-none">3655462742</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div class="col-4">
+                        <h4 class="text-center">Redes Sociales</h4>
+                        <ul class="list-unstyled">
+                            <li class="text-center"><a href="#" class="text-white text-decoration-none">
+                                <i class="bi bi-facebook"></i>
+                                <i class="bi bi-whatsapp"></i>
+                                <i class="bi bi-instagram"></i>
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+<!--FILA 2-->
+            <div class="col-12">
+                <hr class="my-2 bg-dark border-2">
+                <p class="text-center">© 2025 Innovation Fusion. Todos los derechos reservados.</p>
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+</body>
+</html>
