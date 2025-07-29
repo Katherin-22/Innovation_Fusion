@@ -1,0 +1,193 @@
+/* Reset general y fuente base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: sans-serif;
+    overflow: hidden; /* Evita scroll */
+    background: linear-gradient(to right bottom, #0F0F0F 50%, #E0B253 50%);
+    min-height: 100vh;
+}
+
+/* ================= CONTENEDORES ================= */
+
+/* Contenedor principal: punto de referencia para posición absoluta */
+.main-content-wrapper {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Collage de tarjetas */
+.grid-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Formulario superpuesto */
+.login-container {
+    position: absolute;
+    top: 50%;
+    left: 66.66%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    width: 100vh;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ================= FORMULARIO ================= */
+
+form {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    max-width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    background-color: #FAF9F6;
+}
+
+h2 {
+    text-align: center;
+    font-size: 30px;
+    text-transform: uppercase;
+    color: #0F0F0F;
+    margin-bottom: 25px;
+}
+
+label, p {
+    font-size: 17px;
+    color: #0F0F0F;
+    margin-bottom: 10px;
+}
+
+input {
+    padding: 10px 15px;
+    border: 1px solid #E0B253;
+    border-radius: 25px;
+    margin-bottom: 15px;
+    background-color: #FAF9F6;
+    outline: none;
+    color: #0F0F0F;
+    font-size: 17px;
+}
+
+input[type="email"], input[type="password"] {
+    width: 100%;
+}
+
+.btn-1 {
+    background-color: #E0B253;
+    font-size: 15px;
+    color: #0F0F0F;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100%;
+    padding: 10px;
+    border-radius: 25px;
+    border: none;
+}
+
+.btn-1:hover {
+    background-color: #C49A3D;
+}
+
+.opciones p {
+    text-align: left;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.opciones a {
+    color: #0F0F0F;
+    text-decoration: none;
+}
+
+.opciones a:hover {
+    text-decoration: underline;
+}
+
+.boton-inicio {
+    margin-top: 20px;
+}
+
+.registro {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.no-tienes-cuenta {
+    font-size: 15px;
+    margin-right: 10px;
+}
+
+.btn-registrarse {
+    background-color: #E0B253;
+    border: 1px solid #E0B253;
+    color: #0F0F0F;
+    padding: 5px 15px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.btn-registrarse:hover {
+    background-color: #E0B253;
+    color: #0F0F0F;
+}
+
+/* ================= MEDIA QUERIES ================= */
+
+@media (max-width: 991px) {
+    .login-container {
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    form {
+        width: 400px;
+    }
+
+    .registro {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .grid-container {
+        padding: 5px;
+    }
+}
+
+@media (max-width: 600px) {
+    .grid-container {
+        padding: 2px;
+    }
+}
