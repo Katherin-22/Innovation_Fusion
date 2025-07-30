@@ -1,0 +1,97 @@
+/* Título */
+.contenedor-historial h1 {
+  color: #0F0F0F; /* Negro profundo */
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+
+/* Botón Atrás */
+.botonAtras {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 10px 18px;
+  background-color: #E0B253; /* Dorado */
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+}
+
+.botonAtras:hover {
+  background-color: #c89a44;
+}
+
+/* Tabla */
+.tabla-HisPedidos {
+  margin: 0 auto;
+  margin-top: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+}
+
+.tabla-HisPedidos h2 {
+  margin-top: 0;
+  color: #0F0F0F;
+  font-size: 20px;
+  margin-bottom: 1%;
+}
+
+.tabla-HisPedidos table {
+  width: 0%;
+  border-collapse: collapse;
+}
+
+.tabla-HisPedidos thead{
+    height: 15%;
+    width: 15%;
+}
+
+.tabla-HisPedidos th,
+.tabla-HisPedidos td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.tabla-HisPedidos th {
+  background-color: #0F0F0F; /* Negro profundo */
+  color: white;
+}
+
+.tabla-HisPedidos td {
+  background-color: #fdfdfd;
+}
+
+.tabla-HisPedidos button {
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #E0B253;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tabla-HisPedidos button:hover {
+  background-color: #c89a44;
+}
+
+/* Estado */
+.estado.completado {
+  background-color: #2ecc71;
+  color: white;
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.estado.en.proceso{
+    background-color: red;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}

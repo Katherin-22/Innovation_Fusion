@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventario</title>
+  <link rel="stylesheet" href="./css/dministrador.css">
+  <script src="./js/inventario.js" defer></script>
+</head>
+<body>
+
+  <!-- Menú lateral -->
+  <div class="menu">
+    <h2>ADMINISTRADOR</h2>
+    <div class="mNivel1">
+      <a class="elegido" href="./administrador.html">Inventario</a>
+      <a href="./gestionPagina.html">Gestión página</a>
+      <a href="./gestionUsuario.html">Gestión usuarios</a>
+    </div>
+    <div class="mNivel2">
+      <a href="./chat.html">Chat</a>
+      <a href="./pedidos.html">Pedidos</a>
+    </div>
+    <div class="mNivel3">
+      <a href="../../../principal/index.html">Cerrar sesión</a>
+    </div>
+  </div>
+
+  <!-- Sección de Inventario -->
+  <div class="Inventario">
+    <!-- Cabecera de Inventario -->
+    <div class="parteA">
+      <h1>Inventario</h1>
+      <input class="botonA" type="button" value="Registrar producto" onclick="window.location.href='./registrar.html'">
+    </div>
+
+    <!-- Tabla de Inventario -->
+    <table id="tablaProductos">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>Tipo</th>
+          <th>Categoría</th>
+          <th>Descripción</th>
+          <th>Cantidad</th>
+          <th>Precio Venta</th>
+          <th>Precio Interno</th>
+          <th>Material</th>
+          <th>Género</th>
+          <th>Colores</th>
+          <th>Talla / Tamaño</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Productos agregados aquí dinámicamente -->
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>

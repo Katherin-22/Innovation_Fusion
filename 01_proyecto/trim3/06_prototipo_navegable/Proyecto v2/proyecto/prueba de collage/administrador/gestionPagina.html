@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion página</title>
+    <link rel="stylesheet" href="./css/dministrador.css">
+</head>
+<body>
+
+    <!-- Menu de navegación -->
+    <div class="menu">
+        <h2>ADMINISTRADOR</h2>
+        <div class="mNivel1">
+            <a href="./administrador.html">Inventario</a>
+            <a class="elegido" href="./gestionPagina.html">Gestión página</a>
+            <a href="./gestionUsuario.html">Gestión usuarios</a>
+        </div>    
+        <div class="mNivel2">
+            <a href="./chat.html">Chat</a>
+            <a href="./pedidos.html">Pedidos</a>
+        </div>
+        <div class="mNivel3">
+            <a href="../../../principal/index.html">Cerrar sesión</a>
+        </div>
+    </div>
+
+    <!-- Contenido principal: Gestión de página -->
+    <div class="gesPagina">
+        <h1>Cambiar banner</h1>
+      
+        <!-- Vista previa del banner -->
+
+        <!-- Formulario para cambiar el banner -->
+        <div class="bannerForm">
+            <form id="bannerForm">
+                <input class="filesban" type="file" id="bannerInput" accept="image/*">
+                <button type="submit">Guardar nuevo banner</button>
+            </form>
+        </div>
+
+        <!-- Slider con los banners guardados -->
+        <div class="bannerSlider" id="bannerSlider">
+            <!-- Aquí se cargarán los banners dinámicamente con un botón de eliminar -->
+        </div>
+    </div>
+
+    <script src="./js/banner.js"></script>
+</body>
+</html>

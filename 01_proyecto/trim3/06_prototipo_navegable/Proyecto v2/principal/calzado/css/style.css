@@ -1,0 +1,97 @@
+@import url(menu.css);
+@import url(banner.css);
+@import url(footer.css);
+@import url(chat.css);
+@import url(catalogo.css);
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+body{
+    background: linear-gradient(to right bottom, #0f0f0f 50%, #E0B253 50%);
+    line-height: 1.6;
+}
+
+header{
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    background: #333;
+    background-color: #fff;
+    position: fixed; /*hace que flota el header*/
+    top: 0;
+    left: 0;
+    z-index: 100;
+    
+    
+}
+main{
+    position: relative;
+    width: 100%;
+    height: auto;
+    top: 0;
+    left: 0;
+}
+
+.contenedor{
+    width: 98%;
+    margin: auto;
+}
+h1{
+    float: left;
+}
+.contenedor h1{
+    color: #fff;
+}
+header .contenedor{
+    display: table;
+    background-color: #0f0f0f;
+}
+section{
+    width: 100%;
+    margin-bottom: 25px;
+}
+#bienvenidos{
+    text-align: center;
+}
+footer{
+    position: relative;
+    bottom: -60px;
+}
+/*
+footer{
+    position:fixed; /*ESTE PEGA EL FOOTER A LA PAGINA, MODIFICAR SOLUCION
+    bottom: 0;
+    left: auto;
+    right:auto;
+}
+
+footer .contenedor{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 25px;
+}
+*/
+.copy{
+    font-size: 20px;
+}
+
+header .acceso{
+    float: right;
+    margin: 6px 0;
+    cursor: pointer;
+    height: 0;
+    width: auto;
+    text-align: right;
+    font-size: 28px;    
+}
+.acceso a{
+    color: #333;
+    text-decoration: none;
+}

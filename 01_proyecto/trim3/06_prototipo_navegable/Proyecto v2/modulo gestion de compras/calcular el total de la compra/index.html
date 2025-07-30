@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+    <script src="./js/app.js"></script>
+
+<div class="shopping-cart">
+    <h1>My Shopping Cart</h1>
+
+    <div class="cart-header">
+        <h3>Producto</h3>
+        <h3>Talla</h3>
+        <h3>Tamaño</h3>
+        <h3>Cantidad</h3>
+        <h3>Precio Unitario</h3>
+        <h3>Acciones</h3>
+    </div>
+
+<div class="cart-items">
+
+<!-- Primer producto -->
+  <div class="cart-item">
+     <div class="cart-grid">
+         <!-- Producto -->
+           <div class="item-description">
+             <img src="./img/zapatos.jpg" alt="Streamline Leggings">
+            <div>
+                 <p>Streamline Leggings</p>
+                 <p class="product-code">Product Code: MLLG</p>
+      </div>
+  </div>
+
+<!-- Talla -->
+ <div>
+    <select class="size-select">
+     <option>28</option><option>29</option><option>30</option><option>31</option>
+     <option>32</option><option>33</option><option>34</option><option>35</option>
+      <option>36</option><option>37</option><option>38</option><option>39</option><option>40</option>
+     </select>
+</div>
+
+<!-- Tamaño -->
+<div>
+    <select class="Tamaño-select">
+         <option>Pequeño</option>
+          <option>Mediano</option>
+           <option>Grande</option>
+         </select>
+</div>
+
+<!-- Cantidad -->
+  <div class="quantity-controls">
+     <button class="quantity-button">-</button>
+      <input type="number" class="quantity-input" value="1" min="1">
+       <button class="quantity-button">+</button>
+     </div>
+
+<!-- Precio -->
+<div class="price">£55.00</div>
+
+<!-- Acciones -->
+ <div class="actions">
+     <button class="action-btn delete-btn" data-id="ID_DEL_PRODUCTO_1">Eliminar</button>
+    </div>
+</div>
+</div>
+
+<!-- Segundo producto -->
+ <div class="cart-item">
+     <div class="cart-grid">
+         <!-- Producto -->
+          <div class="item-description">
+             <img src="./img/riñonera.webp" alt="Streamline Sports Bra">
+             <div>
+                 <p>Streamline Sports Bra</p>
+                  <p class="product-code">Product Code: MLSB</p>
+    </div>
+</div>
+
+<!-- Talla -->
+<div>
+    <select class="size-select">
+     <option>28</option><option>29</option><option>30</option><option>31</option>
+     <option>32</option><option>33</option><option>34</option><option>35</option>
+      <option>36</option><option>37</option><option>38</option><option>39</option><option>40</option>
+     </select>
+</div>
+
+<!-- Tamaño -->
+<div>
+     <select class="Tamaño-select">
+        <option>Pequeño</option>
+        <option>Mediano</option>
+        <option>Grande</option>
+     </select>
+</div>
+
+<!-- Cantidad -->
+ <div class="quantity-controls">
+    <button class="quantity-button">-</button>
+    <input type="number" class="quantity-input" value="1" min="1">
+    <button class="quantity-button">+</button>
+ </div>
+
+<!-- Precio -->
+<div class="price">£55.00</div>
+
+<!-- Acciones -->
+<div class="actions">
+    <button class="action-btn delete-btn" data-id="ID_DEL_PRODUCTO_2">Eliminar</button>
+</div>
+</div>
+</div>
+
+</div>
+
+ <div class="cart-summary">
+    <div class="summary-row">
+        <span>Descuento</span>
+         <span>£0.00</span>
+    </div>
+    <div class="summary-row subtotal">
+        <span>Subtotal</span>
+        <span>£110.00</span>
+    </div>
+    <div class="summary-row total">
+         <span>Total</span>
+          <span>£110.00</span>
+    </div>
+</div>
+
+ <div class="promo-code-area">
+    <p>If you have a promotion code, please enter it here:</p>
+     <div class="promo-input-group">
+        <input type="text" placeholder="Please enter promo code">
+         <button class="apply-discount-button">Apply Discount</button>
+        </div>
+</div>
+
+<div class="checkout-actions">
+    <button class="checkout-button">Checkout <span class="lock-icon">🔒</span></button>
+    <div class="secondary-actions">
+        <button class="update-quantity-button">Update Quantity</button>
+        <button class="continue-shopping-button">Continue Shopping</button>
+    </div>
+</div>
+
+</div>
+
+</body>
+</html>
+

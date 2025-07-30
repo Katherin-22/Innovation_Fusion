@@ -1,0 +1,117 @@
+/* ------------------- Contenedor principal ------------------- */
+.contenedor-devoluciones-cambios {
+    margin-left: 18%;
+    padding: 30px;
+    background-color: #FAF9F6; /* Blanco roto */
+    min-height: 100vh;
+    box-sizing: border-box;
+    width: calc(100% - 18%); /* Ajusta al ancho restante sin forzar scroll */
+    overflow-x: hidden; /* Evita la barra horizontal */
+}
+
+/* ------------------- Botón Atrás ------------------- */
+.btn-atras {
+    background-color: transparent;
+    border: none;
+    color: #0F0F0F;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-atras:hover {
+    color:white;
+}
+
+/* ------------------- Títulos ------------------- */
+.contenedor-devoluciones-cambios h1 {
+    font-size: 28px;
+    color: #0F0F0F;
+    margin-bottom: 30px;
+}
+
+.tabla-devoluciones h2,
+.tabla-cambios h2 {
+    font-size: 22px;
+    color: #0F0F0F;
+    margin-bottom: 15px;
+    margin-top: 40px;
+    text-align: center;
+}
+
+/* ------------------- Tablas ------------------- */
+.tabla-devoluciones,
+.tabla-cambios {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin: 30px auto; /* Centra la tabla horizontalmente */
+    width: 90%;
+    max-width: 1000px; /* Evita que se estire demasiado en pantallas grandes */
+    overflow-x: auto;
+}
+
+/* Tabla como tal */
+.tabla-devoluciones table,
+.tabla-cambios table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto; /* Centra el contenido de la tabla si su ancho es menor */
+}
+
+.tabla-devoluciones th,
+.tabla-devoluciones td,
+.tabla-cambios th,
+.tabla-cambios td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.tabla-devoluciones th,
+.tabla-cambios th {
+    background-color: #0F0F0F;
+    color: white;
+}
+
+.tabla-devoluciones td,
+.tabla-cambios td {
+    background-color: #fdfdfd;
+}
+
+/* ------------------- Botones ------------------- */
+.tabla-devoluciones button,
+.tabla-cambios button {
+    padding: 8px 14px;
+    font-size: 14px;
+    background-color: #E0B253;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.tabla-devoluciones button:hover,
+.tabla-cambios button:hover {
+    background-color: #c89a44;
+}
+
+/* ------------------- Estados ------------------- */
+.estado.pendiente {
+    background-color: #f39c12;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+.botonGestionar{
+    margin-left: 20px;
+    margin-right: 20px;
+}

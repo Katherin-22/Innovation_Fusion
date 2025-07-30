@@ -1,0 +1,103 @@
+/* Estilos base para el body */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden; /* Para evitar barras de desplazamiento innecesarias */
+    background: linear-gradient(to right bottom, #0F0F0F 50%, #E0B253 50%);
+    min-height: 100vh;
+    display: grid;
+    place-items: center; /* Centra el contenido del grid */
+}
+
+/* Contenedor principal para el collage y el formulario */
+.contenedor-principal {
+    position: relative; /* Asegura que sea el punto de referencia */
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    width: 90vw;
+    height: 95vh;
+}
+
+/* Estilos del contenedor del collage */
+.demo {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* Estilos de la galería del collage */
+.demo__gallery {
+    width: 100%;
+    height: 98%;
+    padding: 2px;
+    flex-shrink: 0;
+    background: #eee;
+    perspective: 700px;
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+.demo__placeholder {
+    /* Para 6 columnas, el ancho sería aproximadamente 16.66% */
+    width: calc(16.66666667% - 4px);
+    height: calc(25% - 4px); /* Para 4 filas */
+    margin: 2px;
+    background-color: #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+/* Estilos para el contenedor del formulario */
+.login-container {
+    grid-column: 1;
+    grid-row: 1;
+    position: absolute;
+    top: 50%;
+    /* Cálculo para el borde izquierdo de la columna 4 + la mitad del ancho de dos columnas */
+    left: calc( (3 * (16.66666667% - 4px) + 3 * 2px) + ( (2 * (16.66666667% - 4px) + 2 * 2px) / 2 ) );
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    width: auto; /* El ancho se ajustará al contenido */
+    height: auto; /* La altura se ajustará al contenido */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    /* *** ELIMINADO: Altura máxima y overflow *** */
+}
+
+/* Media queries - ajusta según sea necesario */
+@media (max-width: 991px) {
+    .login-container {
+        left: calc( (3 * (16.66666667% - 4px) + 3 * 2px) + ( (2 * (16.66666667% - 4px) + 2 * 2px) / 2 ) );
+    }
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        left: 50%;
+        width: 70%;
+    }
+}
+
+@media (max-width: 600px) {
+    .login-container {
+        width: 90%;
+        left: 50%;
+    }
+}
+
+/* Aquí deberían ir los estilos específicos para los elementos internos de tu formulario */

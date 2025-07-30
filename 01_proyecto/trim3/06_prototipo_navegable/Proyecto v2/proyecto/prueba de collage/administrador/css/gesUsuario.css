@@ -1,0 +1,166 @@
+/* Estilo contenedor principal */
+.Usuario {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin: 2% 2% 2% 20%;
+}
+
+/* Títulos */
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+/* Estilo de los botones */
+.botonA, .botonB {
+    background-color: #e0b253;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 200px;    /* Botón de tamaño fijo */
+    display: block;  /* Para que margin auto funcione */
+    margin: 10px auto;
+}
+
+/* Hover effect para los botones */
+.botonA:hover, .botonB:hover {
+    background-color: #d09b44;
+}
+
+/* Formulario para cambiar rol y estado */
+.formCambio {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.formCambio form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilos de los selectores */
+select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    font-size: 14px;
+}
+
+select:focus {
+    border-color: #e0b253;
+    outline: none;
+}
+
+/* Botón de envío */
+.btnSubmit button {
+    background-color: #e0b253;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btnSubmit button:hover {
+    background-color: #E0B253;
+}
+
+/* Estilos para la lista de usuarios: título centrado */
+.tablaUsuarios {
+    display: flex;
+    flex-direction: column;  /* Apila el título sobre la tabla */
+    align-items: center;     /* Centra horizontalmente ambos */
+    margin-top: 30px;
+    margin-left: 15%;
+    width: 50%;
+}
+
+.tablaUsuarios h2 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Tabla */
+.tablaUsuarios table {
+    width: 80%;               /* Ajusta el ancho de la tabla */        /* Controla el tamaño máximo */
+    border-collapse: collapse;
+}
+
+/* Celdas y encabezados */
+.tablaUsuarios th,
+.tablaUsuarios td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.tablaUsuarios th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+.tablaUsuarios td {
+    background-color: #fff;
+}
+
+/* Botones en celdas */
+.tablaUsuarios td button {
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    color: #fff;
+}
+
+.tablaUsuarios td button:hover {
+    background-color: #E0B253;
+}
+
+.tablaUsuarios td button:not(.eliminar) {
+    background-color: #E0B253;
+}
+
+.tablaUsuarios td button.eliminar {
+    background-color: #f44336;
+}
+
+.tablaUsuarios td button.eliminar:hover {
+    background-color: #e53935;
+}
+
+/* Acciones del usuario (si se usan) */
+.usuarioActions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.usuarioActions button {
+    background-color: #E0B253;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.usuarioActions button:hover {
+    background-color: #E0B253;
+}

@@ -1,0 +1,79 @@
+/* General para el contenedor principal */
+.Inventario {
+    width: 75%;
+    box-sizing: border-box;
+    padding-top: 60px; /* Para compensar la cabecera fija */
+}
+
+/* Cabecera del Inventario */
+.parteA {
+    display: flex;
+    position: fixed; /* Fija la cabecera en la parte superior */
+    top: 0;
+    left: 18%; /* Desplaza la cabecera hacia la derecha para evitar el menú lateral */
+    justify-content: space-between;
+    align-items: center; /* Centra los elementos verticalmente */
+    background-color: black;
+    color: white;
+    width: 82%;
+    height: 9%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra más suave */
+    padding: 10px 0;
+    z-index: 1000;  /* Asegura que la cabecera esté encima de otros elementos */
+}
+
+.parteA h1 {
+    margin: 0;
+    margin-left: 5%;
+    color: #E0B253;
+}
+
+.parteA input.botonA {
+    background-color: #E0B253;
+    border: none;
+    border-radius: 25px;
+    width: 15vw;
+    height: 5vh;
+    margin-right: 1%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    justify-content: center; /* Alinea el texto horizontalmente */
+    align-items: center;     /* Alinea el texto verticalmente */
+    text-align: center;      /* Asegura que el texto se alinee en el centro */
+    transition: background-color 0.3s ease; /* Transición suave para el hover */
+}
+
+.parteA input.botonA:hover {
+    background-color: white;
+    color: black; /* Cambia el color del texto cuando el botón cambia de fondo */
+}
+
+
+/* Tabla */
+.tabla {
+    width: 100%;
+    display: block;
+    margin-top: 15px; /* Ajusta el margen para que la tabla quede debajo de la cabecera fija */
+}
+
+/* Estilos generales de la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-left: 25%;
+}
+
+th, td {
+    background-color: #f4f4f4;
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-weight: bold;
+    white-space: nowrap;  /* Esto evita que el texto se divida en varias líneas */
+}
+
+/* Asegura que el texto de las celdas no se divida */
+td {
+    white-space: nowrap;  
+}
