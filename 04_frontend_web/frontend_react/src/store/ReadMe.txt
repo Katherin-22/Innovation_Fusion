@@ -1,0 +1,1 @@
+Manejo del estado global (Redux, Zustand, Context API).
