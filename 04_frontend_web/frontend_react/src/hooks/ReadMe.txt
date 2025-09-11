@@ -1,1 +1,0 @@
-Custom hooks para encapsular lógica reutilizable (useAuth, useFetch, etc.)
