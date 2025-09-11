@@ -1,0 +1,1 @@
+Funciones para consumir APIs (axios/fetch) centralizadas aquí.
