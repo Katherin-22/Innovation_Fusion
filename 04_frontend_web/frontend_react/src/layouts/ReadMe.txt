@@ -1,0 +1,1 @@
+Diseños generales que envuelven páginas (ej. MainLayout con Navbar + Sidebar).
