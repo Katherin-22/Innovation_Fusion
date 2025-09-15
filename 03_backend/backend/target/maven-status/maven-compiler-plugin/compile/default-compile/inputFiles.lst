@@ -1,1 +1,10 @@
-C:\Users\JHONATAN\Desktop\maven\Innovation_Fusion\03_backend\backend\src\main\java\com\proyectosena\backend\BackendApplication.java
+C:\Users\AZUS\Desktop\Innovation_Fusion\03_backend\backend\src\main\java\com\proyectosena\backend\BackendApplication.java
+C:\Users\AZUS\Desktop\Innovation_Fusion\03_backend\backend\src\main\java\com\proyectosena\backend\controller\modulo_productos\CategoriaController.java
+C:\Users\AZUS\Desktop\Innovation_Fusion\03_backend\backend\src\main\java\com\proyectosena\backend\controller\modulo_productos\TipoProductoController.java
+C:\Users\AZUS\Desktop\Innovation_Fusion\03_backend\backend\src\main\java\com\proyectosena\backend\exception\modulo_productos\TipoProductoNotFoundAdvice.java
+C:\Users\AZUS\Desktop\Innovation_Fusion\03_backend\backend\src\main\java\com\proyectosena\backend\exception\modulo_productos\TipoProductoNotFoundException.java
+C:\Users\AZUS\Desktop\Innovation_Fusion\03_backend\backend\src\main\java\com\proyectosena\backend\model\modulo_productos\Categoria.java
+C:\Users\AZUS\Desktop\Innovation_Fusion\03_backend\backend\src\main\java\com\proyectosena\backend\model\modulo_productos\CategoriaDTO.java
+C:\Users\AZUS\Desktop\Innovation_Fusion\03_backend\backend\src\main\java\com\proyectosena\backend\model\modulo_productos\TipoProducto.java
+C:\Users\AZUS\Desktop\Innovation_Fusion\03_backend\backend\src\main\java\com\proyectosena\backend\repository\modulo_productos\CategoriaRepository.java
+C:\Users\AZUS\Desktop\Innovation_Fusion\03_backend\backend\src\main\java\com\proyectosena\backend\repository\modulo_productos\TipoProductoRepository.java

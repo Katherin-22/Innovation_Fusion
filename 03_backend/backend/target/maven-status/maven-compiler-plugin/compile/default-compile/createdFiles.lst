@@ -1,1 +1,6 @@
+com\proyectosena\backend\model\modulo_productos\TipoProducto.class
 com\proyectosena\backend\BackendApplication.class
+com\proyectosena\backend\exception\modulo_productos\TipoProductoNotFoundAdvice.class
+com\proyectosena\backend\exception\modulo_productos\TipoProductoNotFoundException.class
+com\proyectosena\backend\controller\modulo_productos\TipoProductoController.class
+com\proyectosena\backend\repository\modulo_productos\TipoProductoRepository.class
