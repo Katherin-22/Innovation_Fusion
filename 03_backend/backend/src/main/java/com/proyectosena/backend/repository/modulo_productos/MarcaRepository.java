@@ -1,5 +1,9 @@
 package com.proyectosena.backend.repository.modulo_productos;
 
-public interface MarcaRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.proyectosena.backend.model.modulo_productos.Marca;
+
+public interface MarcaRepository extends JpaRepository<Marca,Integer>{
 
 }

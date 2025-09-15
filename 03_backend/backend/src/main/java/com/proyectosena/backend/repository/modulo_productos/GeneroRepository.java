@@ -1,5 +1,9 @@
 package com.proyectosena.backend.repository.modulo_productos;
 
-public interface GeneroRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.proyectosena.backend.model.modulo_productos.Genero;
+
+
+public interface GeneroRepository extends JpaRepository<Genero,Integer>{
 
 }

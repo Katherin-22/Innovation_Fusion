@@ -1,5 +1,10 @@
 package com.proyectosena.backend.repository.modulo_productos;
 
-public interface ColorRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.proyectosena.backend.model.modulo_productos.Color;
+
+public interface ColorRepository extends JpaRepository<Color,Integer>{
 
 }
+
