@@ -1,4 +1,4 @@
-package com.proyectosena.backend.model.modulo_productos;
+package com.proyectosena.backend.model.modulo_promociones;
 
 import java.time.LocalDate;
 
@@ -28,7 +28,7 @@ public class Promocion {
     @Column(name = "descuento", nullable = false)
     private Integer descuento;
 
-    @Column(name = "descripcion", length = 200)
+    @Column(name = "descripcion", nullable = false, length = 200)
     private String descripcion;
 
     @Column(name = "fecha_inicio", nullable = false)

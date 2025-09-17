@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyectosena.backend.exception.modulo_productos.ResourceNotFoundException;
-import com.proyectosena.backend.model.modulo_productos.Categoria;
 import com.proyectosena.backend.model.modulo_productos.TipoProducto;
 import com.proyectosena.backend.repository.modulo_productos.TipoProductoRepository;
 

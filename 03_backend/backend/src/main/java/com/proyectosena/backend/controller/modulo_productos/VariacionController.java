@@ -37,18 +37,22 @@ public class VariacionController {
                 .orElseThrow(() -> new ResourceNotFoundException("Variacion", idVariacion));
     }
 
+    @GetMapping("/variacion/tipo/{tipo}")
+    List<Variacion> getVariacionesPorTipo(@PathVariable Variacion.Tipo tipo) {
+        return variacionRepository.findByTipo(tipo);
+    }
 
     @PutMapping("/variacion/{idVariacion}")
     Variacion updateVariacion (@RequestBody Variacion updateVariacion, @PathVariable Integer idVariacion){
         return variacionRepository.findById(idVariacion)
             .map(variacion ->{
                 variacion.setNombre(updateVariacion.getNombre());
-
+                variacion.setTipo(updateVariacion.getTipo());
                 return variacionRepository.save(variacion);
             }).orElseThrow(()->new ResourceNotFoundException("Variacion", idVariacion));
     }
 
-    @DeleteMapping("/Variacion/{idVariacion}")
+    @DeleteMapping("/variacion/{idVariacion}")
     String deleteVariacion (@PathVariable Integer idVariacion){
         if(!variacionRepository.existsById(idVariacion)){
             throw new ResourceNotFoundException("Variacion",idVariacion);

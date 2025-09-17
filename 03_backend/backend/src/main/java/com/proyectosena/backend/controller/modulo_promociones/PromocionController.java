@@ -1,4 +1,4 @@
-package com.proyectosena.backend.controller.modulo_productos;
+package com.proyectosena.backend.controller.modulo_promociones;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyectosena.backend.exception.modulo_productos.ResourceNotFoundException;
-import com.proyectosena.backend.model.modulo_productos.Promocion;
-import com.proyectosena.backend.model.modulo_productos.PromocionDTO;
-import com.proyectosena.backend.repository.modulo_productos.PromocionRepository;
+import com.proyectosena.backend.model.modulo_promociones.Promocion;
+import com.proyectosena.backend.model.modulo_promociones.PromocionDTO;
+import com.proyectosena.backend.repository.modulo_promociones.PromocionRepository;
 
 @RestController
 public class PromocionController {

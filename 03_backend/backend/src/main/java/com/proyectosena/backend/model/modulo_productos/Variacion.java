@@ -2,6 +2,8 @@ package com.proyectosena.backend.model.modulo_productos;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,6 +21,15 @@ public class Variacion {
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo", nullable = false)
+    private Tipo tipo;
+
+    public enum Tipo {
+        Talla_Calzado,
+        Tamano_Bolso
+    }
+
     // Constructor vacío (necesario para JPA)
     public Variacion() {}
 
@@ -27,6 +38,7 @@ public class Variacion {
         this.nombre = nombre;
     }
     // Getters y Setters
+
     public Integer getIdVariacion() {
         return idVariacion;
     }
@@ -42,5 +54,14 @@ public class Variacion {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public Tipo getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo;
+    }
+
     
 }

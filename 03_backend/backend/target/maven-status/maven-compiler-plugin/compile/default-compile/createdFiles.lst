@@ -34,6 +34,7 @@ com\proyectosena\backend\controller\modulo_productos\StockController.class
 com\proyectosena\backend\repository\modulo_productos\MarcaRepository.class
 com\proyectosena\backend\model\modulo_productos\Promocion.class
 com\proyectosena\backend\repository\modulo_productos\PromocionRepository.class
+com\proyectosena\backend\model\modulo_productos\Variacion$Tipo.class
 com\proyectosena\backend\controller\modulo_productos\MaterialController.class
 com\proyectosena\backend\model\modulo_productos\Categoria.class
 com\proyectosena\backend\repository\modulo_productos\TipoProductoRepository.class

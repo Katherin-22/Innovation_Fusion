@@ -1,8 +1,8 @@
-package com.proyectosena.backend.model.modulo_productos;
+package com.proyectosena.backend.model.modulo_promociones;
 
 import java.time.LocalDate;
 
-import com.proyectosena.backend.model.modulo_productos.Promocion.EstadoPromocion;
+import com.proyectosena.backend.model.modulo_promociones.Promocion.EstadoPromocion;
 
 public class PromocionDTO {
 
