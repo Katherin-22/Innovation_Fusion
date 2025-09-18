@@ -9,7 +9,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Exponer la carpeta /uploads para que se pueda acceder desde el navegador
         registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:C:/uploads/");
+                .addResourceLocations("file:" + System.getProperty("user.dir") + "/uploads/");
     }
 }

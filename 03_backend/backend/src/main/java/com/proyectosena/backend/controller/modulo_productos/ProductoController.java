@@ -1,21 +1,14 @@
 package com.proyectosena.backend.controller.modulo_productos;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,7 +43,7 @@ public class ProductoController {
     @Autowired
     private MarcaRepository marcaRepository; 
 
-    private final String UPLOAD_DIR = "C:/uploads/";
+    private final String UPLOAD_DIR = System.getProperty("user.dir") + "/uploads/";
 
     @PostMapping("/producto")
     ResponseEntity<String> guardarProducto(
@@ -72,11 +65,20 @@ public class ProductoController {
         File directory = new File(UPLOAD_DIR);
         if (!directory.exists()) {
             directory.mkdirs();
+            System.out.println("Carpeta creada en: " + UPLOAD_DIR);
         }
-        // Guardar archivo físico
-        Path filePath = Paths.get(UPLOAD_DIR + urlImagen.getOriginalFilename());
-        Files.write(filePath, urlImagen.getBytes());
         
+        // Ruta donde se guardará
+        String ruta = UPLOAD_DIR + urlImagen.getOriginalFilename();
+
+        try {
+            urlImagen.transferTo(new File(ruta));
+            System.out.println("Imagen guardada en: " + ruta);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al guardar la imagen: " + ex.getMessage());
+        }
 
         // Validar que la fechaFin ingresada no sea anterior a hoy
         if(fechaModificacion.isBefore(LocalDate.now())){
@@ -117,10 +119,14 @@ public class ProductoController {
             producto.setPromocion(promocion);
         }
 
+        
+
         // solo la ruta relativa
         productoRepository.save(producto);
 
         return ResponseEntity.ok("Producto guardado exitosamente");
+
+        
 
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
