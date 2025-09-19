@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/calcularcompra.css">
+</head>
+<body>
+
+    <div class="shopping-cart">
+        <h1>My Shopping Cart</h1>
+
+        <div class="cart-header">
+            <h3>Producto</h3>
+            <h3>Talla</h3>
+            <h3>Tamaño</h3>
+            <h3>Cantidad</h3>
+            <h3>Precio Unitario</h3>
+            <h3>Acciones</h3>
+        </div>
+
+        <div class="cart-items">
+
+            <!-- Primer producto -->
+            <div class="cart-item" data-price="55.00">
+                <div class="cart-grid">
+                    <!-- Producto -->
+                    <div class="item-description">
+                        <img src="../img/zapatos.jpg" alt="Streamline Leggings">
+                        <div>
+                            <p>Streamline Leggings</p>
+                            <p class="product-code">Product Code: MLLG</p>
+                        </div>
+                    </div>
+
+                    <!-- Talla -->
+                    <div>
+                        <select class="size-select">
+                            <option>28</option><option>29</option><option>30</option><option>31</option>
+                            <option>32</option><option>33</option><option>34</option><option>35</option>
+                            <option>36</option><option>37</option><option>38</option><option>39</option><option>40</option>
+                        </select>
+                    </div>
+
+                    <!-- Tamaño -->
+                    <div>
+                        <select class="Tamaño-select">
+                            <option>Pequeño</option>
+                            <option>Mediano</option>
+                            <option>Grande</option>
+                        </select>
+                    </div>
+
+                    <!-- Cantidad -->
+                    <div class="quantity-controls">
+                        <button class="quantity-button decrease-quantity">-</button>
+                        <input type="number" class="quantity-input" value="1" min="1">
+                        <button class="quantity-button increase-quantity">+</button>
+                    </div>
+
+                    <!-- Precio -->
+                    <div class="price">£55.00</div>
+
+                    <!-- Acciones -->
+                    <div class="actions">
+                        <button class="action-btn delete-btn" data-id="ID_DEL_PRODUCTO_1">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Segundo producto -->
+            <div class="cart-item" data-price="55.00">
+                <div class="cart-grid">
+                    <!-- Producto -->
+                    <div class="item-description">
+                        <img src="../img/riñonera.webp" alt="Streamline Sports Bra">
+                        <div>
+                            <p>Streamline Sports Bra</p>
+                            <p class="product-code">Product Code: MLSB</p>
+                        </div>
+                    </div>
+
+                    <!-- Talla -->
+                    <div>
+                        <select class="size-select">
+                            <option>28</option><option>29</option><option>30</option><option>31</option>
+                            <option>32</option><option>33</option><option>34</option><option>35</option>
+                            <option>36</option><option>37</option><option>38</option><option>39</option><option>40</option>
+                        </select>
+                    </div>
+
+                    <!-- Tamaño -->
+                    <div>
+                        <select class="Tamaño-select">
+                            <option>Pequeño</option>
+                            <option>Mediano</option>
+                            <option>Grande</option>
+                        </select>
+                    </div>
+
+                    <!-- Cantidad -->
+                    <div class="quantity-controls">
+                        <button class="quantity-button decrease-quantity">-</button>
+                        <input type="number" class="quantity-input" value="1" min="1">
+                        <button class="quantity-button increase-quantity">+</button>
+                    </div>
+
+                    <!-- Precio -->
+                    <div class="price">£55.00</div>
+
+                    <!-- Acciones -->
+                    <div class="actions">
+                        <button class="action-btn delete-btn" data-id="ID_DEL_PRODUCTO_2">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="cart-summary">
+            <div class="summary-row">
+                <span>Descuento</span>
+                <span id="discount">£0.00</span>
+            </div>
+            <div class="summary-row subtotal">
+                <span>Subtotal</span>
+                <span id="subtotal">£110.00</span>
+            </div>
+            <div class="summary-row total">
+                <span>Total</span>
+                <span id="total">£110.00</span>
+            </div>
+        </div>
+
+        <div class="promo-code-area">
+            <p>If you have a promotion code, please enter it here:</p>
+            <div class="promo-input-group">
+                <input type="text" placeholder="Please enter promo code" id="promoCodeInput">
+                <button class="apply-discount-button" id="applyDiscountBtn">Apply Discount</button>
+            </div>
+        </div>
+
+        <div class="checkout-actions">
+            <button class="checkout-button"><a href="../../realizar checkout seguro/html/checkout.html">Checkout </a><span class="lock-icon">🔒</span></button>
+
+            <div class="secondary-actions">
+                <button class="update-quantity-button" id="updateQuantityBtn">Update Quantity</button>
+                <button class="continue-shopping-button">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/app.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+</body>
+</html>
