@@ -1,7 +1,11 @@
+import MenuHome from "../../layouts/menuHome/menuHome"
+
+import "../../styles/home/paginaInicio.css"
+
 const Home = () =>{
-    return 
-        
-            ;
+    return (
+    <MenuHome />
+    );
 }
 
 export default Home;

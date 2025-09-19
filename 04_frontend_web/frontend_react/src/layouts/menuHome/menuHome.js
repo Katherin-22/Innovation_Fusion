@@ -1,5 +1,7 @@
 
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
+import "../../styles/home/paginaInicio.css"
+
 
 const MenuHome = () => {
   return (
@@ -138,7 +140,7 @@ const MenuHome = () => {
                 <i className="bi bi-cart-fill"></i>
               </button>
             </li>
-
+            
             {/* Salir */}
             <li className="nav-item">
               <button className="nav-link btn btn-link" type="button" style={{ padding: 0 }}>
@@ -161,6 +163,7 @@ const MenuHome = () => {
           </form>
         </div>
       </div>
+      <Outlet />
     </nav>
   );
 };
