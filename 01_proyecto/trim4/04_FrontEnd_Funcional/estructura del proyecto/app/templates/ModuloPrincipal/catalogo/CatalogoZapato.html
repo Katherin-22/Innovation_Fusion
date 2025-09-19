@@ -1,0 +1,249 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../bootstrap/Iconos/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/zapato.css">
+</head>
+<body>
+
+     <!--Navbar-->
+    <div class="container-fluid">
+
+
+    <nav class="navbar  bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="../../principal/html/paginaInicio.html">InnovationFussion</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Calzado
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="../../Zapatos/html/zapato.html">Mujer</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="../../Zapatos/html/zapato.html">Hombre</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="../../Zapatos/html/zapato.html">Niño</a></li>
+            </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Bolso
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="../../bolsos/html/bolsos.html">Mujer</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="../../bolsos/html/bolsos.html">Hombre</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="../../bolsos/html/bolsos.html">Niño</a></li>
+            </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Novedades
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="../../bolsos/html/bolsos.html">Mujer</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="../../bolsos/html/bolsos.html">Hombre</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="../../bolsos/html/bolsos.html">Niño</a></li>
+            </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Descuento
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="../../bolsos/html/bolsos.html">Mujer</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="../../bolsos/html/bolsos.html">Hombre</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="../../bolsos/html/bolsos.html">Niño</a></li>
+            </ul>
+            </li>
+
+
+
+<!--persona perfil-->
+            <li class="nav-item">
+            <a class="nav-link" href="../../seccionusuario/html/usuario.html">
+                <i class="bi bi-person-fill"></i>
+            </a>
+            </li>
+
+<!--Favoritos-->
+            <li  text-centerclass="nav-item">
+            <a class="nav-link" href="../../seccionusuario/html/favoritos.html">
+                <i class="bi bi-heart-fill"></i>
+            </a>
+            </li>
+
+<!--Carrito-->
+ 
+            <li class="nav-item">
+            <a class="nav-link" href="../../../ModuloUsuarios/calcular el total de la compra/html/calcularcompra.html">
+                <i class="bi bi-cart-fill"></i> <span id="numerito" class="numerito">0</span>
+            </a>
+            </li>
+
+
+
+        </ul>
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        </div>
+    </div>
+    </nav>
+
+
+    </div>
+
+
+<!--NAVBAR-->
+
+
+
+
+
+
+<!--catalogo-->
+<div class="container-fluid">
+
+
+
+    <div class="row">
+
+
+        <div class="col-12 col-md-12 col-lg-2">
+            <nav class="nav flex-column">
+            <a class="nav-link text-white" aria-current="page" href="#">Calzado</a>
+            <select class="form-select" aria-label="Default select example" id="categoriaSelect">
+                <option id="todos" value="todos" class="boton-menu boton-categoria" selected>Todos</option>
+                <option id="abrigos" value="1" class="boton-menu boton-categoria">Running</option>
+                <option id="camisetas" value="2" class="boton-menu boton-categoria">Skateboard</option>
+                <option id="pantalones" value="3" class="boton-menu boton-categorias">Botas</option>
+                <option id="pantalones" value="3" class="boton-menu boton-categorias">tenis</option>
+
+            </select>
+            <a class="nav-link text-white" href="#">Talla</a>
+                <select class="form-select" aria-label="Default select example">
+                    <option value="todos" selected>Seleccione una opción</option>
+                    <option value="1">40</option>
+                    <option value="2">42</option>
+                    <option value="3">45</option>
+                </select>
+            <a class="nav-link text-white" href="#">Color</a>
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Seleccione una opción</option>
+                    <option value="1">Blanco</option>
+                    <option value="2">Negro</option>
+                    <option value="3">Rojo</option>
+                </select>
+            <a class="nav producto-link text-white" class="producto-imagen" aria-disabled="true">Disabled</a producto-titulo> 
+
+        <label for="customRange1" class="form-label text-white">Rango de precio</label>
+            <input type="range" class="form-range" id="customRange1">
+            <p class="text-white">$100.000-$1.000.000</p>
+            </nav>
+        </div>
+
+
+
+
+
+
+        <div class="col-12 col-md-12 col-lg-10">
+
+            <h1 id="titulo-principal" class="text-white"></h1>
+            <!--fila2-->
+            <div id="contenedor-productos" class="row contenedor-productos">
+                
+            <!--los productos los crea js-->
+
+            </div>
+
+        </div>
+
+
+
+
+
+                                    <!--FOOTER-->
+<footer class="bg-dark text-white">
+    <div class="container-fluid">
+
+
+        <div class="row finPag" >
+
+<!--FILA 1-->
+            <div class="col-12">
+
+
+                <div class="row">
+
+                    <div class="col-4">
+                        <h4 class="text-center">Sobre Nosotros</h4>
+                        <ul class="list-unstyled">
+                            <li class="text-center"><a href="#" class="text-white text-decoration-none">innovation Fusion</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div class="col-4">
+                        <h4 class="text-center">Contacto</h4>
+                        <ul class="list-unstyled">
+                            <li class="text-center"><a href="#" class="text-white text-decoration-none">innovationFusion@gmail.com</a></li>
+                            <li class="text-center"><a href="#" class="text-white text-decoration-none">3655462742</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div class="col-4">
+                        <h4 class="text-center">Redes Sociales</h4>
+                        <ul class="list-unstyled">
+                            <li class="text-center"><a href="#" class="text-white text-decoration-none">
+                                <i class="bi bi-facebook"></i>
+                                <i class="bi bi-whatsapp"></i>
+                                <i class="bi bi-instagram"></i>
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+<!--FILA 2-->
+            <div class="col-12">
+                <hr class="my-2 bg-dark border-2">
+                <p class="text-center">© 2025 Innovation Fusion. Todos los derechos reservados.</p>
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+</footer>
+    <script src="../../../bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>
