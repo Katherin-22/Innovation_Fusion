@@ -5,10 +5,14 @@
     --toggle-color: #ddd;
     --text-color: #000000;
 }
-body{
-    background: linear-gradient(to right bottom, #0f0f0f 50%, #E0B253 50%);
-    line-height: 1.6;
+.body-color {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+  color: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
+
 .custom-btn {
     background: var(--primary-color);
     color: white;

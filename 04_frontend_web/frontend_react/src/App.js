@@ -1,11 +1,14 @@
 
 import './App.css';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 import "./styles/home/paginaInicio.css"
 
 import Home from "./pages/home/home";
+import Catalog from "./pages/category/catalogo";
+
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -13,6 +16,7 @@ function App() {
   <Routes>
     <Route>
       <Route path="/" element={<Home />} />
+      <Route path="/Catalog" element={<Catalog />} />
     </Route>
   </Routes>
   );

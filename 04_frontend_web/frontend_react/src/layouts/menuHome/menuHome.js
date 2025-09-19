@@ -1,7 +1,6 @@
 
 import { Link, Outlet } from "react-router-dom";
-import "../../styles/home/paginaInicio.css"
-
+import "../../styles/home/paginaInicio.css";
 
 const MenuHome = () => {
   return (
@@ -10,7 +9,7 @@ const MenuHome = () => {
       data-bs-theme="dark"
     >
       <div className="container-fluid">
-        <Link className="navbar-brand"  to="#">
+        <Link className="navbar-brand" to="/">
           InnovationFussion
         </Link>
 
@@ -28,50 +27,36 @@ const MenuHome = () => {
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            
+
             {/* --- Catálogo --- */}
             <li className="nav-item dropdown">
-              <buttom
-                className="nav-link dropdown-toggle"
-                to="#"
-                role="button"
+              <button
+                className="nav-link dropdown-toggle btn btn-link"
+                type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
                 Catálogo
-              </buttom>
+              </button>
               <ul className="dropdown-menu">
-                <li>
-                  <Link className="dropdown-item" to="#">
-                    Mujer
-                  </Link>
-                </li>
+                <li><Link className="dropdown-item" to="/Catalog">Mujer</Link></li>
                 <li><hr className="dropdown-divider" /></li>
-                <li>
-                  <Link className="dropdown-item" too="#">
-                    Hombre
-                  </Link>
-                </li>
+                <li><Link className="dropdown-item" to="/Catalog">Hombre</Link></li>
                 <li><hr className="dropdown-divider" /></li>
-                <li>
-                  <buttom className="dropdown-item" href="#">
-                    Niño
-                  </buttom>
-                </li>
+                <li><Link className="dropdown-item" to="/Catalog">Niño</Link></li>
               </ul>
             </li>
 
             {/* --- Bolsos --- */}
             <li className="nav-item dropdown">
-              <buttom
-                className="nav-link dropdown-toggle"
-                href="#"
-                role="button"
+              <button
+                className="nav-link dropdown-toggle btn btn-link"
+                type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
                 Bolsos
-              </buttom>
+              </button>
               <ul className="dropdown-menu">
                 <li><Link className="dropdown-item" to="#">Mujer</Link></li>
                 <li><hr className="dropdown-divider" /></li>
@@ -92,60 +77,59 @@ const MenuHome = () => {
                 Novedades
               </button>
               <ul className="dropdown-menu">
-                <li><buttom className="dropdown-item" href="#">Mujer</buttom></li>
+                <li><Link className="dropdown-item" to="#">Mujer</Link></li>
                 <li><hr className="dropdown-divider" /></li>
-                <li><buttom className="dropdown-item" href="#">Hombre</buttom></li>
+                <li><Link className="dropdown-item" to="#">Hombre</Link></li>
                 <li><hr className="dropdown-divider" /></li>
-                <li><buttom className="dropdown-item" href="#">Niño</buttom></li>
+                <li><Link className="dropdown-item" to="#">Niño</Link></li>
               </ul>
             </li>
 
             {/* --- Descuentos --- */}
             <li className="nav-item dropdown">
-              <buttom
-                className="nav-link dropdown-toggle"
-                href="#"
-                role="button"
+              <button
+                className="nav-link dropdown-toggle btn btn-link"
+                type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
                 Descuentos
-              </buttom>
+              </button>
               <ul className="dropdown-menu">
-                <li><a className="dropdown-item" href="../../catalogo/html/CatalogoZapato.html">Mujer</a></li>
+                <li><Link className="dropdown-item" to="#">Mujer</Link></li>
                 <li><hr className="dropdown-divider" /></li>
-                <li><a className="dropdown-item" href="../../catalogo/html/CatalogoZapato.html">Hombre</a></li>
+                <li><Link className="dropdown-item" to="#">Hombre</Link></li>
                 <li><hr className="dropdown-divider" /></li>
-                <li><a className="dropdown-item" href="../../catalogo/html/CatalogoZapato.html">Niño</a></li>
+                <li><Link className="dropdown-item" to="#">Niño</Link></li>
               </ul>
             </li>
 
             {/* Perfil */}
             <li className="nav-item">
-              <a className="nav-link" href="../../seccionusuario/html/usuario.html">
+              <Link className="nav-link" to="#">
                 <i className="bi bi-person-fill"></i>
-              </a>
+              </Link>
             </li>
 
             {/* Favoritos */}
             <li className="nav-item">
-              <a className="nav-link" href="../../seccionusuario/html/favoritos.html">
+              <Link className="nav-link" to="#">
                 <i className="bi bi-heart-fill"></i>
-              </a>
+              </Link>
             </li>
 
             {/* Carrito */}
             <li className="nav-item">
-              <button className="nav-link btn btn-link" type="button" style={{ padding: 0 }}>
+              <Link className="nav-link btn btn-link" type="button">
                 <i className="bi bi-cart-fill"></i>
-              </button>
+              </Link>
             </li>
-            
+
             {/* Salir */}
             <li className="nav-item">
-              <button className="nav-link btn btn-link" type="button" style={{ padding: 0 }}>
+              <Link className="nav-link btn btn-link" type="button">
                 <i className="bi bi-box-arrow-left"></i>
-              </button>
+              </Link>
             </li>
           </ul>
 
