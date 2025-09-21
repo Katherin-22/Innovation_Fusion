@@ -1,0 +1,168 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-image: url();
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background: linear-gradient(to right bottom, #0F0F0F 50%, #E0B253 50%);
+}
+
+.container {
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    background-color: #FAF9F6;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.form-container {
+    flex: 1;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-container {
+    flex: 1;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.form-content {
+    padding-right: 20px;
+    width: 100%; /* Asegura que el contenido ocupe el ancho para centrar */
+}
+
+h2 {
+    text-align: center;
+    font-size: 30px;
+    text-transform: uppercase;
+    color: #0F0F0F;
+    margin-bottom: 25px;
+}
+
+label, p {
+    font-size: 17px;
+    color: #0F0F0F;
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+input {
+    padding: 10px 15px;
+    border: 1px solid #E0B253;
+    border-radius: 25px;
+    background-color: #FAF9F6;
+    outline: none;
+    color: #0F0F0F;
+    font-size: 17px;
+    width: calc(100% - 30px);
+    box-sizing: border-box;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    width: calc(100% - 30px);
+    margin: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.btn-1 {
+    background-color: #E0B253;
+    font-size: 15px;
+    color: #0F0F0F;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: auto;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+}
+
+.btn-1:hover {
+    background-color: #C49A3D;
+}
+
+.registro {
+    display: flex;
+    justify-content: center; /* Centra los botones */
+    margin-top: 15px;
+    gap: 38px;
+    width: 100%; /* Asegura que el contenedor de los botones ocupe el ancho */
+}
+
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.field {
+    width: 100%;
+}
+
+@media (max-width: 991px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .form-container {
+        padding: 20px;
+        align-items: stretch;
+    }
+
+    .form-content {
+        padding-right: 0;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    p {
+        text-align: left;
+    }
+
+    .registro {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .form-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .field {
+        width: 100%;
+    }
+
+    .btn-1 {
+        width: 100%;
+    }
+}
