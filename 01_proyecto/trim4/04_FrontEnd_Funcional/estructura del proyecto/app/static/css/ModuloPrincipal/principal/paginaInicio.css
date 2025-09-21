@@ -1,0 +1,57 @@
+:root {
+    --body-color: #e4e9f7;
+    --slidebar-color: #fff;
+    --primary-color: #E0B253;
+    --toggle-color: #ddd;
+    --text-color: #000000;
+}
+body{
+    background: linear-gradient(to right bottom, #0f0f0f 50%, #E0B253 50%);
+    line-height: 1.6;
+}
+.custom-btn {
+    background: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    text-decoration: none;
+    transition: var(--tran-03);
+}
+
+.custom-btn:hover {
+    border: 2px solid var(--primary-color);
+    background: var(--body-color);
+    color: var(--primary-color);
+}
+.carousel{
+    margin-top: 60px !important;
+}
+.carousel-item{
+    height: 400px;
+}
+#carouselExampleAutoplaying{
+    margin-top: 10px;
+}
+.coleccion{
+    height: 200px;
+    width: 200px;
+}
+.card{
+    margin: 5px;
+}
+.card-img-top{
+    height: 200px;
+    width: auto;
+    overflow: hidden;
+}
+.card-img-top img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.finPag{
+    margin: 20px 0;
+    margin-bottom: -10px;
+}
