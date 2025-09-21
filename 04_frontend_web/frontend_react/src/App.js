@@ -7,7 +7,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "./styles/home/paginaInicio.css"
 
 import Home from "./pages/home/home";
-import Catalog from "./pages/category/catalogo";
+import Catalogo from "./pages/category/catalogo";
 
 import { Routes, Route } from "react-router-dom";
 
@@ -16,7 +16,7 @@ function App() {
   <Routes>
     <Route>
       <Route path="/" element={<Home />} />
-      <Route path="/Catalog" element={<Catalog />} />
+      <Route path="/Catalogo" element={<Catalogo />} />
     </Route>
   </Routes>
   );

@@ -39,11 +39,11 @@ const MenuHome = () => {
                 Catálogo
               </button>
               <ul className="dropdown-menu">
-                <li><Link className="dropdown-item" to="/Catalog">Mujer</Link></li>
+                <li><Link className="dropdown-item" to="/Catalogo">Mujer</Link></li>
                 <li><hr className="dropdown-divider" /></li>
-                <li><Link className="dropdown-item" to="/Catalog">Hombre</Link></li>
+                <li><Link className="dropdown-item" to="/Catalogo">Hombre</Link></li>
                 <li><hr className="dropdown-divider" /></li>
-                <li><Link className="dropdown-item" to="/Catalog">Niño</Link></li>
+                <li><Link className="dropdown-item" to="/Catalogo">Niño</Link></li>
               </ul>
             </li>
 

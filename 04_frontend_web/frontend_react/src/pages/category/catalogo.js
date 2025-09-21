@@ -1,6 +1,6 @@
 import MenuHome from "../../layouts/menuHome/menuHome";
 
-const Catalog = () => {
+const Catalogo = () => {
     return (
         <div className="allHome">
                 <MenuHome />
@@ -11,4 +11,4 @@ const Catalog = () => {
     )
 }
 
-export default Catalog;
+export default Catalogo;
