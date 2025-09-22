@@ -17,6 +17,7 @@ import com.proyectosena.backend.repository.modulo_productos.VariacionRepository;
 
 @RestController
 public class VariacionController {
+    
     @Autowired
     // tipoProductoRepository este se pone en los return
     private VariacionRepository variacionRepository;  

@@ -1,7 +1,6 @@
 package com.proyectosena.backend.model.modulo_productos;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.proyectosena.backend.model.modulo_promociones.Promocion;
@@ -38,8 +37,8 @@ public class Producto {
     @Column(name = "precio", nullable = false)
     private Double precio;
 
-    @Column(name = "urlImagen", nullable = false)
-    private String urlImagen;
+  //@Column(name = "urlImagen", nullable = false)
+  //private String urlImagen;
 
     @Column(name = "fechaCreacion", nullable = false)
     private LocalDate fechaCreacion;
@@ -92,14 +91,15 @@ public class Producto {
 
     // Constructor con parámetros
     public Producto(String nombreProducto, String codigoReferencia, String descripcion, Double precio,
-                    String urlImagen, LocalDate fechaCreacion, LocalDate fechaModificacion,
+                    //String urlImagen, 
+                    LocalDate fechaCreacion, LocalDate fechaModificacion,
                     EstadoProducto estadoProducto, Categoria categoria, Marca marca,
                     Material material, TipoPublico tipoPublico, Promocion promocion) {
         this.nombreProducto = nombreProducto;
         this.codigoReferencia = codigoReferencia;
         this.descripcion = descripcion;
         this.precio = precio;
-        this.urlImagen = urlImagen;
+        //this.urlImagen = urlImagen;
         this.fechaCreacion = fechaCreacion;
         this.fechaModificacion = fechaModificacion;
         this.estadoProducto = estadoProducto;
@@ -150,13 +150,13 @@ public class Producto {
         this.precio = precio;
     }
 
-    public String getUrlImagen() {
-        return urlImagen;
-    }
+    //public String getUrlImagen() {
+    //    return urlImagen;
+    //}
 
-    public void setUrlImagen(String urlImagen) {
-        this.urlImagen = urlImagen;
-    }
+    //public void setUrlImagen(String urlImagen) {
+    //    this.urlImagen = urlImagen;
+    //}
 
     public LocalDate getFechaCreacion() {
         return fechaCreacion;

@@ -69,7 +69,7 @@ CREATE TABLE Producto (
   codigoReferencia VARCHAR(20) NOT NULL,
   descripcion VARCHAR(200) NOT NULL,
   precio DOUBLE NOT NULL, 
-  urlImagen VARCHAR(200) NOT NULL,
+  -- urlImagen VARCHAR(200) NOT NULL,
   fechaCreacion DATE NOT NULL,
   fechaModificacion DATE NOT NULL,
   estadoProducto ENUM('Activo', 'Inactivo', 'Descontinuado') NOT NULL,
@@ -150,11 +150,11 @@ INSERT INTO TipoPublico (nombrePublico) VALUES ("Mujer");
 INSERT INTO TipoPublico (nombrePublico) VALUES ("Unisex");
 
 -- Productos
-INSERT INTO Producto (nombreProducto, codigoReferencia, descripcion, precio, urlImagen, fechaCreacion, fechaModificacion,estadoProducto, idCategoria, idMarca, idMaterial, idPublico, idPromocion) 
-VALUES ("Nike Running Air", "NR001", "Zapatillas deportivas de running", 299000, "nike_running_air.jpg", "2025-09-01", "2025-09-02","Activo", 1, 1, 2, 1, 1);
+INSERT INTO Producto (nombreProducto, codigoReferencia, descripcion, precio,  fechaCreacion, fechaModificacion,estadoProducto, idCategoria, idMarca, idMaterial, idPublico, idPromocion) 
+VALUES ("Nike Running Air", "NR001", "Zapatillas deportivas de running", 299000, "2025-09-01", "2025-09-02","Activo", 1, 1, 2, 1, 1);
 
-INSERT INTO Producto (nombreProducto, codigoReferencia, descripcion, precio, urlImagen, fechaCreacion, fechaModificacion,estadoProducto, idCategoria, idMarca, idMaterial, idPublico, idPromocion) 
-VALUES ("Bandolera Casual", "BD001", "Bolso bandolera casual", 159000, "bandolera_casual.jpg", "2025-09-01", "2025-09-02","Activo", 2, 2, 1, 2, NULL);
+INSERT INTO Producto (nombreProducto, codigoReferencia, descripcion, precio, fechaCreacion, fechaModificacion,estadoProducto, idCategoria, idMarca, idMaterial, idPublico, idPromocion) 
+VALUES ("Bandolera Casual", "BD001", "Bolso bandolera casual", 159000, "2025-09-01", "2025-09-02","Activo", 2, 2, 1, 2, NULL);
 
 -- Colores
 INSERT INTO Color (nombreColor) VALUES ("Rojo");
