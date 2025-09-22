@@ -1,0 +1,108 @@
+:root {
+    --body-color: #e4e9f7;
+    --slidebar-color: #fff;
+    --primary-color: #E0B253;
+    --toggle-color: #ddd;
+    --text-color: #000000;
+
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.4s ease;
+    --tran-05: all 0.5s ease;
+}
+
+body {
+    background-color: var(--body-color);
+    color: var(--text-color);
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+/* Panel izquierdo (contactos) */
+.col-md-4 {
+    background-color: var(--slidebar-color);
+    border-right: 1px solid #ccc;
+}
+
+.list-group-item {
+    cursor: pointer;
+    transition: var(--tran-03);
+    border: none;
+    border-bottom: 1px solid #eee;
+}
+
+.list-group-item:hover {
+    background-color: var(--toggle-color);
+}
+
+.list-group-item.active {
+    background-color: var(--primary-color) !important;
+    color: #fff;
+}
+
+.list-group-item.active .text-light,
+.list-group-item.active .text-muted {
+    color: #fff !important;
+}
+
+/* Panel derecho (chat) */
+.col-md-8 {
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+}
+
+.col-md-8 .p-3 {
+    background-color: var(--slidebar-color);
+}
+
+.flex-grow-1 {
+    overflow-y: auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+/* Mensajes */
+.flex-grow-1 .mb-3 {
+    max-width: 75%;
+}
+
+.flex-grow-1 .text-end {
+    margin-left: auto;
+}
+
+.bg-light {
+    background-color: #f0f0f0 !important;
+}
+
+.bg-primary {
+    background-color: var(--primary-color) !important;
+    color: #fff;
+}
+
+/* Input de mensaje */
+form input.form-control {
+    border-radius: 20px;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    transition: var(--tran-03);
+}
+
+form input.form-control:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: var(--primary-color);
+}
+
+form button.btn-primary {
+    background-color: var(--primary-color);
+    border: none;
+    padding: 0 20px;
+    border-radius: 20px;
+    transition: var(--tran-03);
+}
+
+form button.btn-primary:hover {
+    background-color: #d19a3a;
+}

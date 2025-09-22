@@ -54,14 +54,14 @@ const MenuAdmin = () => {
               </li>
 
               <li className="nav link">
-                <Link to="/Administrador/Pedidos">
+                <Link to="/Administrador/Gestion_Pedido">
                   <i className="bi bi-box2-fill"></i>
                   <span className="text nav-text">Gestion Pedidos</span>
                 </Link>
               </li>
 
               <li className="nav link">
-                <Link to="/Administrador/Chat">
+                <Link to="/Administrador/Inbox">
                   <i className="bi bi-chat-dots-fill"></i>
                   <span className="text nav-text">Chat</span>
                 </Link>
