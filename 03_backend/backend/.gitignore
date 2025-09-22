@@ -30,3 +30,5 @@ build/
 
 ### VS Code ###
 .vscode/
+
+03_backend/backend/src/main/resources/credenciales/*.json
