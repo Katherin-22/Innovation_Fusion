@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.proyectosena.backend.DTO.modulo_productos.StockDTO;
 import com.proyectosena.backend.exception.modulo_productos.ResourceNotFoundException;
 import com.proyectosena.backend.model.modulo_productos.Color;
 import com.proyectosena.backend.model.modulo_productos.Producto;
 import com.proyectosena.backend.model.modulo_productos.Stock;
-import com.proyectosena.backend.model.modulo_productos.StockDTO;
 import com.proyectosena.backend.model.modulo_productos.Variacion;
 import com.proyectosena.backend.repository.modulo_productos.ColorRepository;
 import com.proyectosena.backend.repository.modulo_productos.ProductoRepository;

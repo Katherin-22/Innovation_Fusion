@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.proyectosena.backend.DTO.modulo_promociones.PromocionDTO;
 import com.proyectosena.backend.exception.modulo_productos.ResourceNotFoundException;
 import com.proyectosena.backend.model.modulo_promociones.Promocion;
-import com.proyectosena.backend.model.modulo_promociones.PromocionDTO;
 import com.proyectosena.backend.repository.modulo_promociones.PromocionRepository;
 
 @RestController
