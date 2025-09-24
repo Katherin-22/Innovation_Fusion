@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.proyectosena.backend.model.modulo_productos.Categoria;
 import com.proyectosena.backend.model.modulo_productos.Producto;
 import com.proyectosena.backend.model.modulo_productos.TipoProducto;
 import com.proyectosena.backend.model.modulo_productos.Variacion;
@@ -13,7 +12,7 @@ import com.proyectosena.backend.repository.modulo_productos.ProductoRepository;
 import com.proyectosena.backend.repository.modulo_productos.VariacionRepository;
 
 @Service
-public class StockService {
+public class GetStockService {
 
     @Autowired
     private ProductoRepository productoRepository;
@@ -22,7 +21,7 @@ public class StockService {
     private VariacionRepository variacionRepository;
 
     // Método para obtener las variaciones de un producto según su tipo
-    public List<Variacion> obtenerVariacionesPorProducto(Integer idProducto) {
+    public List<Variacion> listarVariacionesPorProducto(Integer idProducto) {
         // 1. Obtener producto
         Producto producto = productoRepository.findById(idProducto)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));

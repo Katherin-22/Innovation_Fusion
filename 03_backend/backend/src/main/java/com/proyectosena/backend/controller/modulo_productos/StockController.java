@@ -22,13 +22,16 @@ import com.proyectosena.backend.repository.modulo_productos.ColorRepository;
 import com.proyectosena.backend.repository.modulo_productos.ProductoRepository;
 import com.proyectosena.backend.repository.modulo_productos.StockRepository;
 import com.proyectosena.backend.repository.modulo_productos.VariacionRepository;
-import com.proyectosena.backend.service.modulo_productos.StockService;
+import com.proyectosena.backend.service.modulo_productos.GetStockService;
+import com.proyectosena.backend.service.modulo_productos.PostStockService;
 
 @RestController
 
 public class StockController {
 @Autowired
-private StockService stockService;
+private GetStockService getStockService;
+@Autowired
+private PostStockService postStockService;
 @Autowired
 private StockRepository stockRepository;
 @Autowired 
@@ -43,8 +46,13 @@ private ProductoRepository productoRepository;
         Color color = colorRepository.findById(stockDTO.getIdColor())
                 .orElseThrow(() -> new ResourceNotFoundException("Color", stockDTO.getIdColor()));
 
-        Variacion variacion = variacionRepository.findById(stockDTO.getIdVariacion())
-                .orElseThrow(() -> new ResourceNotFoundException("Variacion", stockDTO.getIdVariacion()));
+        
+        // Validar variación según el tipo de producto
+        Variacion variacion = postStockService.validarVariacionProducto(
+            stockDTO.getIdProducto(),
+            stockDTO.getIdVariacion()
+        );
+
 
         Producto producto = productoRepository.findById(stockDTO.getIdProducto())
                 .orElseThrow(() -> new ResourceNotFoundException("Producto", stockDTO.getIdProducto()));
@@ -62,23 +70,37 @@ private ProductoRepository productoRepository;
 
 
     @GetMapping("/stock/variaciones/{idProducto}")
-    public List<Variacion> obtenerVariacionesPorProducto(Integer idProducto) {
-        Producto producto = productoRepository.findById(idProducto)
-            .orElseThrow(() -> new ResourceNotFoundException("Producto", idProducto));
-
-        String nombreTipo = producto.getCategoria().getTipoProducto().getNombreTipoProducto();
-
-        Variacion.Tipo tipoEnum = nombreTipo.equalsIgnoreCase("Calzado") 
-            ? Variacion.Tipo.Talla_Calzado 
-            : Variacion.Tipo.Tamano_Bolso;
-
-        return variacionRepository.findByTipo(tipoEnum);
+    List<Variacion> obtenerVariacionesPorProducto(@PathVariable Integer idProducto) {
+        return getStockService.listarVariacionesPorProducto(idProducto);
     }
+
 
     @GetMapping("/stocks")
-    List<Stock> getAllStock(){
-        return stockRepository.findAll();
-    }
+    List<StockDTO> getAllStock() {
+    // Traes todos los stocks de la base de datos
+    List<Stock> stocks = stockRepository.findAll();
+
+    // Los conviertes a DTO con stream
+    return stocks.stream()
+            .map(stock -> {
+                StockDTO stockDTO = new StockDTO();
+                stockDTO.setCodigoReferencia(stock.getProducto().getCodigoReferencia());
+                stockDTO.setNombreProducto(stock.getProducto().getNombreProducto());
+                stockDTO.setNombreTipoProducto(stock.getProducto().getCategoria().getTipoProducto().getNombreTipoProducto());
+                stockDTO.setNombreCategoria(stock.getProducto().getCategoria().getNombreCategoria());
+                stockDTO.setDescripcion(stock.getProducto().getDescripcion());
+                stockDTO.setStockActual(stock.getStockActual());
+                stockDTO.setPrecio(stock.getProducto().getPrecio());
+                stockDTO.setNombreMarca(stock.getProducto().getMarca().getNombreMarca());
+                stockDTO.setFechaCreacion(stock.getProducto().getFechaCreacion());
+                stockDTO.setNombreColor(stock.getColor().getNombreColor());
+                stockDTO.setNombreMaterial(stock.getProducto().getMaterial().getNombreMaterial());
+                stockDTO.setNombrePublico(stock.getProducto().getTipoPublico().getNombrePublico());
+            
+                return stockDTO;
+            })
+            .toList();
+}
 
     @GetMapping("/stock/{idStock}")
     Stock getOneStock(@PathVariable Integer idStock) {
