@@ -1,18 +1,27 @@
-import MenuHome from "../../layouts/menuHome/menuHome"
-import Banner from "../../layouts/menuHome/carrousel/carrousel"
+import { useEffect, useState } from "react";
+import MenuHome from "../../layouts/menuHome/menuHome";
+import BannerCarousel from "../../layouts/menuHome/carrousel/carrousel.js";
+import Footer from "../../layouts/menuHome/footer";
+
+import "../../styles/home/paginaInicio.css";
+
+const Home = () => {
+  const [banners, setBanners] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/banners")
+      .then((res) => res.json())
+      .then((data) => setBanners(data)) // PASAMOS OBJETOS COMPLETOS
+      .catch((err) => console.error("Error cargando banners:", err));
+  }, []);
 
 
-import Footer from "../../layouts/menuHome/footer"
-
-import "../../styles/home/paginaInicio.css"
-
-const Home = () =>{
-    return (
+  return (
     <div className="allHome">
-            <MenuHome />
-        <div className="body-color">
-            <Banner />
-            {/*vista produacto 1*/}
+      <MenuHome />
+      <div className="body-color">
+        <BannerCarousel banners={banners} />
+        {/* otras secciones */}
             
                 <div className="container-fluid">
 
