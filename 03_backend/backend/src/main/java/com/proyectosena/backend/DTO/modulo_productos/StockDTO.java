@@ -23,13 +23,13 @@ public class StockDTO {
     private String descripcion;
     private Double precio;
     private String nombreMarca;
+    //nombre de la variacion
+    private String nombre;
     private LocalDate fechaCreacion;
     private String nombreColor;
     private String nombreMaterial;
     private String nombrePublico;
     //imagen
-
-    // getters y setters
     public Integer getStockMinimo() {
         return stockMinimo;
     }
@@ -114,6 +114,12 @@ public class StockDTO {
     public void setNombreMarca(String nombreMarca) {
         this.nombreMarca = nombreMarca;
     }
+    public String getNombre() {
+        return nombre;
+    }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
     public LocalDate getFechaCreacion() {
         return fechaCreacion;
     }
@@ -139,4 +145,9 @@ public class StockDTO {
         this.nombrePublico = nombrePublico;
     }
 
+    // getters y setters
+
+
+
+    
 }

@@ -92,6 +92,8 @@ private ProductoRepository productoRepository;
                 stockDTO.setStockActual(stock.getStockActual());
                 stockDTO.setPrecio(stock.getProducto().getPrecio());
                 stockDTO.setNombreMarca(stock.getProducto().getMarca().getNombreMarca());
+                stockDTO.setNombre(stock.getVariacion().getNombre());
+                stockDTO.setNombreTipoProducto(stock.getProducto().getCategoria().getTipoProducto().getNombreTipoProducto());
                 stockDTO.setFechaCreacion(stock.getProducto().getFechaCreacion());
                 stockDTO.setNombreColor(stock.getColor().getNombreColor());
                 stockDTO.setNombreMaterial(stock.getProducto().getMaterial().getNombreMaterial());

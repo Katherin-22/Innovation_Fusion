@@ -6,19 +6,15 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 import "./styles/home/paginaInicio.css"
 
-import Home from "./pages/home/home";
-import Catalog from "./pages/category/catalogo";
-
 import { Routes, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from './Routes/AppRoutes';
 
 function App() {
   return (
-  <Routes>
-    <Route>
-      <Route path="/" element={<Home />} />
-      <Route path="/Catalog" element={<Catalog />} />
-    </Route>
-  </Routes>
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
   );
 }
 
