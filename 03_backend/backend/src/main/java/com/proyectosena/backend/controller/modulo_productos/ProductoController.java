@@ -1,9 +1,16 @@
 package com.proyectosena.backend.controller.modulo_productos;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.proyectosena.backend.exception.modulo_productos.ResourceNotFoundException;
 import com.proyectosena.backend.model.modulo_productos.Categoria;
@@ -30,6 +38,9 @@ import com.proyectosena.backend.repository.modulo_promociones.PromocionRepositor
 
 @RestController
 public class ProductoController {
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @Autowired
     private ProductoRepository productoRepository;
@@ -50,15 +61,32 @@ public class ProductoController {
         @RequestParam("codigoReferencia") String codigoReferencia,
         @RequestParam("descripcion") String descripcion,
         @RequestParam("precio") double precio,
-        //@RequestParam("urlImagen") MultipartFile urlImagen,
+        @RequestParam("urlImagen") MultipartFile urlImagen,
         @RequestParam("estadoProducto") Producto.EstadoProducto estadoProducto,
         @RequestParam("idCategoria") Integer idCategoria,
         @RequestParam("idMarca") Integer idMarca,
         @RequestParam("idMaterial") Integer idMaterial,
         @RequestParam("idPublico") Integer idPublico,
         @RequestParam(value = "idPromocion", required = false) Integer idPromocion
-    ){
-        try {
+    ) throws IOException {
+    try{
+        if (urlImagen.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        // Crear carpeta si no existe
+        File folder = new File(uploadPath);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
+        // Generar nombre único
+        String fileName = UUID.randomUUID() + "_" + urlImagen.getOriginalFilename();
+        Path path = Paths.get(uploadPath, fileName);
+        Files.write(path, urlImagen.getBytes());
+
+        // URL pública para acceder al archivo
+        String url = "/uploads/" + fileName;
 
         // Crear y llenar entidad
         Producto producto = new Producto();
@@ -66,7 +94,7 @@ public class ProductoController {
         producto.setCodigoReferencia(codigoReferencia);
         producto.setDescripcion(descripcion);
         producto.setPrecio(precio);
-        //producto.setUrlImagen("/uploads/" + urlImagen.getOriginalFilename());
+        producto.setUrlImagen(url);
         producto.setFechaCreacion(LocalDate.now());
         producto.setFechaModificacion(LocalDate.now());
         producto.setEstadoProducto(estadoProducto);
@@ -102,8 +130,9 @@ public class ProductoController {
     } catch (IllegalArgumentException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     } catch (Exception e) {
-            e.printStackTrace(); // esto muestra el error exacto en consola
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar el producto");
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error al guardar el producto");
     }
 }
 
@@ -113,7 +142,7 @@ public class ProductoController {
     }
 
 
-    @GetMapping("/producto/{idProducto}")
+     @GetMapping("/producto/{idProducto}")
     Producto getOneProducto(@PathVariable Integer idProducto) {
         return productoRepository.findById(idProducto)
                 .orElseThrow(() -> new ResourceNotFoundException("Producto", idProducto));
@@ -126,15 +155,32 @@ public class ProductoController {
         @RequestParam("codigoReferencia") String codigoReferencia,
         @RequestParam("descripcion") String descripcion,
         @RequestParam("precio") double precio,
-        //@RequestParam("urlImagen") MultipartFile urlImagen,
+        @RequestParam("urlImagen") MultipartFile urlImagen,
         @RequestParam("estadoProducto") Producto.EstadoProducto estadoProducto,
         @RequestParam("idCategoria") Integer idCategoria,
         @RequestParam("idMarca") Integer idMarca,
         @RequestParam("idMaterial") Integer idMaterial, 
         @RequestParam("idPublico") Integer idPublico,
         @RequestParam(value = "idPromocion", required = false) Integer idPromocion
-    ){
-        try {
+    ) throws IOException {
+    try{
+        if (urlImagen.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        // Crear carpeta si no existe
+        File folder = new File(uploadPath);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
+        // Generar nombre único
+        String fileName = UUID.randomUUID() + "_" + urlImagen.getOriginalFilename();
+        Path path = Paths.get(uploadPath, fileName);
+        Files.write(path, urlImagen.getBytes());
+
+        // URL pública para acceder al archivo
+        String url = "/uploads/" + fileName;
 
 // Buscar producto existente
         Producto producto = productoRepository.findById(idProducto)
@@ -144,7 +190,7 @@ public class ProductoController {
         producto.setCodigoReferencia(codigoReferencia);
         producto.setDescripcion(descripcion);
         producto.setPrecio(precio);
-        //producto.setUrlImagen("/uploads/" + urlImagen.getOriginalFilename());
+        producto.setUrlImagen(url);
         producto.setFechaModificacion(LocalDate.now());
         producto.setEstadoProducto(estadoProducto);
 
@@ -181,7 +227,8 @@ public class ProductoController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     } catch (Exception e) {
         e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar el producto");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error al guardar el producto");
     }
 }
 
@@ -192,5 +239,5 @@ public class ProductoController {
         }
         productoRepository.deleteById(idProducto);
         return "El Producto con id " + idProducto + " ha sido eliminado correctamente";
-    }
+    }    
 }

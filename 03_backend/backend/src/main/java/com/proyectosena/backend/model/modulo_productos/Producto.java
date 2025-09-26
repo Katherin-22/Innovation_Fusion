@@ -37,9 +37,6 @@ public class Producto {
     @Column(name = "precio", nullable = false)
     private Double precio;
 
-  //@Column(name = "urlImagen", nullable = false)
-  //private String urlImagen;
-
     @Column(name = "fechaCreacion", nullable = false)
     private LocalDate fechaCreacion;
 
@@ -80,6 +77,12 @@ public class Producto {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private TipoPublico tipoPublico;
 
+    // Relación muchos a uno con Categoria
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idUrlImagen", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private UrlImagen urlImagen;
+
     // Relación muchos a uno con Material
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idPromocion", nullable = true)
@@ -99,7 +102,7 @@ public class Producto {
         this.codigoReferencia = codigoReferencia;
         this.descripcion = descripcion;
         this.precio = precio;
-        //this.urlImagen = urlImagen;
+        this.urlImagen = urlImagen;
         this.fechaCreacion = fechaCreacion;
         this.fechaModificacion = fechaModificacion;
         this.estadoProducto = estadoProducto;
@@ -150,13 +153,13 @@ public class Producto {
         this.precio = precio;
     }
 
-    //public String getUrlImagen() {
-    //    return urlImagen;
-    //}
+    public String getUrlImagen() {
+        return urlImagen;
+    }
 
-    //public void setUrlImagen(String urlImagen) {
-    //    this.urlImagen = urlImagen;
-    //}
+    public void setUrlImagen(String urlImagen) {
+        this.urlImagen = urlImagen;
+    }
 
     public LocalDate getFechaCreacion() {
         return fechaCreacion;

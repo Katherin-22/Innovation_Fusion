@@ -62,6 +62,14 @@ CREATE TABLE TipoPublico (
   PRIMARY KEY (idPublico)
 ) ;
 
+-- Tabla imagen
+CREATE TABLE UrlImagen(
+	idUrlImagen INT AUTO_INCREMENT NOT NULL,
+    urlImagen VARCHAR(255) NOT NULL,
+    
+    PRIMARY KEY (idUrlImagen)
+);
+
 -- Tabla producto
 CREATE TABLE Producto (
   idProducto INT AUTO_INCREMENT NOT NULL,
@@ -69,7 +77,6 @@ CREATE TABLE Producto (
   codigoReferencia VARCHAR(20) NOT NULL,
   descripcion VARCHAR(200) NOT NULL,
   precio DOUBLE NOT NULL, 
-  -- urlImagen VARCHAR(200) NOT NULL,
   fechaCreacion DATE NOT NULL,
   fechaModificacion DATE NOT NULL,
   estadoProducto ENUM('Activo', 'Inactivo', 'Descontinuado') NOT NULL,
@@ -77,15 +84,19 @@ CREATE TABLE Producto (
   idMarca INT NOT NULL,
   idMaterial INT NOT NULL,
   idPublico INT NOT NULL,
+  idUrlImagen INT NOT NULL,
   idPromocion INT NULL,
+  
   
   PRIMARY KEY (idProducto),
   FOREIGN KEY (idCategoria) REFERENCES Categoria(idCategoria),
   FOREIGN KEY (idMarca) REFERENCES Marca(idMarca),
   FOREIGN KEY (idMaterial) REFERENCES Material(idMaterial),
   FOREIGN KEY (idPublico) REFERENCES TipoPublico(idPublico),
+  FOREIGN KEY (idUrlImagen) REFERENCES UrlImagen(idUrlImagen),
   FOREIGN KEY (idPromocion) REFERENCES Promocion(idPromocion)
 ) ;
+
 
 -- Tabla proveedor
 CREATE TABLE Color (
@@ -149,12 +160,15 @@ INSERT INTO TipoPublico (nombrePublico) VALUES ("Hombre");
 INSERT INTO TipoPublico (nombrePublico) VALUES ("Mujer");
 INSERT INTO TipoPublico (nombrePublico) VALUES ("Unisex");
 
--- Productos
-INSERT INTO Producto (nombreProducto, codigoReferencia, descripcion, precio,  fechaCreacion, fechaModificacion,estadoProducto, idCategoria, idMarca, idMaterial, idPublico, idPromocion) 
-VALUES ("Nike Running Air", "NR001", "Zapatillas deportivas de running", 299000, "2025-09-01", "2025-09-02","Activo", 1, 1, 2, 1, 1);
+-- TipoPublico
+INSERT INTO UrlImagen (urlImagen) VALUES ("eje de link imagen");
 
-INSERT INTO Producto (nombreProducto, codigoReferencia, descripcion, precio, fechaCreacion, fechaModificacion,estadoProducto, idCategoria, idMarca, idMaterial, idPublico, idPromocion) 
-VALUES ("Bandolera Casual", "BD001", "Bolso bandolera casual", 159000, "2025-09-01", "2025-09-02","Activo", 2, 2, 1, 2, NULL);
+-- Productos
+INSERT INTO Producto (nombreProducto, codigoReferencia, descripcion, precio,  fechaCreacion, fechaModificacion,estadoProducto, idCategoria, idMarca, idMaterial, idPublico, idPromocion, idUrlImagen) 
+VALUES ("Nike Running Air", "NR001", "Zapatillas deportivas de running", 299000, "2025-09-01", "2025-09-02","Activo", 1, 1, 2, 1, 1,1);
+
+INSERT INTO Producto (nombreProducto, codigoReferencia, descripcion, precio, fechaCreacion, fechaModificacion,estadoProducto, idCategoria, idMarca, idMaterial, idPublico, idPromocion,idUrlImagen) 
+VALUES ("Bandolera Casual", "BD001", "Bolso bandolera casual", 159000, "2025-09-01", "2025-09-02","Activo", 2, 2, 1, 2, NULL,1);
 
 -- Colores
 INSERT INTO Color (nombreColor) VALUES ("Rojo");
