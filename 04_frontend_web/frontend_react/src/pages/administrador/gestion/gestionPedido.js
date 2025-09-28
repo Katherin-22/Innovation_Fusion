@@ -2,6 +2,8 @@ import MenuAdmin from '../../../layouts/Administrador/Menu/menuAdmin';
 import '../../../styles/Administrador/gestion_producto.css';
 import '../../../styles/Administrador/inventario.css';
 
+import { Link } from "react-router-dom";
+
 const GestionPedido = () => {
     return (
 <div className="all">
@@ -11,15 +13,15 @@ const GestionPedido = () => {
 
 
         <div className="row border-bottom pb-2 mb-4">
-            <h1 className="text-center">Gestión Pedidos</h1>
+            <h2 className="text-center mb-4">Gestión Pedidos</h2>
         </div>
 
         <div className="row row-cols-md-2 g-4 mb-4">
             <div className="col">
-                <button type="button" className="btn btn-outline-secondary w-100">Gestión Devoluciones</button>
+                <Link to="/Adfministrador/Gestion_Devoluciones" className="btn btn-outline-secondary w-100">Gestión Devoluciones</Link>
             </div>
             <div className="col">
-                <button type="button" className="btn btn-outline-secondary w-100">Gestión Cambios</button>
+                <Link to="/Adfministrador/Gestion_Cambios" className="btn btn-outline-secondary w-100">Gestión Cambios</Link>
             </div>
         </div>
 

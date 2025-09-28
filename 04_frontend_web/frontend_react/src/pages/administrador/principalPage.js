@@ -5,15 +5,17 @@ import "../../styles/Administrador/inventario.css";
 
 const PrincipalPage = () => {
   return (
-    <div className="admin-layout">
-      {/* Barra lateral */}
+    <div className="all">
       <MenuAdmin />
+      <div className="main-content">
+        <div className="container">
+        <div className="row border-bottom pb-2 mb-4">
+            <h2 className="text-center mb-4">Inventario</h2>
 
-      {/* Contenido principal */}
-      <main className="admin-content">
-        <h1>Panel de Administración</h1>
-        <p>Bienvenido al módulo administrador. Selecciona una opción del menú.</p>
-      </main>
+
+        </div>
+        </div>
+      </div>
     </div>
   );
 };

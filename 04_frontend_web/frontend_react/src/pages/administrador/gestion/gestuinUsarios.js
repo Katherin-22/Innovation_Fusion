@@ -1,6 +1,6 @@
-import MenuAdmin from "../../layouts/Administrador/Menu/menuAdmin";
-import "../../styles/Administrador/gestion_producto.css";
-import "../../styles/Administrador/inventario.css";
+import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
+import "../../../styles/Administrador/gestion_producto.css";
+import "../../../styles/Administrador/inventario.css";
 
 const GestionUsiuarios = () => {
     return (
@@ -9,7 +9,10 @@ const GestionUsiuarios = () => {
       <div className="main-content">
         <div className="container">
         <div className="row border-bottom pb-2 mb-4">
-            <h1 className="text-center">Gestión Usuarios</h1>
+            <h2 className="text-center mb-4">Gestión Usuarios</h2>
+
+
+
         </div>
         </div>
       </div>
