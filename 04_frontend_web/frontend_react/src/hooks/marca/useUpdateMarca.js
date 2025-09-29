@@ -1,22 +1,22 @@
 import { useState } from "react";
-import { createStock } from "../../services/administrador/StockService";
+import { updateMarca } from "../../services/administrador/MarcaService";
 
-export const useCreateStock = () => {
-  const [loading, setLoad] = useState(false);
+export const useUpdateMarca = () => {
+  const [load, setLoad] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleCreateStock = async (data) => {
+  const handleUpdateMarca = async (id, data) => {
     setLoad(true); // paso 1: activar "cargando"
     try {
-      await createStock(data); // paso 2: enviar datos al backend
+      await updateMarca(id, data); // paso 2: enviar datos al backend
       setSuccess(true);        // paso 3: si todo ok → marcar éxito
     } catch (error) {
-      console.error("Error al crear stock:", error);
+      console.error("Error al actualizar marca:", error);
       setSuccess(false);      // si falla → marcar como no exitoso
     } finally {
       setLoad(false);         // paso 4: quitar "cargando"
     }
   };
 
-  return { handleCreateStock, loading, success };
+  return { handleUpdateMarca, load, success };
 };

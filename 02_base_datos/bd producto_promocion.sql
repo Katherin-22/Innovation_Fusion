@@ -62,14 +62,6 @@ CREATE TABLE TipoPublico (
   PRIMARY KEY (idPublico)
 ) ;
 
--- Tabla imagen
-CREATE TABLE UrlImagen(
-	idUrlImagen INT AUTO_INCREMENT NOT NULL,
-    urlImagen VARCHAR(255) NOT NULL,
-    
-    PRIMARY KEY (idUrlImagen)
-);
-
 -- Tabla producto
 CREATE TABLE Producto (
   idProducto INT AUTO_INCREMENT NOT NULL,
@@ -84,19 +76,16 @@ CREATE TABLE Producto (
   idMarca INT NOT NULL,
   idMaterial INT NOT NULL,
   idPublico INT NOT NULL,
-  idUrlImagen INT NOT NULL,
   idPromocion INT NULL,
   
-  
+
   PRIMARY KEY (idProducto),
   FOREIGN KEY (idCategoria) REFERENCES Categoria(idCategoria),
   FOREIGN KEY (idMarca) REFERENCES Marca(idMarca),
   FOREIGN KEY (idMaterial) REFERENCES Material(idMaterial),
   FOREIGN KEY (idPublico) REFERENCES TipoPublico(idPublico),
-  FOREIGN KEY (idUrlImagen) REFERENCES UrlImagen(idUrlImagen),
   FOREIGN KEY (idPromocion) REFERENCES Promocion(idPromocion)
 ) ;
-
 
 -- Tabla proveedor
 CREATE TABLE Color (
@@ -120,7 +109,6 @@ CREATE TABLE Stock (
   idStock INT AUTO_INCREMENT NOT NULL,
   stockMinimo INT NOT NULL,
   stockActual INT NOT NULL,
-  fechaModificacion DATE NOT NULL,
   idColor INT NOT NULL,
   idVariacion INT NOT NULL,
   idProducto INT NOT NULL,
@@ -131,6 +119,15 @@ CREATE TABLE Stock (
   FOREIGN KEY (idProducto) REFERENCES Producto(idProducto)
 ) ;
 
+-- Tabla imagen
+CREATE TABLE Imagen(
+	idImagen INT AUTO_INCREMENT NOT NULL,
+    urlImagen VARCHAR(255) NOT NULL,
+    idStock INT NOT NULL,
+    
+    PRIMARY KEY (idImagen),
+    FOREIGN KEY (idStock) REFERENCES Stock(idStock)
+);
 -- Insert
 -- Promociones
 INSERT INTO Promocion (nombrePromocion, codigo_Promocion, descuento, descripcion, fecha_inicio, fecha_fin, estadoPromocion) 
@@ -160,15 +157,12 @@ INSERT INTO TipoPublico (nombrePublico) VALUES ("Hombre");
 INSERT INTO TipoPublico (nombrePublico) VALUES ("Mujer");
 INSERT INTO TipoPublico (nombrePublico) VALUES ("Unisex");
 
--- TipoPublico
-INSERT INTO UrlImagen (urlImagen) VALUES ("eje de link imagen");
-
 -- Productos
-INSERT INTO Producto (nombreProducto, codigoReferencia, descripcion, precio,  fechaCreacion, fechaModificacion,estadoProducto, idCategoria, idMarca, idMaterial, idPublico, idPromocion, idUrlImagen) 
-VALUES ("Nike Running Air", "NR001", "Zapatillas deportivas de running", 299000, "2025-09-01", "2025-09-02","Activo", 1, 1, 2, 1, 1,1);
+INSERT INTO Producto (nombreProducto, codigoReferencia, descripcion, precio,  fechaCreacion, fechaModificacion,estadoProducto, idCategoria, idMarca, idMaterial, idPublico, idPromocion) 
+VALUES ("Nike Running Air", "NR001", "Zapatillas deportivas de running", 299000, "2025-09-01", "2025-09-02","Activo", 1, 1, 2, 1, 1);
 
-INSERT INTO Producto (nombreProducto, codigoReferencia, descripcion, precio, fechaCreacion, fechaModificacion,estadoProducto, idCategoria, idMarca, idMaterial, idPublico, idPromocion,idUrlImagen) 
-VALUES ("Bandolera Casual", "BD001", "Bolso bandolera casual", 159000, "2025-09-01", "2025-09-02","Activo", 2, 2, 1, 2, NULL,1);
+INSERT INTO Producto (nombreProducto, codigoReferencia, descripcion, precio, fechaCreacion, fechaModificacion,estadoProducto, idCategoria, idMarca, idMaterial, idPublico, idPromocion) 
+VALUES ("Bandolera Casual", "BD001", "Bolso bandolera casual", 159000, "2025-09-01", "2025-09-02","Activo", 2, 2, 1, 2, NULL);
 
 -- Colores
 INSERT INTO Color (nombreColor) VALUES ("Rojo");
@@ -181,12 +175,15 @@ INSERT INTO Variacion (nombre, tipo) VALUES ("Pequeño", "Tamano_Bolso");
 INSERT INTO Variacion (nombre, tipo) VALUES ("Grande", "Tamano_Bolso");
 
 -- Stock
-INSERT INTO Stock (stockMinimo, stockActual, fechaModificacion, idColor, idVariacion, idProducto) 
-VALUES (5, 20, "2025-09-09", 1, 1, 1);
+INSERT INTO Stock (stockMinimo, stockActual, idColor, idVariacion, idProducto) 
+VALUES (5, 20, 1, 1, 1);
 
-INSERT INTO Stock (stockMinimo, stockActual, fechaModificacion, idColor, idVariacion, idProducto) 
-VALUES (5, 15, "2025-09-09", 2, 2, 1);
+INSERT INTO Stock (stockMinimo, stockActual, idColor, idVariacion, idProducto) 
+VALUES (5, 15, 2, 2, 1);
 
-INSERT INTO Stock (stockMinimo, stockActual, fechaModificacion, idColor, idVariacion, idProducto) 
-VALUES (2, 10, "2025-09-09", 2, 3, 2);
+INSERT INTO Stock (stockMinimo, stockActual, idColor, idVariacion, idProducto) 
+VALUES (2, 10, 2, 3, 2);
+
+-- TipoPublico
+INSERT INTO Imagen (urlImagen, idStock) VALUES ("eje de link imagen",1);
 

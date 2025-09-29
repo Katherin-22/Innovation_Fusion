@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getStock } from "../../services/admi/StockService";
+import { getStock } from "../../services/administrador/StockService";
 
 export const useGetStock = () => {
   const [stock, setStock] = useState([]);

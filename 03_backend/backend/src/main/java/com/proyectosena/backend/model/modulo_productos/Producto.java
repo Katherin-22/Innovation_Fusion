@@ -77,12 +77,6 @@ public class Producto {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private TipoPublico tipoPublico;
 
-    // Relación muchos a uno con Categoria
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idUrlImagen", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private UrlImagen urlImagen;
-
     // Relación muchos a uno con Material
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idPromocion", nullable = true)
@@ -93,16 +87,14 @@ public class Producto {
     public Producto() {}
 
     // Constructor con parámetros
-    public Producto(String nombreProducto, String codigoReferencia, String descripcion, Double precio,
-                    //String urlImagen, 
-                    LocalDate fechaCreacion, LocalDate fechaModificacion,
+    public Producto(String nombreProducto, String codigoReferencia, String descripcion, 
+                    Double precio, LocalDate fechaCreacion, LocalDate fechaModificacion,
                     EstadoProducto estadoProducto, Categoria categoria, Marca marca,
                     Material material, TipoPublico tipoPublico, Promocion promocion) {
         this.nombreProducto = nombreProducto;
         this.codigoReferencia = codigoReferencia;
         this.descripcion = descripcion;
         this.precio = precio;
-        this.urlImagen = urlImagen;
         this.fechaCreacion = fechaCreacion;
         this.fechaModificacion = fechaModificacion;
         this.estadoProducto = estadoProducto;
@@ -151,14 +143,6 @@ public class Producto {
 
     public void setPrecio(Double precio) {
         this.precio = precio;
-    }
-
-    public String getUrlImagen() {
-        return urlImagen;
-    }
-
-    public void setUrlImagen(String urlImagen) {
-        this.urlImagen = urlImagen;
     }
 
     public LocalDate getFechaCreacion() {

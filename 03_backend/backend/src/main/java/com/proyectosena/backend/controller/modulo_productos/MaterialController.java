@@ -21,24 +21,24 @@ public class MaterialController {
     // tipoProductoRepository este se pone en los return
     private MaterialRepository materialRepository;  
 
-    @PostMapping("/Material")
+    @PostMapping("/material")
     Material newMaterial(@RequestBody Material newMaterial) {
         return materialRepository.save(newMaterial);
     }
 
-    @GetMapping("/Materiales")
+    @GetMapping("/materiales")
     List<Material> getAllMaterial(){
         return materialRepository.findAll();
     }
 
-    @GetMapping("/Material/{idMaterial}")
+    @GetMapping("/material/{idMaterial}")
     Material getOneMaterial(@PathVariable Integer idMaterial) {
         return materialRepository.findById(idMaterial)
                 .orElseThrow(() -> new ResourceNotFoundException("Material", idMaterial));
     }
 
 
-    @PutMapping("/Material/{idMaterial}")
+    @PutMapping("/material/{idMaterial}")
     Material updateMaterial (@RequestBody Material updateMaterial, @PathVariable Integer idMaterial){
         return materialRepository.findById(idMaterial)
             .map(material ->{
@@ -48,7 +48,7 @@ public class MaterialController {
             }).orElseThrow(()->new ResourceNotFoundException("Material", idMaterial));
     }
 
-    @DeleteMapping("/Material/{idMaterial}")
+    @DeleteMapping("/material/{idMaterial}")
     String deleteMaterial (@PathVariable Integer idMaterial){
         if(!materialRepository.existsById(idMaterial)){
             throw new ResourceNotFoundException("Material",idMaterial);

@@ -10,7 +10,6 @@ public class ProductoDTO {
     private String codigoReferencia;
     private String descripcion;
     private Double precio;
-    private String urlImagen;
     private LocalDate fechaModificacion;
     private EstadoProducto estadoProducto;
     private Integer idCategoria;
@@ -43,12 +42,6 @@ public class ProductoDTO {
     }
     public void setPrecio(Double precio) {
         this.precio = precio;
-    }
-    public String getUrlImagen() {
-        return urlImagen;
-    }
-    public void setUrlImagen(String urlImagen) {
-        this.urlImagen = urlImagen;
     }
     public LocalDate getFechaModificacion() {
         return fechaModificacion;

@@ -1,22 +1,22 @@
 import { useState } from "react";
-import { createStock } from "../../services/administrador/StockService";
+import { deleteCategoria } from "../../services/administrador/CategoriaService";
 
-export const useCreateStock = () => {
+export const useDeleteCategoria = () => {
   const [loading, setLoad] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleCreateStock = async (data) => {
+  const handleDeleteCategoria = async (id) => {
     setLoad(true); // paso 1: activar "cargando"
     try {
-      await createStock(data); // paso 2: enviar datos al backend
+      await deleteCategoria(id); // paso 2: enviar datos al backend
       setSuccess(true);        // paso 3: si todo ok → marcar éxito
     } catch (error) {
-      console.error("Error al crear stock:", error);
+      console.error("Error al eliminar categoria:", error);
       setSuccess(false);      // si falla → marcar como no exitoso
     } finally {
       setLoad(false);         // paso 4: quitar "cargando"
     }
   };
 
-  return { handleCreateStock, loading, success };
+  return { handleDeleteCategoria, loading, success };
 };

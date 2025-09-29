@@ -29,9 +29,6 @@ public class Stock {
   @Column(name="stockActual", nullable=false)
   private Integer stockActual;
 
-  @Column(name="fechaModificacion", nullable=false)
-  private LocalDate fechaModificacion;
-
   // Relación muchos a uno con TipoProducto
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "idColor", nullable = false)
@@ -56,7 +53,6 @@ public class Stock {
 Color color,  Variacion variacion,  Producto producto) {
     this.stockMinimo = stockMinimo;
     this.stockActual = stockActual;
-    this.fechaModificacion = fechaModificacion;
     this.color = color;
     this.variacion = variacion;
     this.producto = producto;
@@ -85,14 +81,6 @@ Color color,  Variacion variacion,  Producto producto) {
 
   public void setStockActual(Integer stockActual) {
     this.stockActual = stockActual;
-  }
-
-  public LocalDate getFechaModificacion() {
-    return fechaModificacion;
-  }
-
-  public void setFechaModificacion(LocalDate fechaModificacion) {
-    this.fechaModificacion = fechaModificacion;
   }
 
   public Color getColor() {

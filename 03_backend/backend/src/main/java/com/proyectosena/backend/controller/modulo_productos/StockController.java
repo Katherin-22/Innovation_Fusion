@@ -47,14 +47,12 @@ private ProductoRepository productoRepository;
     Stock newStock(@RequestBody StockDTO stockDTO) {
         Color color = colorRepository.findById(stockDTO.getIdColor())
                 .orElseThrow(() -> new ResourceNotFoundException("Color", stockDTO.getIdColor()));
-
-        
+    
         // Validar variación según el tipo de producto
         Variacion variacion = postStockService.validarVariacionProducto(
             stockDTO.getIdProducto(),
             stockDTO.getIdVariacion()
         );
-
 
         Producto producto = productoRepository.findById(stockDTO.getIdProducto())
                 .orElseThrow(() -> new ResourceNotFoundException("Producto", stockDTO.getIdProducto()));
@@ -62,7 +60,6 @@ private ProductoRepository productoRepository;
         Stock stock = new Stock();
         stock.setStockMinimo(stockDTO.getStockMinimo());
         stock.setStockActual(stockDTO.getStockActual());
-        stock.setFechaModificacion(LocalDate.now());
         stock.setColor(color);
         stock.setVariacion(variacion);
         stock.setProducto(producto);
@@ -70,41 +67,37 @@ private ProductoRepository productoRepository;
         return stockRepository.save(stock);
     }
 
-
     @GetMapping("/stock/variaciones/{idProducto}")
     List<Variacion> obtenerVariacionesPorProducto(@PathVariable Integer idProducto) {
         return getStockService.listarVariacionesPorProducto(idProducto);
     }
 
-
     @GetMapping("/stocks")
     List<StockDTO> getAllStock() {
     // Traes todos los stocks de la base de datos
     List<Stock> stocks = stockRepository.findAll();
-
     // Los conviertes a DTO con stream
     return stocks.stream()
-            .map(stock -> {
-                StockDTO stockDTO = new StockDTO();
-                stockDTO.setCodigoReferencia(stock.getProducto().getCodigoReferencia());
-                stockDTO.setNombreProducto(stock.getProducto().getNombreProducto());
-                stockDTO.setNombreTipoProducto(stock.getProducto().getCategoria().getTipoProducto().getNombreTipoProducto());
-                stockDTO.setNombreCategoria(stock.getProducto().getCategoria().getNombreCategoria());
-                stockDTO.setDescripcion(stock.getProducto().getDescripcion());
-                stockDTO.setStockActual(stock.getStockActual());
-                stockDTO.setPrecio(stock.getProducto().getPrecio());
-                stockDTO.setNombreMarca(stock.getProducto().getMarca().getNombreMarca());
-                stockDTO.setNombre(stock.getVariacion().getNombre());
-                stockDTO.setNombreTipoProducto(stock.getProducto().getCategoria().getTipoProducto().getNombreTipoProducto());
-                stockDTO.setFechaCreacion(stock.getProducto().getFechaCreacion());
-                stockDTO.setNombreColor(stock.getColor().getNombreColor());
-                stockDTO.setNombreMaterial(stock.getProducto().getMaterial().getNombreMaterial());
-                stockDTO.setNombrePublico(stock.getProducto().getTipoPublico().getNombrePublico());
-            
-                return stockDTO;
-            })
-            .toList();
-}
+        .map(stock -> {
+            StockDTO stockDTO = new StockDTO();
+            stockDTO.setCodigoReferencia(stock.getProducto().getCodigoReferencia());
+            stockDTO.setNombreProducto(stock.getProducto().getNombreProducto());
+            stockDTO.setNombreTipoProducto(stock.getProducto().getCategoria().getTipoProducto().getNombreTipoProducto());
+            stockDTO.setNombreCategoria(stock.getProducto().getCategoria().getNombreCategoria());
+            stockDTO.setDescripcion(stock.getProducto().getDescripcion());
+            stockDTO.setStockActual(stock.getStockActual());
+            stockDTO.setPrecio(stock.getProducto().getPrecio());
+            stockDTO.setNombreMarca(stock.getProducto().getMarca().getNombreMarca());
+            stockDTO.setNombre(stock.getVariacion().getNombre());
+            stockDTO.setNombreColor(stock.getColor().getNombreColor());
+            stockDTO.setNombreMaterial(stock.getProducto().getMaterial().getNombreMaterial());
+            stockDTO.setNombrePublico(stock.getProducto().getTipoPublico().getNombrePublico());
+            stockDTO.setEstadoProducto(stock.getProducto().getEstadoProducto());
+        
+            return stockDTO;
+        })
+        .toList();
+    }
 
     @GetMapping("/stock/{idStock}")
     Stock getOneStock(@PathVariable Integer idStock) {
@@ -128,7 +121,6 @@ private ProductoRepository productoRepository;
 
         stock.setStockMinimo(updateStockDTO.getStockMinimo());
         stock.setStockActual(updateStockDTO.getStockActual());
-        stock.setFechaModificacion(LocalDate.now());
         stock.setColor(color);
         stock.setVariacion(variacion);
         stock.setProducto(producto);

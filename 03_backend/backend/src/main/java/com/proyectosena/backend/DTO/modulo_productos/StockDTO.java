@@ -2,6 +2,8 @@ package com.proyectosena.backend.DTO.modulo_productos;
 
 import java.time.LocalDate;
 
+import com.proyectosena.backend.model.modulo_productos.Producto.EstadoProducto;
+
 public class StockDTO {
     private Integer stockMinimo;
     private Integer stockActual;
@@ -29,7 +31,9 @@ public class StockDTO {
     private String nombreColor;
     private String nombreMaterial;
     private String nombrePublico;
-    //imagen
+    private EstadoProducto estadoProducto;
+
+    // Getters y Setters
     public Integer getStockMinimo() {
         return stockMinimo;
     }
@@ -144,10 +148,13 @@ public class StockDTO {
     public void setNombrePublico(String nombrePublico) {
         this.nombrePublico = nombrePublico;
     }
-
-    // getters y setters
-
-
+    public EstadoProducto getEstadoProducto() {
+        return estadoProducto;
+    }
+    public void setEstadoProducto(EstadoProducto estadoProducto) {
+        this.estadoProducto = estadoProducto;
+    }
+    
 
     
 }
