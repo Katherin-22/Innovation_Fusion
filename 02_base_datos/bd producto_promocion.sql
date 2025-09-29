@@ -186,4 +186,3 @@ VALUES (2, 10, 2, 3, 2);
 
 -- TipoPublico
 INSERT INTO Imagen (urlImagen, idStock) VALUES ("eje de link imagen",1);
-

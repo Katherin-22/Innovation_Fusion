@@ -4,6 +4,7 @@ import MenuAdmin from '../../layouts/administrador/MenuAdmi';
 
 import "../../styles/administrador/inventario.css";
 import "../../styles/administrador/gestion_producto.css";
+import { Link } from 'react-router-dom';
 
 export default function Stock() {
   // Usamos el hook
@@ -23,7 +24,7 @@ export default function Stock() {
                 <h1 className="mb-0">STOCK</h1>
             </div>
             <div className="col-9 d-flex align-items-end px-1 gap-2 w-50">
-                <a href="./REGISTRO_CATEGORIA.HTML" className="btn custom-btn btn-light">Registrar Categoria</a>
+                <Link to="/categoria" className="btn custom-btn btn-light">Registrar Categoria</Link>
                 <a href="./REGISTRO_PRODUCTO.HTML" className="btn custom-btn btn-light">Registrar producto</a>
                 <a href="./REGISTRO_DESCUENTO.HTML" className="btn custom-btn btn-light">Registrar Descuento</a>
             </div>

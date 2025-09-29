@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import com.proyectosena.backend.exception.modulo_productos.ResourceNotFoundExcep
 import com.proyectosena.backend.model.modulo_promociones.Promocion;
 import com.proyectosena.backend.repository.modulo_promociones.PromocionRepository;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class PromocionController {
     @Autowired

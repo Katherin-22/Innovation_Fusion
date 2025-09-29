@@ -29,6 +29,7 @@ export default function CreateProducto() {
         idPromocion: ""
     });
 
+    const estadoProductos = ['Activo', 'Inactivo', 'Descontinuado'];
     const { nombreProducto, codigoReferencia, descripcion, precio, estadoProducto } = producto;
 
     // Hooks personalizados para cargar selects
@@ -59,153 +60,154 @@ Y lo guarda en user con setUsers.*/}
 {/*después de guardar, te lleva a la página principal */}
         navigate("/Administrador/stock")
     }
-};
+
   return (
     
-<div class="main-content">
-    <div class="header">    
-        <div class="row custom-header">
-            <div class="col-12 d-flex align-items-center justify-content-between px-4 w-100">
-                <h1 class="mb-0">Registro producto</h1>
-                <a href="./INVENTARIO(PRINCIPAL).HTML" class="btn btn-light custom-btn-exit">
+<div className="main-content">
+    <div className="header">    
+        <div className="row custom-header">
+            <div className="col-12 d-flex align-items-center justify-content-between px-4 w-100">
+                <h1 className="mb-0">Registro producto</h1>
+                <a href="./INVENTARIO(PRINCIPAL).HTML" className="btn btn-light custom-btn-exit">
                     <img src="../img/caret-left.png" alt=""/>
                 </a>
             </div>
         </div>
     </div>  
 
-    <form class="container py-4" onSubmit={(e)=> onSubmit(e)}> 
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <form className="container py-4" onSubmit={(e)=> onSubmit(e)}> 
+        <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
-            <div class="col">
-                <label class="form-label">Categoria</label>
-                <select name="idCategoria" value={producto.idCategoria} onChange={(e)=>onInputChange(e)} class="form-select">
+            <div className="col">
+                <label className="form-label">Categoria</label>
+                <select name="idCategoria" value={producto.idCategoria} onChange={(e)=>onInputChange(e)} className="form-select">
+                <option value="">-- Selecciona una opción --</option>
                 {categorias.map((categoria) => (
                 <option key={categoria.idCategoria} value={categoria.idCategoria}>
-                    {categoria.nombre}
+                    {categoria.nombreCategoria}
                 </option>
                 ))}
                 </select>
             </div>
 
-            <div class="col">
-                <label class="form-label">Código de referencia</label>
+            <div className="col">
+                <label className="form-label">Código de referencia</label>
                 <input type="text" 
                 name="codigoReferencia" 
                 placeholder="Ingresa nombre del producto"
-                class="form-control" 
+                className="form-control" 
                 value={codigoReferencia} 
                 onChange={(e)=>onInputChange(e)}
                 />
             </div>
 
-            <div class="col">
-                <label class="form-label">Nombre del producto</label>
+            <div className="col">
+                <label className="form-label">Nombre del producto</label>
                 <input type="text" 
                 name="nombreProducto" 
                 placeholder="Ingresa nombre del producto"
-                class="form-control" 
+                className="form-control" 
                 value={nombreProducto} 
                 onChange={(e)=>onInputChange(e)}
                 />
             </div>
 
-            <div class="col">
-                <label class="form-label">Marca</label>
-                <select name="idMarca" value={producto.idMarca} onChange={(e)=>onInputChange(e)} class="form-select">
+            <div className="col">
+                <label className="form-label">Marca</label>
+                <select name="idMarca" value={producto.idMarca} onChange={(e)=>onInputChange(e)} className="form-select">
+                <option value="">-- Selecciona una opción --</option>
                 {marcas.map((marca) => (
                 <option key={marca.idMarca} value={marca.idMarca}>
-                    {marca.nombre}
+                    {marca.nombreMarca}
                 </option>
                 ))}
                 </select>
             </div>
 
-            <div class="col">
-                <label class="form-label">Descripción</label>
-                <textarea class="form-control" 
+            <div className="col">
+                <label className="form-label">Descripción</label>
+                <textarea 
                 name="descripcion"
                 placeholder="Ingresa una descripción del producto"
-                class="form-control" 
+                className="form-control" 
                 value={descripcion} 
                 onChange={(e)=>onInputChange(e)}
-                />
+                ></textarea>
             </div>
  
-            <div class="col">
-                <label class="form-label">Precio de venta</label>
-                <input type="text" 
+            <div className="col">
+                <label className="form-label">Precio</label>
+                <input type="number" 
                 name="precio" 
                 placeholder="Ingresa el precio del producto"
-                class="form-control" 
+                className="form-control" 
                 value={precio} 
                 onChange={(e)=>onInputChange(e)}
                 />
             </div>
 
-            <div class="col">
-                <label class="form-label">Material</label>
-                <select name="material" id="material" class="form-select">
-                    <option value="">Selecciona material</option>
-                    <option value="cuero">Cuero</option>
-                    <option value="sintetico">Cuero sintético</option>
-                    <option value="tela">Tela</option>
+            <div className="col">
+                <label className="form-label">Material</label>
+                <select name="idMaterial" value={producto.idMaterial} onChange={(e)=>onInputChange(e)} className="form-select">
+                <option value="">-- Selecciona una opción --</option>
+                {materiales.map((material) => (
+                <option key={material.idMaterial} value={material.idMaterial}>
+                    {material.nombreMaterial}
+                </option>
+                ))}
                 </select>
             </div>
 
-            <div class="col">
-                <label class="form-label">Género</label>
-                <select name="genero" id="gen" class="form-select">
-                    <option value="">Selecciona género</option>
-                    <option value="masculino">Masculino</option>
-                    <option value="femenino">Femenino</option>
-                    <option value="otro">Otro</option>
+
+            <div className="col">
+                <label className="form-label">Sexo Biologico</label>
+                <select name="idPublico" value={producto.idPublico} onChange={(e)=>onInputChange(e)} className="form-select">
+                <option value="">-- Selecciona una opción --</option>
+                {publicos.map((publico) => (
+                <option key={publico.idPublico} value={publico.idPublico}>
+                    {publico.nombrePublico}
+                </option>
+                ))}
                 </select>
             </div>
 
-            <div class="col">
-                <label class="form-label">Estado del Producto</label>
-                <select name="estado" id="estado" class="form-select">
-                    <option value="elegir">Elegir</option>
-                    <option value="Activo">Activo</option>
-                    <option value="Inactivo">Inactivo</option>
-                    <option value="Descontinuado">Descontinuado</option>
+            <div className="col">
+                <label className="form-label">Estado del Producto</label>
+                <select name="estadoProducto" value={estadoProducto} onChange={(e)=>onInputChange(e)} className="form-select">
+                <option value="">-- Selecciona una opción --</option>
+                {estadoProductos.map((estado) => (
+                <option key={estado} value={estado}>
+                    {estado}
+                </option>
+                ))}
                 </select>
             </div>
 
-            <div class="col">
-                <label class="form-label">Imagen del producto</label>
-                <input type="file" name="imagen" class="form-control">
-            </div>
-
-            <div class="col">
-                <label class="form-label">Fecha de ingreso</label>
-                <input type="date" name="fechaIngreso" class="form-control">
-            </div>
-
-            <div class="col">
-                <label class="form-label">Fecha de modificacion</label>
-                <input type="date" name="fechaIngreso" class="form-control">
-            </div>
-
-            <div class="col">
-                <label class="form-label">Promocion del producto</label>
-                <select name="estado" id="estado" class="form-select">
-                    <option value="elegir">Elegir</option>
-                    <option value="Activo">a</option>
-                    <option value="Inactivo">b</option>
-                    <option value="Descontinuado">c</option>
+            <div className="col">
+                <label className="form-label">Promocion del producto</label>
+                <select name="idPromocion" value={producto.idPromocion} onChange={(e)=>onInputChange(e)} className="form-select">
+                <option value="">-- Selecciona una opción --</option>
+                {promociones.map((promocion) => (
+                <option key={promocion.idPromocion} value={promocion.idPromocion}>
+                    {promocion.nombrePromocion}
+                </option>
+                ))}
                 </select>
             </div>
 
             </div>
 
-<div class="row row-cols-1">
-            <div class="col-12 text-center">
-                <button type="submit" class="btn mt-3 custom-btn">Guardar producto</button>
-                {loading ? "Guardando..." : "Guardar"}
-                <button type="submit" class="btn mt-3 custom-btn-1">Vaciar Campos</button>
-            </div>
+<div className="row row-cols-1">
+{/* esto es para enviar el formulario*/} 
+            <button type="submit" className="btn btn-outline-primary" disabled={loading}>
+            {loading ? "Guardando..." : "Submit"}
+            </button>
+
+
+            {/* esto es para cancelar el formulario*/} 
+            <Link className="btn btn-outline-danger mx-2" to="/Administrador/stock">
+                Cancel
+            </Link>
         </div>
     </form>
 </div>
