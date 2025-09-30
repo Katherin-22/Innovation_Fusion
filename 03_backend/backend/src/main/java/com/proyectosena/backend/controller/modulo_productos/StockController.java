@@ -45,24 +45,32 @@ private ProductoRepository productoRepository;
 
     @PostMapping("/stock")
     Stock newStock(@RequestBody StockDTO stockDTO) {
-        Color color = colorRepository.findById(stockDTO.getIdColor())
-                .orElseThrow(() -> new ResourceNotFoundException("Color", stockDTO.getIdColor()));
-    
-        // Validar variación según el tipo de producto
-        Variacion variacion = postStockService.validarVariacionProducto(
-            stockDTO.getIdProducto(),
-            stockDTO.getIdVariacion()
-        );
-
         Producto producto = productoRepository.findById(stockDTO.getIdProducto())
                 .orElseThrow(() -> new ResourceNotFoundException("Producto", stockDTO.getIdProducto()));
 
         Stock stock = new Stock();
         stock.setStockMinimo(stockDTO.getStockMinimo());
         stock.setStockActual(stockDTO.getStockActual());
-        stock.setColor(color);
-        stock.setVariacion(variacion);
         stock.setProducto(producto);
+
+
+        // Color opcional
+        if (stockDTO.getIdColor() != null) {
+            Color color = colorRepository.findById(stockDTO.getIdColor())
+                .orElseThrow(() -> new ResourceNotFoundException("Color", stockDTO.getIdColor()));
+            stock.setColor(color);
+        } else {
+            stock.setColor(null);
+        }
+
+        // Variación opcional
+        if (stockDTO.getIdVariacion() != null) {
+            Variacion variacion = variacionRepository.findById(stockDTO.getIdVariacion())
+                .orElseThrow(() -> new ResourceNotFoundException("Variacion", stockDTO.getIdVariacion()));
+            stock.setVariacion(variacion);
+        } else {
+            stock.setVariacion(null);
+        }
 
         return stockRepository.save(stock);
     }
@@ -88,11 +96,18 @@ private ProductoRepository productoRepository;
             stockDTO.setStockActual(stock.getStockActual());
             stockDTO.setPrecio(stock.getProducto().getPrecio());
             stockDTO.setNombreMarca(stock.getProducto().getMarca().getNombreMarca());
-            stockDTO.setNombre(stock.getVariacion().getNombre());
-            stockDTO.setNombreColor(stock.getColor().getNombreColor());
             stockDTO.setNombreMaterial(stock.getProducto().getMaterial().getNombreMaterial());
             stockDTO.setNombrePublico(stock.getProducto().getTipoPublico().getNombrePublico());
             stockDTO.setEstadoProducto(stock.getProducto().getEstadoProducto());
+
+            //esto permite que este null no de error
+            stockDTO.setNombre(
+                stock.getVariacion() != null ? stock.getVariacion().getNombre() : "Sin variación"
+            );
+            stockDTO.setNombreColor(
+                stock.getColor() != null ? stock.getColor().getNombreColor() : "Sin color"
+            );
+
         
             return stockDTO;
         })
@@ -110,19 +125,30 @@ private ProductoRepository productoRepository;
         return stockRepository.findById(idStock)
             .map(stock ->{
             // Buscar las entidades relacionadas por ID
+        Producto producto = productoRepository.findById(updateStockDTO.getIdProducto())
+            .orElseThrow(() -> new ResourceNotFoundException("Producto", updateStockDTO.getIdProducto()));
+
+
+        // Color opcional
+        if (updateStockDTO.getIdColor() != null) {
             Color color = colorRepository.findById(updateStockDTO.getIdColor())
                 .orElseThrow(() -> new ResourceNotFoundException("Color", updateStockDTO.getIdColor()));
+            stock.setColor(color);
+        } else {
+            stock.setColor(null);
+        }
 
+        // Variación opcional
+        if (updateStockDTO.getIdVariacion() != null) {
             Variacion variacion = variacionRepository.findById(updateStockDTO.getIdVariacion())
                 .orElseThrow(() -> new ResourceNotFoundException("Variacion", updateStockDTO.getIdVariacion()));
-
-            Producto producto = productoRepository.findById(updateStockDTO.getIdProducto())
-                .orElseThrow(() -> new ResourceNotFoundException("Producto", updateStockDTO.getIdProducto()));
+            stock.setVariacion(variacion);
+        } else {
+            stock.setVariacion(null);
+        }
 
         stock.setStockMinimo(updateStockDTO.getStockMinimo());
         stock.setStockActual(updateStockDTO.getStockActual());
-        stock.setColor(color);
-        stock.setVariacion(variacion);
         stock.setProducto(producto);
 
         return stockRepository.save(stock);

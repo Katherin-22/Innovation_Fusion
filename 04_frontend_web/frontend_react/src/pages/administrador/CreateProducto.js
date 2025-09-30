@@ -33,14 +33,18 @@ export default function CreateProducto() {
     const { nombreProducto, codigoReferencia, descripcion, precio, estadoProducto } = producto;
 
     // Hooks personalizados para cargar selects
+
+    //aca se pone los return de los hooks, por ejemplo: 
+    // return { tipoPublicos, loading };
     const { categorias } = useGetCategorias();
     const { marcas } = useGetMarca();
     const { materiales } = useGetMaterial();
-    const { publicos } = useGetTipoPublicos();
+    const { tipoPublicos } = useGetTipoPublicos();
     const { promociones } = useGetPromociones();
 
     // Hook personalizado para crear producto
     const { handleCreateProducto, loading, success } = useCreateProducto();
+    
   
 {/*...user: copia lo que ya tenga el objeto user (username: "ana23" // agrega un campo nuevo)*/}   
 {/*e.target.name: se vincula con name=email */}    
@@ -60,10 +64,20 @@ Y lo guarda en user con setUsers.*/}
 {/*después de guardar, te lleva a la página principal */}
         navigate("/Administrador/stock")
     }
+console.log({ categorias, marcas, materiales, tipoPublicos, promociones });
+console.log("categorias:", categorias);
+console.log("marcas:", marcas);
+console.log("materiales:", materiales);
+console.log("tipoPublicos:", tipoPublicos);
+console.log("promociones:", promociones);
+
 
   return (
-    
+
 <div className="main-content">
+    <nav>
+        <MenuAdmin />
+    </nav>
     <div className="header">    
         <div className="row custom-header">
             <div className="col-12 d-flex align-items-center justify-content-between px-4 w-100">
@@ -163,7 +177,7 @@ Y lo guarda en user con setUsers.*/}
                 <label className="form-label">Sexo Biologico</label>
                 <select name="idPublico" value={producto.idPublico} onChange={(e)=>onInputChange(e)} className="form-select">
                 <option value="">-- Selecciona una opción --</option>
-                {publicos.map((publico) => (
+                {tipoPublicos.map((publico) => (
                 <option key={publico.idPublico} value={publico.idPublico}>
                     {publico.nombrePublico}
                 </option>
@@ -185,7 +199,8 @@ Y lo guarda en user con setUsers.*/}
 
             <div className="col">
                 <label className="form-label">Promocion del producto</label>
-                <select name="idPromocion" value={producto.idPromocion} onChange={(e)=>onInputChange(e)} className="form-select">
+                <select name="idPromocion"   value={producto.idPromocion || ""}
+                onChange={(e)=>onInputChange(e)} className="form-select">
                 <option value="">-- Selecciona una opción --</option>
                 {promociones.map((promocion) => (
                 <option key={promocion.idPromocion} value={promocion.idPromocion}>

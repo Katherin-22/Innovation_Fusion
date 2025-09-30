@@ -26,9 +26,9 @@ public class Imagen {
 
     // Relación muchos a uno con TipoProducto
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idStock", nullable = false)
+    @JoinColumn(name = "idProducto", nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Stock stock;
+    private Producto producto;
 
 
     // Constructor vacío (necesario para JPA)
@@ -36,10 +36,11 @@ public class Imagen {
     }
 
     // Constructor con parámetros
-    public Imagen(String urlImagen) {
+    public Imagen(String urlImagen, Producto producto) {
         this.urlImagen = urlImagen;
-        this.stock = stock;
+        this.producto = producto;
     }
+
     // Getters y Setters
 
     public Integer getIdImagen() {
@@ -58,12 +59,12 @@ public class Imagen {
         this.urlImagen = urlImagen;
     }
 
-    public Stock getStock() {
-        return stock;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setStock(Stock stock) {
-        this.stock = stock;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
 }

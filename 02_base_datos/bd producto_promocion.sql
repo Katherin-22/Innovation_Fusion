@@ -109,8 +109,8 @@ CREATE TABLE Stock (
   idStock INT AUTO_INCREMENT NOT NULL,
   stockMinimo INT NOT NULL,
   stockActual INT NOT NULL,
-  idColor INT NOT NULL,
-  idVariacion INT NOT NULL,
+  idColor INT NULL,
+  idVariacion INT NULL,
   idProducto INT NOT NULL,
   
   PRIMARY KEY (idStock),
@@ -121,13 +121,28 @@ CREATE TABLE Stock (
 
 -- Tabla imagen
 CREATE TABLE Imagen(
-	idImagen INT AUTO_INCREMENT NOT NULL,
+	idImagen INT AUTO_INCREMENT NOT NULL, 
     urlImagen VARCHAR(255) NOT NULL,
-    idStock INT NOT NULL,
+    idProducto INT NOT NULL,   -- asociamos directamente al producto
     
     PRIMARY KEY (idImagen),
-    FOREIGN KEY (idStock) REFERENCES Stock(idStock)
+    FOREIGN KEY (idProducto) REFERENCES Producto(idProducto)
 );
+
+
+-- trigger para que cuando se cree un producto, se guarde en un stoc vacio
+DELIMITER $$
+
+CREATE TRIGGER trg_producto_after_insert
+AFTER INSERT ON Producto
+FOR EACH ROW
+BEGIN
+    INSERT INTO Stock (stockMinimo, stockActual, idColor, idVariacion, idProducto)
+    VALUES (0, 0, NULL, NULL, NEW.idProducto);
+END$$
+
+DELIMITER ;
+
 -- Insert
 -- Promociones
 INSERT INTO Promocion (nombrePromocion, codigo_Promocion, descuento, descripcion, fecha_inicio, fecha_fin, estadoPromocion) 
@@ -185,4 +200,4 @@ INSERT INTO Stock (stockMinimo, stockActual, idColor, idVariacion, idProducto)
 VALUES (2, 10, 2, 3, 2);
 
 -- TipoPublico
-INSERT INTO Imagen (urlImagen, idStock) VALUES ("eje de link imagen",1);
+INSERT INTO Imagen (urlImagen, idProducto) VALUES ("eje de link imagen",1);

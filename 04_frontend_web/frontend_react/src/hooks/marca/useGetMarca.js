@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getMarca } from "../../services/administrador/MarcaService";
 
 export const useGetMarca = () => {
-  const [marca, setMarca] = useState([]);
+  const [marcas, setMarca] = useState([]);
   const [loading, setLoad] = useState(true);
 
   useEffect(() => {
@@ -11,5 +11,5 @@ export const useGetMarca = () => {
       .finally(() => setLoad(false));
   }, []);
 
-  return { marca, loading };
+  return { marcas, loading };
 };
