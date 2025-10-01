@@ -13,6 +13,7 @@ import GestionCambios from "../pages/administrador/gestion/gestionCambios";
 import GestionPagina from "../pages/administrador/gestion/gestionPagina";
 import GestionPedido from "../pages/administrador/gestion/gestionPedido";
 import GestionUsiuarios from "../pages/administrador/gestion/gestuinUsarios";
+import UserPanel from "../pages/home/UserPanel";
 
 export default function AppRoutes() {
   return (
@@ -26,6 +27,7 @@ export default function AppRoutes() {
       <Route path="/Administrador/Inbox" element={<Inbox />} />
       <Route path="/Adfministrador/Gestion_Devoluciones" element={<GestionDevoluciones />}/>
       <Route path="/Adfministrador/Gestion_Cambios" element={<GestionCambios />}/>
+      <Route path="/Home/inboxSend" element={<UserPanel />}/>
     </Routes>
   );
 }

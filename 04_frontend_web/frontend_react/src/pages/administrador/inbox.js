@@ -3,22 +3,65 @@ import "../../styles/Administrador/gestion_producto.css";
 import "../../styles/Administrador/inventario.css";
 import "../../styles/Administrador/chat.css";
 
+import { useEffect, useState } from "react";
+import { getMensajes, responderMensaje } from "../../services/administrador/inboxService";
+
 const Inbox = () => {
-    return (
+  const [mensajes, setMensajes] = useState([]);
+  const [respuesta, setRespuesta] = useState({});
+
+  useEffect(() => {
+    cargarMensajes();
+  }, []);
+
+  const cargarMensajes = async () => {
+    try {
+      const res = await getMensajes();
+      setMensajes(res.data); // axios devuelve en data
+    } catch (err) {
+      console.error("Error al obtener mensajes:", err);
+    }
+  };
+
+  const enviarRespuesta = async (id) => {
+    try {
+      await responderMensaje(id, respuesta[id]);
+      alert("Respuesta enviada");
+      cargarMensajes(); // refrescar lista
+    } catch (err) {
+      console.error("Error al responder:", err);
+    }
+  };
+
+  return (
     <div className="all">
       <MenuAdmin />
-      <div className="main-content">
-        <div className="container">
-        <div className="row border-bottom pb-2 mb-4">
-            <h2 className="text-center mb-4">Inbox</h2>
-
-
-
-        </div>
-        </div>
+      <div className="main-content p-4">
+        <h2 className="text-center mb-4">📩 Inbox</h2>
+        {mensajes.map((m) => (
+          <div key={m.id} className="card mb-3 p-3">
+            <h5>{m.tipo} - {m.usuario}</h5>
+            <p>{m.contenido}</p>
+            <p><b>Respuesta:</b> {m.respuesta || "Sin respuesta"}</p>
+            <textarea
+              className="form-control mb-2"
+              placeholder="Escribir respuesta..."
+              value={respuesta[m.id] || ""}
+              onChange={(e) =>
+                setRespuesta({ ...respuesta, [m.id]: e.target.value })
+              }
+            ></textarea>
+            <button
+              className="btn btn-success"
+              onClick={() => enviarRespuesta(m.id)}
+            >
+              Responder
+            </button>
+          </div>
+        ))}
       </div>
     </div>
-    )
-}
+  );
+};
 
 export default Inbox;

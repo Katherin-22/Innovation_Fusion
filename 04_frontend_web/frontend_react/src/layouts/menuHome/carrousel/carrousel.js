@@ -14,7 +14,7 @@ const BannerCarousel = ({ banners }) => {
             className={`carousel-item ${index === 0 ? "active" : ""}`}
           >
             <img
-              src={`http://localhost:8080${banner.url}`} // se construye la URL
+              src={`http://localhost:8081${banner.url}`} // se construye la URL
               className="d-block w-100"
               alt={banner.titulo || `Banner ${index + 1}`}
               style={{ height: "400px", objectFit: "cover" }}
