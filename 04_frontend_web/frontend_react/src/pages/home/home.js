@@ -9,7 +9,7 @@ const Home = () => {
   const [banners, setBanners] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/banners")
+    fetch("http://localhost:8081/api/banners")
       .then((res) => res.json())
       .then((data) => setBanners(data)) // PASAMOS OBJETOS COMPLETOS
       .catch((err) => console.error("Error cargando banners:", err));
@@ -25,15 +25,6 @@ const Home = () => {
             
                 <div className="container-fluid">
 
-                    {/* Sección: Colección */}
-                    <div className="row">
-                        <h1 className="text-center text-white mt-4">Crea tu colección</h1>
-                        <div className="col-12 text-center">
-                        <a href="../../colecciones/html/coleccion.html">
-                            <div classNameName="addColecccion" />
-                        </a>
-                        </div>
-                    </div>
 
                         {/* Sección: estilo de calzados*/}
                     <div className="row mt-5">
@@ -157,3 +148,4 @@ const Home = () => {
 }
 
 export default Home;
+
