@@ -41,7 +41,7 @@ const UserPanel = () => {
         value={contenido}
         onChange={(e) => setContenido(e.target.value)}
       ></textarea>
-      <button className="btn btn-primary" onClick={enviarMensaje}>
+      <button className="btn custom-btn" onClick={enviarMensaje}>
         Enviar
       </button>
     </div>

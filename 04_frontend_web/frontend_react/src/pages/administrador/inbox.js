@@ -52,7 +52,7 @@ const Inbox = () => {
               }
             ></textarea>
             <button
-              className="btn btn-success"
+              className="btn custom-btn"
               onClick={() => enviarRespuesta(m.id)}
             >
               Responder
