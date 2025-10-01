@@ -1,22 +1,22 @@
 import { useState } from "react";
-import { updateStock } from "../../services/administrador/StockService";
+import { updateImagen } from "../../services/administrador/ImagenService";
 
-export const useUpdateStock = () => {
+export const useUpdateImagen = () => {
   const [load, setLoad] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleUpdateStock = async (id, data) => {
+  const handleUpdateImagen = async (idProducto, idImagen, file) => {
     setLoad(true); // paso 1: activar "cargando"
     try {
-      await updateStock(id, data); // paso 2: enviar datos al backend
+      await updateImagen(idProducto, idImagen, file); // paso 2: enviar datos al backend
       setSuccess(true);        // paso 3: si todo ok → marcar éxito
     } catch (error) {
-      console.error("Error al actualizar stock:", error);
+      console.error("Error al actualizar Imagen:", error);
       setSuccess(false);      // si falla → marcar como no exitoso
     } finally {
       setLoad(false);         // paso 4: quitar "cargando"
     }
   };
 
-  return { handleUpdateStock, load, success };
+  return { handleUpdateImagen, load, success };
 };
