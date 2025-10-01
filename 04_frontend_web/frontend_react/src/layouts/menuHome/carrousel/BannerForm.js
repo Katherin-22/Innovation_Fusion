@@ -10,7 +10,7 @@ const BannerForm = ({ onUpload }) => {
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await fetch("http://localhost:8080/api/banners/upload", {
+    const response = await fetch("http://localhost:8081/api/banners/upload", {
       method: "POST",
       body: formData,
     });
