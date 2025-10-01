@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import com.proyectosena.backend.model.modulo_productos.Producto.EstadoProducto;
 
 public class StockDTO {
+    private Integer idStock;
     private Integer stockMinimo;
     private Integer stockActual;
     private LocalDate fechaModificacion;
@@ -32,8 +33,13 @@ public class StockDTO {
     private String nombreMaterial;
     private String nombrePublico;
     private EstadoProducto estadoProducto;
-
-    // Getters y Setters
+    
+    public Integer getIdStock() {
+        return idStock;
+    }
+    public void setIdStock(Integer idStock) {
+        this.idStock = idStock;
+    }
     public Integer getStockMinimo() {
         return stockMinimo;
     }
@@ -154,6 +160,9 @@ public class StockDTO {
     public void setEstadoProducto(EstadoProducto estadoProducto) {
         this.estadoProducto = estadoProducto;
     }
+
+    // Getters y Setters
+
     
 
     

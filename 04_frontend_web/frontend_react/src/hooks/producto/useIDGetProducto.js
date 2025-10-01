@@ -1,16 +1,21 @@
 import { useEffect, useState } from "react";
 import { getProductoId } from "../../services/administrador/ProductoService";
 
-export const useIDGetProductoId = (idStock) => {
+export const useIDGetProductoId = (idProducto) => {
   const [producto, setProducto] = useState(null); // un solo objeto
   const [load, setLoad] = useState(true);
 
-  useEffect(() => {
-    if (!idStock) return; // si no hay id, no hago nada
-    getProductoId(idStock)
-      .then((res) => setProducto(res.data))
-      .finally(() => setLoad(false));
-  }, [idStock]); // se ejecuta cada vez que cambia el id
+useEffect(() => {
+  if (!idProducto) return; 
+  getProductoId(idProducto)
+    .then((res) => {
+        console.log("Respuesta API producto:", res);
+        setProducto(res.data);
+    })
+    .catch((err) => console.error("Error cargando producto", err))
+    .finally(() => setLoad(false));
+}, [idProducto]);
+
 
   return { producto, load };
 };

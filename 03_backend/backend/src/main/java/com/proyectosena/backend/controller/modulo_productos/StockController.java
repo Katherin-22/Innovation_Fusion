@@ -1,9 +1,10 @@
 package com.proyectosena.backend.controller.modulo_productos;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,7 +45,7 @@ private VariacionRepository variacionRepository;
 private ProductoRepository productoRepository;
 
     @PostMapping("/stock")
-    Stock newStock(@RequestBody StockDTO stockDTO) {
+    ResponseEntity<Stock> newStock(@RequestBody StockDTO stockDTO) {
         Producto producto = productoRepository.findById(stockDTO.getIdProducto())
                 .orElseThrow(() -> new ResourceNotFoundException("Producto", stockDTO.getIdProducto()));
 
@@ -72,7 +73,8 @@ private ProductoRepository productoRepository;
             stock.setVariacion(null);
         }
 
-        return stockRepository.save(stock);
+        Stock saved = stockRepository.save(stock);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved); // 201 Created
     }
 
     @GetMapping("/stock/variaciones/{idProducto}")
@@ -81,47 +83,43 @@ private ProductoRepository productoRepository;
     }
 
     @GetMapping("/stocks")
-    List<StockDTO> getAllStock() {
-    // Traes todos los stocks de la base de datos
-    List<Stock> stocks = stockRepository.findAll();
-    // Los conviertes a DTO con stream
-    return stocks.stream()
-        .map(stock -> {
-            StockDTO stockDTO = new StockDTO();
-            stockDTO.setCodigoReferencia(stock.getProducto().getCodigoReferencia());
-            stockDTO.setNombreProducto(stock.getProducto().getNombreProducto());
-            stockDTO.setNombreTipoProducto(stock.getProducto().getCategoria().getTipoProducto().getNombreTipoProducto());
-            stockDTO.setNombreCategoria(stock.getProducto().getCategoria().getNombreCategoria());
-            stockDTO.setDescripcion(stock.getProducto().getDescripcion());
-            stockDTO.setStockActual(stock.getStockActual());
-            stockDTO.setPrecio(stock.getProducto().getPrecio());
-            stockDTO.setNombreMarca(stock.getProducto().getMarca().getNombreMarca());
-            stockDTO.setNombreMaterial(stock.getProducto().getMaterial().getNombreMaterial());
-            stockDTO.setNombrePublico(stock.getProducto().getTipoPublico().getNombrePublico());
-            stockDTO.setEstadoProducto(stock.getProducto().getEstadoProducto());
+    ResponseEntity <List<StockDTO>> getAllStock() {
+    List<StockDTO> listaStockDTO  = stockRepository.findAll().stream().map(stock -> {
+            StockDTO stockDTOs = new StockDTO();
+            stockDTOs.setIdStock(stock.getIdStock());  // <- importante, para eliminar
+            stockDTOs.setCodigoReferencia(stock.getProducto().getCodigoReferencia());
+            stockDTOs.setNombreProducto(stock.getProducto().getNombreProducto());
+            stockDTOs.setNombreTipoProducto(stock.getProducto().getCategoria().getTipoProducto().getNombreTipoProducto());
+            stockDTOs.setNombreCategoria(stock.getProducto().getCategoria().getNombreCategoria());
+            stockDTOs.setDescripcion(stock.getProducto().getDescripcion());
+            stockDTOs.setStockActual(stock.getStockActual());
+            stockDTOs.setPrecio(stock.getProducto().getPrecio());
+            stockDTOs.setNombreMarca(stock.getProducto().getMarca().getNombreMarca());
+            stockDTOs.setNombreMaterial(stock.getProducto().getMaterial().getNombreMaterial());
+            stockDTOs.setNombrePublico(stock.getProducto().getTipoPublico().getNombrePublico());
+            stockDTOs.setEstadoProducto(stock.getProducto().getEstadoProducto());
 
             //esto permite que este null no de error
-            stockDTO.setNombre(
+            stockDTOs.setNombre(
                 stock.getVariacion() != null ? stock.getVariacion().getNombre() : "Sin variación"
             );
-            stockDTO.setNombreColor(
+            stockDTOs.setNombreColor(
                 stock.getColor() != null ? stock.getColor().getNombreColor() : "Sin color"
             );
-
-        
-            return stockDTO;
-        })
-        .toList();
+            return stockDTOs;
+        }).toList();
+        return ResponseEntity.ok(listaStockDTO);
     }
 
     @GetMapping("/stock/{idStock}")
-    Stock getOneStock(@PathVariable Integer idStock) {
-        return stockRepository.findById(idStock)
+     ResponseEntity<Stock> getOneStock(@PathVariable Integer idStock) {
+        Stock stock = stockRepository.findById(idStock)
                 .orElseThrow(() -> new ResourceNotFoundException("Stock", idStock));
+        return ResponseEntity.ok(stock); // 200 OK
     }
 
     @PutMapping("/stock/{idStock}")
-    Stock updateStock (@RequestBody StockDTO updateStockDTO, @PathVariable Integer idStock){
+    ResponseEntity <Stock> updateStock (@RequestBody StockDTO updateStockDTO, @PathVariable Integer idStock){
         return stockRepository.findById(idStock)
             .map(stock ->{
             // Buscar las entidades relacionadas por ID
@@ -151,16 +149,17 @@ private ProductoRepository productoRepository;
         stock.setStockActual(updateStockDTO.getStockActual());
         stock.setProducto(producto);
 
-        return stockRepository.save(stock);
+        Stock actualizado = stockRepository.save(stock);
+        return ResponseEntity.ok(actualizado); // 200 OK
         }).orElseThrow(()->new ResourceNotFoundException("Stock",idStock));
     }
 
     @DeleteMapping("/stock/{idStock}")
-    String  deleteStock (@PathVariable Integer idStock){
+    ResponseEntity<Void> deleteStock (@PathVariable Integer idStock){
         if(!stockRepository.existsById(idStock)){
             throw new ResourceNotFoundException("Stock",idStock);
         }
         stockRepository.deleteById(idStock);
-        return "El Stock con id " + idStock + " ha sido eliminado correctamente";
+        return ResponseEntity.noContent().build();// 204 No Content
     }
 }

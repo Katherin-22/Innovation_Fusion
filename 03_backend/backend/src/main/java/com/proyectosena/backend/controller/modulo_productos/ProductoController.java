@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -101,11 +102,30 @@ public class ProductoController {
     }
 
 //OJO: Aca se muestra todos los productos, tanto activos como inactivos
-    @GetMapping("/productos")
-    ResponseEntity<List<Producto>> getProductos() {
-        List<Producto> productos = productoRepository.findAll();
-        return ResponseEntity.ok(productos); // 200 OK
-    }
+@GetMapping("/productos")
+ResponseEntity<List<ProductoDTO>> getProductos() {
+    List<ProductoDTO> lista = productoRepository.findAll().stream().map(producto -> {
+        ProductoDTO dto = new ProductoDTO();
+        dto.setIdProducto(producto.getIdProducto());
+        dto.setNombreProducto(producto.getNombreProducto());
+        dto.setNombreTipoProducto(producto.getCategoria().getTipoProducto().getNombreTipoProducto());
+        dto.setCodigoReferencia(producto.getCodigoReferencia());
+        dto.setDescripcion(producto.getDescripcion());
+        dto.setPrecio(producto.getPrecio());
+        dto.setNombreCategoria(producto.getCategoria().getNombreCategoria());
+        dto.setNombreMarca(producto.getMarca().getNombreMarca());
+        dto.setNombreMaterial(producto.getMaterial().getNombreMaterial());
+        dto.setNombrePublico(producto.getTipoPublico().getNombrePublico());
+        dto.setEstadoProducto(producto.getEstadoProducto());
+        dto.setFechaCreacion(producto.getFechaCreacion());
+        dto.setFechaModificacion(producto.getFechaModificacion());
+
+        return dto;
+    }).toList();
+
+    return ResponseEntity.ok(lista);
+}
+
 //OJO: Aca se muestra solo los productos activos- para el cliente final
     @GetMapping("/productos_activos")
     ResponseEntity<List<Producto>> getProductosActivos(){
@@ -183,11 +203,18 @@ public class ProductoController {
 }
 
     @DeleteMapping("/producto/{idProducto}")
-    ResponseEntity<Void> deleteProducto (@PathVariable Integer idProducto){
-        if(!productoRepository.existsById(idProducto)){
-            throw new ResourceNotFoundException("Producto",idProducto);
+    public ResponseEntity<String> deleteProducto(@PathVariable Integer idProducto) {
+        if (!productoRepository.existsById(idProducto)) {
+            throw new ResourceNotFoundException("Producto", idProducto);
         }
-        productoRepository.deleteById(idProducto);
-        return ResponseEntity.noContent().build();// 204 No Content
-    }    
+
+        try {
+            productoRepository.deleteById(idProducto);
+            return ResponseEntity.noContent().build(); // 204 No Content
+        } catch (DataIntegrityViolationException e) {
+            // Si hay registros en stock relacionados
+            return ResponseEntity.status(409)
+                    .body("No se puede eliminar el producto porque tiene stocks asociados");
+        }
+    }
 }

@@ -126,7 +126,7 @@ CREATE TABLE Imagen(
     idProducto INT NOT NULL,   -- asociamos directamente al producto
     
     PRIMARY KEY (idImagen),
-    FOREIGN KEY (idProducto) REFERENCES Producto(idProducto)
+    FOREIGN KEY (idProducto) REFERENCES Producto(idProducto) ON DELETE CASCADE
 );
 
 

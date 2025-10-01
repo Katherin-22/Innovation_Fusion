@@ -1,20 +1,26 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import {useCreateProducto} from "../../hooks/producto/useCreateProducto";
-import {useGetCategorias} from "../../hooks/categoria/useGetCategoria";
-import {useGetMarca} from "../../hooks/marca/useGetMarca";
-import {useGetMaterial} from "../../hooks/material/useGetMaterial";
-import {useGetTipoPublicos} from "../../hooks/tipoPublico/useGetTipoPublico";
-import {useGetPromociones} from "../../hooks/promocion/useGetPromocion";
-import MenuAdmin from '../../layouts/administrador/MenuAdmi';
-import "../../styles/administrador/inventario.css";
-import "../../styles/administrador/gestion_producto.css"
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import {useUpdateProducto} from "../../../hooks/producto/useUpdateProducto";
+import {useIDGetProductoId} from "../../../hooks/producto/useIDGetProducto";
+import {useGetCategorias} from "../../../hooks/categoria/useGetCategoria";
+import {useGetMarca} from "../../../hooks/marca/useGetMarca";
+import {useGetMaterial} from "../../../hooks/material/useGetMaterial";
+import {useGetTipoPublicos} from "../../../hooks/tipoPublico/useGetTipoPublico";
+import {useGetPromociones} from "../../../hooks/promocion/useGetPromocion";
+import MenuAdmin from '../../../layouts/administrador/MenuAdmi';
+import "../../../styles/administrador/inventario.css";
+import "../../../styles/administrador/gestion_producto.css"
 
-export default function CreateProducto() {
+export default function UpdateProducto() {
 {/*navigate=useNavigate():Sirve para moverte entre páginas desde el código */}
 {/*navigate("/"); // me lleva a la página principal */}
     
     let navigate=useNavigate();
+
+    // este valor sale al final de usefect: }, [idProducto]); (useIDGetProductoId)
+    // ademas lo que este en const {}, debe ir en : await handleUpdateProducto(idProducto, producto);
+    const { idProducto } = useParams(); // esto se usa cuando se va a editar
+
 
         const [producto,setproducto]=useState({ 
         nombreProducto:"",
@@ -32,6 +38,29 @@ export default function CreateProducto() {
     const estadoProductos = ['Activo', 'Inactivo', 'Descontinuado'];
     const { nombreProducto, codigoReferencia, descripcion, precio, estadoProducto } = producto;
 
+    // 🔹 Hook para traer el producto desde la BD
+    const { producto: productoDB, load: loadProducto } = useIDGetProductoId(idProducto);
+
+    // Cuando llegue el producto desde la BD → actualizamos el estado local
+useEffect(() => {
+    if (productoDB) {
+        console.log("Producto desde BD:", productoDB);
+        setproducto({
+            nombreProducto: productoDB.nombreProducto || "",
+            codigoReferencia: productoDB.codigoReferencia || "",
+            descripcion: productoDB.descripcion || "",
+            precio: productoDB.precio || "",
+            estadoProducto: productoDB.estadoProducto || "",
+            idCategoria: productoDB.categoria?.idCategoria || "",
+            idMarca: productoDB.marca?.idMarca || "",
+            idMaterial: productoDB.material?.idMaterial || "",
+            idPublico: productoDB.tipoPublico?.idPublico || "",
+            idPromocion: productoDB.promocion?.idPromocion || ""
+});
+
+    }
+}, [productoDB]);
+
     // Hooks personalizados para cargar selects
 
     //aca se pone los return de los hooks, por ejemplo: 
@@ -43,7 +72,7 @@ export default function CreateProducto() {
     const { promociones } = useGetPromociones();
 
     // Hook personalizado para crear producto
-    const { handleCreateProducto, loading, success } = useCreateProducto();
+    const { handleUpdateProducto, load, success } = useUpdateProducto();
     
   
 {/*...user: copia lo que ya tenga el objeto user (username: "ana23" // agrega un campo nuevo)*/}   
@@ -60,16 +89,13 @@ Y lo guarda en user con setUsers.*/}
 {/*evita que se recargue la página */}
         e.preventDefault();
 {/*manda los datos (user) al backend.*/}
-        await handleCreateProducto(producto); // manda datos al backend
+        await handleUpdateProducto(idProducto, producto); // acá le pasas el id y los datos(como esta en el hook)
 {/*después de guardar, te lleva a la página principal */}
         navigate("/Administrador/stock")
     }
-console.log({ categorias, marcas, materiales, tipoPublicos, promociones });
-console.log("categorias:", categorias);
-console.log("marcas:", marcas);
-console.log("materiales:", materiales);
-console.log("tipoPublicos:", tipoPublicos);
-console.log("promociones:", promociones);
+
+  // Mostrar loading mientras trae el producto
+  if (loadProducto) return <p>Cargando producto...</p>;
 
 
   return (
@@ -81,7 +107,7 @@ console.log("promociones:", promociones);
     <div className="header">    
         <div className="row custom-header">
             <div className="col-12 d-flex align-items-center justify-content-between px-4 w-100">
-                <h1 className="mb-0">Registro producto</h1>
+                <h1 className="mb-0">Editar producto</h1>
                 <a href="./INVENTARIO(PRINCIPAL).HTML" className="btn btn-light custom-btn-exit">
                     <img src="../img/caret-left.png" alt=""/>
                 </a>
@@ -94,10 +120,10 @@ console.log("promociones:", promociones);
 
             <div className="col">
                 <label className="form-label">Categoria</label>
-                <select name="idCategoria" value={producto.idCategoria} onChange={(e)=>onInputChange(e)} className="form-select">
+                <select name="idCategoria" value={String(producto.idCategoria || "")} onChange={(e)=>onInputChange(e)} className="form-select">
                 <option value="">-- Selecciona una opción --</option>
                 {categorias.map((categoria) => (
-                <option key={categoria.idCategoria} value={categoria.idCategoria}>
+                <option key={categoria.idCategoria} value={String(categoria.idCategoria)}>
                     {categoria.nombreCategoria}
                 </option>
                 ))}
@@ -128,10 +154,10 @@ console.log("promociones:", promociones);
 
             <div className="col">
                 <label className="form-label">Marca</label>
-                <select name="idMarca" value={producto.idMarca} onChange={(e)=>onInputChange(e)} className="form-select">
+                <select name="idMarca" value={String(producto.idMarca || "")} onChange={(e)=>onInputChange(e)} className="form-select">
                 <option value="">-- Selecciona una opción --</option>
                 {marcas.map((marca) => (
-                <option key={marca.idMarca} value={marca.idMarca}>
+                <option key={marca.idMarca} value={String(marca.idMarca)}>
                     {marca.nombreMarca}
                 </option>
                 ))}
@@ -162,12 +188,13 @@ console.log("promociones:", promociones);
 
             <div className="col">
                 <label className="form-label">Material</label>
-                <select name="idMaterial" value={producto.idMaterial} onChange={(e)=>onInputChange(e)} className="form-select">
+                <select name="idMaterial" value={String(producto.idMaterial || "")} onChange={(e)=>onInputChange(e)} className="form-select">
                 <option value="">-- Selecciona una opción --</option>
                 {materiales.map((material) => (
-                <option key={material.idMaterial} value={material.idMaterial}>
+                <option key={material.idMaterial} value={String(material.idMaterial)}>
                     {material.nombreMaterial}
                 </option>
+
                 ))}
                 </select>
             </div>
@@ -175,10 +202,10 @@ console.log("promociones:", promociones);
 
             <div className="col">
                 <label className="form-label">Sexo Biologico</label>
-                <select name="idPublico" value={producto.idPublico} onChange={(e)=>onInputChange(e)} className="form-select">
+                <select name="idPublico" value={String(producto.idPublico || "")} onChange={(e)=>onInputChange(e)} className="form-select">
                 <option value="">-- Selecciona una opción --</option>
                 {tipoPublicos.map((publico) => (
-                <option key={publico.idPublico} value={publico.idPublico}>
+                <option key={publico.idPublico} value={String(publico.idPublico)}>
                     {publico.nombrePublico}
                 </option>
                 ))}
@@ -203,7 +230,7 @@ console.log("promociones:", promociones);
                 onChange={(e)=>onInputChange(e)} className="form-select">
                 <option value="">-- Selecciona una opción --</option>
                 {promociones.map((promocion) => (
-                <option key={promocion.idPromocion} value={promocion.idPromocion}>
+                <option key={promocion.idPromocion} value={String(promocion.idPromocion)}>
                     {promocion.nombrePromocion}
                 </option>
                 ))}
@@ -214,8 +241,8 @@ console.log("promociones:", promociones);
 
 <div className="row row-cols-1">
 {/* esto es para enviar el formulario*/} 
-            <button type="submit" className="btn btn-outline-primary" disabled={loading}>
-            {loading ? "Guardando..." : "Submit"}
+            <button type="submit" className="btn btn-outline-primary" disabled={load}>
+            {load ? "Guardando..." : "Submit"}
             </button>
 
 
