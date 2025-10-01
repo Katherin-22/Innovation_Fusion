@@ -1,0 +1,45 @@
+:root {
+    --body-color: #e4e9f7;
+    --slidebar-color: #fff;
+    --primary-color: #E0B253;
+    --toggle-color: #ddd;
+    --text-color: #000000;
+
+    /* Transiciones */
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.4s ease;
+    --tran-05: all 0.5s ease;
+}
+
+/*============Botones=============*/
+.custom-btn-exit{
+    border: 2px solid var(--primary-color);
+    background: var(--body-color);
+}
+
+.custom-btn-1{
+    background-color: red;
+    color: var(--body-color);
+}
+
+.custom-btn-1:hover{
+    background: var(--body-color);
+    border: 2px solid red;
+    color: red;
+}
+
+.custom-btn-exit:hover{
+    background: var(--primary-color);
+    color: var(--text-color);
+}
+
+
+/*================Campos=================*/
+
+.col{
+    margin: 10px 0;
+}
+
+input{
+    border: 1px solid var(--primary-color);
+}
