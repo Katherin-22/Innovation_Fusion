@@ -1,5 +1,4 @@
 @import url("./gestion_producto.css");
-
 * {
     margin: 0;
     padding: 0;
@@ -25,12 +24,7 @@ body {
 }
 
 /* ==================== SLIDEBAR ==================== */
-.bi {
-  color: var(--text-color);
-}
-
 .slidebar {
-  font-size: 22px;
     position: fixed;
     top: 0;
     left: 0;
@@ -160,12 +154,15 @@ header .image-text .header-text {
     width: 24px;
     height: 24px;
     display: inline-block;
-    background-image: url("../../assets/imagenes/door-closed.svg");
+    background-image: url("../../assets/door-closed.svg");
     background-size: contain;
     background-repeat: no-repeat;
     transition: background-image 0.5s ease;
 }
 
+a:hover .door {
+    background-image: url("../../assets/door-open.svg");
+}
 
 
 
