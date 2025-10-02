@@ -1,20 +1,18 @@
 import React from "react";
-import MenuHome from "../../layouts/menuHome/menuHome";
 import { useGetStock } from "../../hooks/stock/useGetStock";
+import { Link } from "react-router-dom";
+import MenuHome from "../../layouts/menuHome/menuHome";
 
 const Catalogo = () => {
-  const { stock, loading } = useGetStock();
-
-  if (loading) return <p className="text-center mt-4">Cargando productos...</p>;
+  const { stock } = useGetStock();
 
   return (
     <div className="allHome">
       <MenuHome />
-      <div className="body-color py-4">
-        <div className="container">
-          <h2 className="text-center mb-4">Catálogo de Productos</h2>
-          <div className="row">
-            {stock.map((producto) => (
+      <div className="body-color">
+        <div className="container-fluid">
+          <div className="row custom-row">
+            {stock.map(producto => (
               <div key={producto.codigoReferencia} className="col-md-4 mb-4">
                 <div className="card shadow-sm h-100">
                   <div className="card-body d-flex flex-column">
@@ -22,9 +20,13 @@ const Catalogo = () => {
                     <p className="card-text text-muted">
                       Precio: <b>${producto.precio}</b>
                     </p>
-                    <button className="btn btn-primary mt-auto">
-                      Ver más
-                    </button>
+                    {/* Botón que lleva a la vista del producto */}
+                    <Link
+                      to={`/home/${producto.codigoReferencia}`}
+                      className="btn btn-primary btn-custom mt-auto"
+                    >
+                      Ver producto
+                    </Link>
                   </div>
                 </div>
               </div>

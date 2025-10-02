@@ -6,7 +6,7 @@ const UserPanel = () => {
   const [usuario, setUsuario] = useState("");
 
   const enviarMensaje = async () => {
-    await fetch("http://localhost:8081/api/mensajes", {
+    await fetch("http://localhost:8080/api/mensajes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ usuario, tipo, contenido }),

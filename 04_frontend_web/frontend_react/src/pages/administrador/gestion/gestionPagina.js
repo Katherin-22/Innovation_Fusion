@@ -11,7 +11,7 @@ const GestionPagina = () => {
   const [banners, setBanners] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8081/api/banners")
+    fetch("http://localhost:8080/api/banners")
       .then((res) => res.json())
       .then((data) => setBanners(data))
       .catch((err) => console.error("Error cargando banners:", err));
