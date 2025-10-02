@@ -1,4 +1,4 @@
-package com.proyectosena.backend.controller.inbox;
+package com.proyectosena.backend.config.inbox;
 
 import com.proyectosena.backend.model.inbox.Mensaje;
 import com.proyectosena.backend.service.inbox.MensajeService;
