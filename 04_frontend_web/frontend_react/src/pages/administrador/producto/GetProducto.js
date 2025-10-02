@@ -107,6 +107,7 @@ export default function GetProducto() {
                             >
                             Eliminar
                             </button>
+                            <Link to={`/producto/${producto.idProducto}/imagenes`} id="boton_agregar" className="btn btn-light">Crear imagenes</Link>
                             </td>
                             </tr>
                         ))}
