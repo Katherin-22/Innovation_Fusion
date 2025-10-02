@@ -15,6 +15,7 @@ import Stock from "../pages/administrador/stock/Stock";
 import GetProducto from "../pages/administrador/producto/GetProducto"
 import CreateProducto from "../pages/administrador/producto/CreateProducto";
 import UpdateProducto from "../pages/administrador/producto/UpdateProducto";
+import ProductoGen from "../pages/home/productoGen";
 
 export default function AppRoutes() {
   return (
@@ -31,6 +32,7 @@ export default function AppRoutes() {
       <Route path="/ver_producto" element={<GetProducto/>}></Route> 
       <Route path="/crear_producto" element={<CreateProducto/>}></Route>
       <Route path="/producto/:idProducto" element={<UpdateProducto/>}></Route>
+      <Route path="/home/:codigoReferencia" element={<ProductoGen />} />
     </Routes>
   );
 }

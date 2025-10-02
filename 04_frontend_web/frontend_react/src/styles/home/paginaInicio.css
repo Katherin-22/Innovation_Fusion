@@ -1,3 +1,5 @@
+@import url("./card.css");
+
 :root {
     --body-color: #e4e9f7;
     --slidebar-color: #fff;
@@ -67,4 +69,8 @@
 .finPag{
     margin: 20px 0;
     margin-bottom: -10px;
+}
+
+.custom-row{
+    margin-top: 5%;
 }
