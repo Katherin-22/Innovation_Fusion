@@ -7,9 +7,9 @@ import {useGetMarca} from "../../../hooks/marca/useGetMarca";
 import {useGetMaterial} from "../../../hooks/material/useGetMaterial";
 import {useGetTipoPublicos} from "../../../hooks/tipoPublico/useGetTipoPublico";
 import {useGetPromociones} from "../../../hooks/promocion/useGetPromocion";
-import MenuAdmin from '../../../layouts/administrador/MenuAdmi';
-import "../../../styles/administrador/inventario.css";
-import "../../../styles/administrador/gestion_producto.css"
+import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
+import "../../../styles/Administrador/inventario.css";
+import "../../../styles/Administrador/gestion_producto.css";
 
 export default function CreateProducto() {
 {/*navigate=useNavigate():Sirve para moverte entre páginas desde el código */}
@@ -63,7 +63,7 @@ Y lo guarda en user con setUsers.*/}
 {/*manda los datos (user) al backend.*/}
         await handleCreateProducto(producto); // manda datos al backend
 {/*después de guardar, te lleva a la página principal */}
-        navigate("/Administrador/stock")
+        navigate("/ver_producto")
     }
 console.log({ categorias, marcas, materiales, tipoPublicos, promociones });
 console.log("categorias:", categorias);
@@ -221,7 +221,7 @@ console.log("promociones:", promociones);
 
 
             {/* esto es para cancelar el formulario*/} 
-            <Link className="btn btn-outline-danger mx-2" to="/Administrador/stock">
+            <Link className="btn btn-outline-danger mx-2" to="/ver_producto">
                 Cancel
             </Link>
         </div>

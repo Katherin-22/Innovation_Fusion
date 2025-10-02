@@ -106,7 +106,7 @@ const MenuHome = () => {
 
             {/* Perfil */}
             <li className="nav-item">
-              <Link className="nav-link" to="#">
+              <Link className="nav-link" to="/Administrador/stock">
                 <i className="bi bi-person-fill"></i>
               </Link>
             </li>

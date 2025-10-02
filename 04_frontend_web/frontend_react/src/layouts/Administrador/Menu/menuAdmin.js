@@ -33,7 +33,7 @@ const MenuAdmin = () => {
           <div className="menu">
             <ul className="menu-links">
               <li className="nav link">
-                <Link to="/Administrador">
+                <Link to="/Administrador/stock">
                   <i className="bi bi-bag-fill"></i>
                   <span className="text nav-text">Inventario</span>
                 </Link>

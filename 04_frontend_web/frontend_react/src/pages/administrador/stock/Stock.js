@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {getStock, deleteStock  } from "../../../services/administrador/StockService";
-import MenuAdmin from '../../../layouts/administrador/MenuAdmi';
+import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
 
-import "../../../styles/administrador/inventario.css";
-import "../../../styles/administrador/gestion_producto.css";
+import "../../../styles/Administrador/inventario.css";
+import "../../../styles/Administrador/gestion_producto.css";
 import { Link, useParams } from 'react-router-dom';
 
 export default function Stock() {
