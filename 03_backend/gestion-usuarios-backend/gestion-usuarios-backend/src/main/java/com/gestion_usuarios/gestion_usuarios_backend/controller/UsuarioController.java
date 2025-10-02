@@ -47,7 +47,7 @@ public class UsuarioController {
     // Ver usuario por ID
     // El administrador puede ver cualquier usuario por ID.
     // Un cliente solo puede ver su propio perfil
-    @PreAuthorize("hasAuthority('administrador') or #id == authentication.principal.id")
+    @PreAuthorize("hasAuthority('administrador') or #id.toString() == authentication.principal.idUsuario.toString()")
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> listarUsuarioPorId(@PathVariable Long id) {
         Usuario usuario = usuarioRepository.findById(id)
@@ -84,7 +84,7 @@ public class UsuarioController {
     // Actualizar usuario
     // Un cliente solo puede actualizar su propio perfil.
     // El administrador puede actualizar cualquier perfil.
-    @PreAuthorize("hasAuthority('administrador') or #id == authentication.principal.id")
+    @PreAuthorize("hasAuthority('administrador') or #id.toString() == authentication.principal.idUsuario.toString()")
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long id, @RequestBody UsuarioRequest usuarioRequest) {
         Usuario usuario = usuarioRepository.findById(id)

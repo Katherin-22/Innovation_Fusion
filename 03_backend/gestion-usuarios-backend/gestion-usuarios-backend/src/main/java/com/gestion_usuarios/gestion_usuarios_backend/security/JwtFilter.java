@@ -5,6 +5,8 @@ import com.gestion_usuarios.gestion_usuarios_backend.repository.UsuarioRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -14,6 +16,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -61,14 +65,24 @@ public class JwtFilter extends OncePerRequestFilter {
             if (usuarioOpt.isPresent() && jwtUtil.isTokenValid(token, correo)) {
                 // Si el token es válido, autenticar
                 Usuario usuario = usuarioOpt.get();
+
+                // Obtener el rol del usuario y crear una autoridad
+                String roleName = usuario.getRol().getNombreRol().toString();
+                List<GrantedAuthority> authorities = Collections.singletonList(
+                        new SimpleGrantedAuthority(roleName)
+                );
+
                 UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(usuario, null, null);
+                        new UsernamePasswordAuthenticationToken(usuario, null, authorities);
+
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         } catch (Exception e) {
             // En caso de cualquier error (token inválido, expirado, etc.),
             // el filtro no continúa la cadena y la solicitud es rechazada con un 401 Unauthorized.
+
+            System.err.println("Error de autenticación JWT: " + e.getMessage());
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
