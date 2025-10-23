@@ -1,4 +1,4 @@
-package com.backend.proyect.controller.modulo_productos;
+package com.backend.proyect.controller.productos;
 
 import java.util.List;
 
@@ -12,16 +12,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backend.proyect.exception.modulo_productos.ResourceNotFoundException;
-import com.backend.proyect.model.modulo_productos.TipoProducto;
-import com.backend.proyect.repository.modulo_productos.TipoProductoRepository;
+import com.backend.proyect.exception.productos.ResourceNotFoundException;
+import com.backend.proyect.model.productos.TipoProducto;
+import com.backend.proyect.repository.productos.TipoProductoRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class TipoProductoController {
+
     @Autowired
     // tipoProductoRepository este se pone en los return
-    private TipoProductoRepository tipoProductoRepository;  
+    private TipoProductoRepository tipoProductoRepository;
 
     @PostMapping("/tipo_producto")
     TipoProducto newTipoProducto(@RequestBody TipoProducto newTipoProducto) {
@@ -29,7 +30,7 @@ public class TipoProductoController {
     }
 
     @GetMapping("/tipo_productos")
-    List<TipoProducto> getAllTipoProducto(){
+    List<TipoProducto> getAllTipoProducto() {
         return tipoProductoRepository.findAll();
     }
 
@@ -39,21 +40,20 @@ public class TipoProductoController {
                 .orElseThrow(() -> new ResourceNotFoundException("TipoProducto", idTipoProducto));
     }
 
-
     @PutMapping("/tipo_producto/{idTipoProducto}")
-    TipoProducto updateTipoProducto (@RequestBody TipoProducto updateTipoProducto, @PathVariable Integer idTipoProducto){
+    TipoProducto updateTipoProducto(@RequestBody TipoProducto updateTipoProducto, @PathVariable Integer idTipoProducto) {
         return tipoProductoRepository.findById(idTipoProducto)
-            .map(tipoProducto ->{
-                tipoProducto.setNombreTipoProducto(updateTipoProducto.getNombreTipoProducto());
+                .map(tipoProducto -> {
+                    tipoProducto.setNombreTipoProducto(updateTipoProducto.getNombreTipoProducto());
 
-                return tipoProductoRepository.save(tipoProducto);
-            }).orElseThrow(()->new ResourceNotFoundException("TipoProducto",idTipoProducto));
+                    return tipoProductoRepository.save(tipoProducto);
+                }).orElseThrow(() -> new ResourceNotFoundException("TipoProducto", idTipoProducto));
     }
 
     @DeleteMapping("/tipo_producto/{idTipoProducto}")
-    String deleteTipoProducto (@PathVariable Integer idTipoProducto){
-        if(!tipoProductoRepository.existsById(idTipoProducto)){
-            throw new ResourceNotFoundException("TipoProducto",idTipoProducto);
+    String deleteTipoProducto(@PathVariable Integer idTipoProducto) {
+        if (!tipoProductoRepository.existsById(idTipoProducto)) {
+            throw new ResourceNotFoundException("TipoProducto", idTipoProducto);
         }
         tipoProductoRepository.deleteById(idTipoProducto);
         return "El Tipo de producto con id " + idTipoProducto + " ha sido eliminado correctamente";

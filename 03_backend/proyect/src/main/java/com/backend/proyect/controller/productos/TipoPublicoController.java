@@ -1,4 +1,4 @@
-package com.backend.proyect.controller.modulo_productos;
+package com.backend.proyect.controller.productos;
 
 import java.util.List;
 
@@ -12,16 +12,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backend.proyect.exception.modulo_productos.ResourceNotFoundException;
-import com.backend.proyect.model.modulo_productos.TipoPublico;
-import com.backend.proyect.repository.modulo_productos.TipoPublicoRepository;
+import com.backend.proyect.exception.productos.ResourceNotFoundException;
+import com.backend.proyect.model.productos.TipoPublico;
+import com.backend.proyect.repository.productos.TipoPublicoRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class TipoPublicoController {
+
     @Autowired
     // tipoProductoRepository este se pone en los return
-    private TipoPublicoRepository tipoPublicoRepository;  
+    private TipoPublicoRepository tipoPublicoRepository;
 
     @PostMapping("/tipo_publico")
     TipoPublico newTipoPublico(@RequestBody TipoPublico newTipoPublico) {
@@ -29,7 +30,7 @@ public class TipoPublicoController {
     }
 
     @GetMapping("/tipo_publicos")
-    List<TipoPublico> getAllTipoPublico(){
+    List<TipoPublico> getAllTipoPublico() {
         return tipoPublicoRepository.findAll();
     }
 
@@ -39,20 +40,19 @@ public class TipoPublicoController {
                 .orElseThrow(() -> new ResourceNotFoundException("TipoPublico", idPublico));
     }
 
-
     @PutMapping("/tipo_publico/{idPublico}")
-    TipoPublico updateTipoPublico (@RequestBody TipoPublico updateTipoPublico, @PathVariable Integer idPublico){
+    TipoPublico updateTipoPublico(@RequestBody TipoPublico updateTipoPublico, @PathVariable Integer idPublico) {
         return tipoPublicoRepository.findById(idPublico)
-            .map(tipoPublico ->{
-                tipoPublico.setNombrePublico(updateTipoPublico.getNombrePublico());
+                .map(tipoPublico -> {
+                    tipoPublico.setNombrePublico(updateTipoPublico.getNombrePublico());
 
-                return tipoPublicoRepository.save(tipoPublico);
-            }).orElseThrow(()->new ResourceNotFoundException("TipoPublico", idPublico));
+                    return tipoPublicoRepository.save(tipoPublico);
+                }).orElseThrow(() -> new ResourceNotFoundException("TipoPublico", idPublico));
     }
 
     @DeleteMapping("/tipo_publico/{idPublico}")
-    String deleteTipoPublico (@PathVariable Integer idPublico){
-        if(!tipoPublicoRepository.existsById(idPublico)){
+    String deleteTipoPublico(@PathVariable Integer idPublico) {
+        if (!tipoPublicoRepository.existsById(idPublico)) {
             throw new ResourceNotFoundException("TipoPublico", idPublico);
         }
         tipoPublicoRepository.deleteById(idPublico);

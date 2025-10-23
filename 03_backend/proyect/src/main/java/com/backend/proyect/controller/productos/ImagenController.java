@@ -1,4 +1,4 @@
-package com.backend.proyect.controller.modulo_productos;
+package com.backend.proyect.controller.productos;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.backend.proyect.exception.modulo_productos.ResourceNotFoundException;
-import com.backend.proyect.model.modulo_productos.Imagen;
-import com.backend.proyect.model.modulo_productos.Producto;
-import com.backend.proyect.repository.modulo_productos.ImagenRepository;
-import com.backend.proyect.repository.modulo_productos.ProductoRepository;
+import com.backend.proyect.exception.productos.ResourceNotFoundException;
+import com.backend.proyect.model.productos.Imagen;
+import com.backend.proyect.model.productos.Producto;
+import com.backend.proyect.repository.productos.ImagenRepository;
+import com.backend.proyect.repository.productos.ProductoRepository;
 
 
 @CrossOrigin(origins = "http://localhost:3000")

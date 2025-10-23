@@ -1,4 +1,4 @@
-package com.backend.proyect.controller.modulo_productos;
+package com.backend.proyect.controller.productos;
 
 import java.util.List;
 
@@ -14,35 +14,36 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backend.proyect.DTO.modulo_productos.StockDTO;
-import com.backend.proyect.exception.modulo_productos.ResourceNotFoundException;
-import com.backend.proyect.model.modulo_productos.Color;
-import com.backend.proyect.model.modulo_productos.Producto;
-import com.backend.proyect.model.modulo_productos.Stock;
-import com.backend.proyect.model.modulo_productos.Variacion;
-import com.backend.proyect.repository.modulo_productos.ColorRepository;
-import com.backend.proyect.repository.modulo_productos.ProductoRepository;
-import com.backend.proyect.repository.modulo_productos.StockRepository;
-import com.backend.proyect.repository.modulo_productos.VariacionRepository;
-import com.backend.proyect.service.modulo_productos.GetStockService;
-import com.backend.proyect.service.modulo_productos.PostStockService;
+import com.backend.proyect.dto.productos.StockDTO;
+import com.backend.proyect.exception.productos.ResourceNotFoundException;
+import com.backend.proyect.model.productos.Color;
+import com.backend.proyect.model.productos.Producto;
+import com.backend.proyect.model.productos.Stock;
+import com.backend.proyect.model.productos.Variacion;
+import com.backend.proyect.repository.productos.ColorRepository;
+import com.backend.proyect.repository.productos.ProductoRepository;
+import com.backend.proyect.repository.productos.StockRepository;
+import com.backend.proyect.repository.productos.VariacionRepository;
+import com.backend.proyect.service.productos.GetStockService;
+import com.backend.proyect.service.productos.PostStockService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 
 public class StockController {
-@Autowired
-private GetStockService getStockService;
-@Autowired
-private PostStockService postStockService;
-@Autowired
-private StockRepository stockRepository;
-@Autowired 
-private ColorRepository colorRepository;
-@Autowired
-private VariacionRepository variacionRepository;
-@Autowired
-private ProductoRepository productoRepository;
+
+    @Autowired
+    private GetStockService getStockService;
+    @Autowired
+    private PostStockService postStockService;
+    @Autowired
+    private StockRepository stockRepository;
+    @Autowired
+    private ColorRepository colorRepository;
+    @Autowired
+    private VariacionRepository variacionRepository;
+    @Autowired
+    private ProductoRepository productoRepository;
 
     @PostMapping("/stock")
     ResponseEntity<Stock> newStock(@RequestBody StockDTO stockDTO) {
@@ -54,11 +55,10 @@ private ProductoRepository productoRepository;
         stock.setStockActual(stockDTO.getStockActual());
         stock.setProducto(producto);
 
-
         // Color opcional
         if (stockDTO.getIdColor() != null) {
             Color color = colorRepository.findById(stockDTO.getIdColor())
-                .orElseThrow(() -> new ResourceNotFoundException("Color", stockDTO.getIdColor()));
+                    .orElseThrow(() -> new ResourceNotFoundException("Color", stockDTO.getIdColor()));
             stock.setColor(color);
         } else {
             stock.setColor(null);
@@ -67,7 +67,7 @@ private ProductoRepository productoRepository;
         // Variación opcional
         if (stockDTO.getIdVariacion() != null) {
             Variacion variacion = variacionRepository.findById(stockDTO.getIdVariacion())
-                .orElseThrow(() -> new ResourceNotFoundException("Variacion", stockDTO.getIdVariacion()));
+                    .orElseThrow(() -> new ResourceNotFoundException("Variacion", stockDTO.getIdVariacion()));
             stock.setVariacion(variacion);
         } else {
             stock.setVariacion(null);
@@ -83,8 +83,8 @@ private ProductoRepository productoRepository;
     }
 
     @GetMapping("/stocks")
-    ResponseEntity <List<StockDTO>> getAllStock() {
-    List<StockDTO> listaStockDTO  = stockRepository.findAll().stream().map(stock -> {
+    ResponseEntity<List<StockDTO>> getAllStock() {
+        List<StockDTO> listaStockDTO = stockRepository.findAll().stream().map(stock -> {
             StockDTO stockDTOs = new StockDTO();
             stockDTOs.setIdStock(stock.getIdStock());  // <- importante, para eliminar
             stockDTOs.setCodigoReferencia(stock.getProducto().getCodigoReferencia());
@@ -101,10 +101,10 @@ private ProductoRepository productoRepository;
 
             //esto permite que este null no de error
             stockDTOs.setNombre(
-                stock.getVariacion() != null ? stock.getVariacion().getNombre() : "Sin variación"
+                    stock.getVariacion() != null ? stock.getVariacion().getNombre() : "Sin variación"
             );
             stockDTOs.setNombreColor(
-                stock.getColor() != null ? stock.getColor().getNombreColor() : "Sin color"
+                    stock.getColor() != null ? stock.getColor().getNombreColor() : "Sin color"
             );
             return stockDTOs;
         }).toList();
@@ -112,52 +112,51 @@ private ProductoRepository productoRepository;
     }
 
     @GetMapping("/stock/{idStock}")
-     ResponseEntity<Stock> getOneStock(@PathVariable Integer idStock) {
+    ResponseEntity<Stock> getOneStock(@PathVariable Integer idStock) {
         Stock stock = stockRepository.findById(idStock)
                 .orElseThrow(() -> new ResourceNotFoundException("Stock", idStock));
         return ResponseEntity.ok(stock); // 200 OK
     }
 
     @PutMapping("/stock/{idStock}")
-    ResponseEntity <Stock> updateStock (@RequestBody StockDTO updateStockDTO, @PathVariable Integer idStock){
+    ResponseEntity<Stock> updateStock(@RequestBody StockDTO updateStockDTO, @PathVariable Integer idStock) {
         return stockRepository.findById(idStock)
-            .map(stock ->{
-            // Buscar las entidades relacionadas por ID
-        Producto producto = productoRepository.findById(updateStockDTO.getIdProducto())
-            .orElseThrow(() -> new ResourceNotFoundException("Producto", updateStockDTO.getIdProducto()));
+                .map(stock -> {
+                    // Buscar las entidades relacionadas por ID
+                    Producto producto = productoRepository.findById(updateStockDTO.getIdProducto())
+                            .orElseThrow(() -> new ResourceNotFoundException("Producto", updateStockDTO.getIdProducto()));
 
+                    // Color opcional
+                    if (updateStockDTO.getIdColor() != null) {
+                        Color color = colorRepository.findById(updateStockDTO.getIdColor())
+                                .orElseThrow(() -> new ResourceNotFoundException("Color", updateStockDTO.getIdColor()));
+                        stock.setColor(color);
+                    } else {
+                        stock.setColor(null);
+                    }
 
-        // Color opcional
-        if (updateStockDTO.getIdColor() != null) {
-            Color color = colorRepository.findById(updateStockDTO.getIdColor())
-                .orElseThrow(() -> new ResourceNotFoundException("Color", updateStockDTO.getIdColor()));
-            stock.setColor(color);
-        } else {
-            stock.setColor(null);
-        }
+                    // Variación opcional
+                    if (updateStockDTO.getIdVariacion() != null) {
+                        Variacion variacion = variacionRepository.findById(updateStockDTO.getIdVariacion())
+                                .orElseThrow(() -> new ResourceNotFoundException("Variacion", updateStockDTO.getIdVariacion()));
+                        stock.setVariacion(variacion);
+                    } else {
+                        stock.setVariacion(null);
+                    }
 
-        // Variación opcional
-        if (updateStockDTO.getIdVariacion() != null) {
-            Variacion variacion = variacionRepository.findById(updateStockDTO.getIdVariacion())
-                .orElseThrow(() -> new ResourceNotFoundException("Variacion", updateStockDTO.getIdVariacion()));
-            stock.setVariacion(variacion);
-        } else {
-            stock.setVariacion(null);
-        }
+                    stock.setStockMinimo(updateStockDTO.getStockMinimo());
+                    stock.setStockActual(updateStockDTO.getStockActual());
+                    stock.setProducto(producto);
 
-        stock.setStockMinimo(updateStockDTO.getStockMinimo());
-        stock.setStockActual(updateStockDTO.getStockActual());
-        stock.setProducto(producto);
-
-        Stock actualizado = stockRepository.save(stock);
-        return ResponseEntity.ok(actualizado); // 200 OK
-        }).orElseThrow(()->new ResourceNotFoundException("Stock",idStock));
+                    Stock actualizado = stockRepository.save(stock);
+                    return ResponseEntity.ok(actualizado); // 200 OK
+                }).orElseThrow(() -> new ResourceNotFoundException("Stock", idStock));
     }
 
     @DeleteMapping("/stock/{idStock}")
-    ResponseEntity<Void> deleteStock (@PathVariable Integer idStock){
-        if(!stockRepository.existsById(idStock)){
-            throw new ResourceNotFoundException("Stock",idStock);
+    ResponseEntity<Void> deleteStock(@PathVariable Integer idStock) {
+        if (!stockRepository.existsById(idStock)) {
+            throw new ResourceNotFoundException("Stock", idStock);
         }
         stockRepository.deleteById(idStock);
         return ResponseEntity.noContent().build();// 204 No Content

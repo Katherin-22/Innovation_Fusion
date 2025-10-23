@@ -1,4 +1,4 @@
-package com.backend.proyect.controller.modulo_productos;
+package com.backend.proyect.controller.productos;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,21 +17,21 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backend.proyect.DTO.modulo_productos.ProductoDTO;
-import com.backend.proyect.exception.modulo_productos.ConflictException;
-import com.backend.proyect.exception.modulo_productos.ResourceNotFoundException;
-import com.backend.proyect.model.modulo_productos.Categoria;
-import com.backend.proyect.model.modulo_productos.Marca;
-import com.backend.proyect.model.modulo_productos.Material;
-import com.backend.proyect.model.modulo_productos.Producto;
-import com.backend.proyect.model.modulo_productos.TipoPublico;
-import com.backend.proyect.model.modulo_promociones.Promocion;
-import com.backend.proyect.repository.modulo_productos.CategoriaRepository;
-import com.backend.proyect.repository.modulo_productos.MarcaRepository;
-import com.backend.proyect.repository.modulo_productos.MaterialRepository;
-import com.backend.proyect.repository.modulo_productos.ProductoRepository;
-import com.backend.proyect.repository.modulo_productos.TipoPublicoRepository;
-import com.backend.proyect.repository.modulo_promociones.PromocionRepository;
+import com.backend.proyect.dto.productos.ProductoDTO;
+import com.backend.proyect.exception.productos.ConflictException;
+import com.backend.proyect.exception.productos.ResourceNotFoundException;
+import com.backend.proyect.model.productos.Categoria;
+import com.backend.proyect.model.productos.Marca;
+import com.backend.proyect.model.productos.Material;
+import com.backend.proyect.model.productos.Producto;
+import com.backend.proyect.model.productos.TipoPublico;
+import com.backend.proyect.model.promociones.Promocion;
+import com.backend.proyect.repository.productos.CategoriaRepository;
+import com.backend.proyect.repository.productos.MarcaRepository;
+import com.backend.proyect.repository.productos.MaterialRepository;
+import com.backend.proyect.repository.productos.ProductoRepository;
+import com.backend.proyect.repository.productos.TipoPublicoRepository;
+import com.backend.proyect.repository.promociones.PromocionRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController

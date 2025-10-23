@@ -1,4 +1,4 @@
-package com.backend.proyect.controller.modulo_promociones;
+package com.backend.proyect.controller.promociones;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backend.proyect.DTO.modulo_promociones.PromocionDTO;
-import com.backend.proyect.exception.modulo_productos.ResourceNotFoundException;
-import com.backend.proyect.model.modulo_promociones.Promocion;
-import com.backend.proyect.repository.modulo_promociones.PromocionRepository;
+import com.backend.proyect.dto.promociones.PromocionDTO;
+import com.backend.proyect.exception.productos.ResourceNotFoundException;
+import com.backend.proyect.model.promociones.Promocion;
+import com.backend.proyect.repository.promociones.PromocionRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController

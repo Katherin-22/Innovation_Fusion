@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backend.proyect.DTO.modulo_productos.CategoriaDTO;
-import com.backend.proyect.exception.modulo_productos.ResourceNotFoundException;
-import com.backend.proyect.model.modulo_productos.Categoria;
-import com.backend.proyect.model.modulo_productos.TipoProducto;
-import com.backend.proyect.repository.modulo_productos.CategoriaRepository;
-import com.backend.proyect.repository.modulo_productos.TipoProductoRepository;
+import com.backend.proyect.dto.productos.CategoriaDTO;
+import com.backend.proyect.exception.productos.ResourceNotFoundException;
+import com.backend.proyect.model.productos.Categoria;
+import com.backend.proyect.model.productos.TipoProducto;
+import com.backend.proyect.repository.productos.CategoriaRepository;
+import com.backend.proyect.repository.productos.TipoProductoRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
