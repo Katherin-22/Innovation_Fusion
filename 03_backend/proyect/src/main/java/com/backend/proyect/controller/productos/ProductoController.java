@@ -152,13 +152,12 @@ ResponseEntity<List<ProductoDTO>> getProductos() {
     ResponseEntity<Producto> updateProducto( @RequestBody ProductoDTO productoDTO, @PathVariable Integer idProducto) {
     return productoRepository.findById(idProducto)
             .map(producto -> {
-        String codigoReferencia = productoDTO.getCodigoReferencia().toLowerCase();
+        String codigoNuevo = productoDTO.getCodigoReferencia().toLowerCase();
+        String codigoActual = producto.getCodigoReferencia();
 
-        if (
-            productoRepository.existsByCodigoReferencia(codigoReferencia) // 1
-            && !producto.getCodigoReferencia().equals(codigoReferencia)   // 2
-        ) {
-            throw new ConflictException("Ya existe un producto con el código " + productoDTO.getCodigoReferencia());
+        if (!codigoActual.equals(codigoNuevo)){
+            if (productoRepository.existsByCodigoReferenciaAndIdProductoNot(codigoNuevo, idProducto))
+            throw new ConflictException("Ya existe un producto con el código " + productoDTO.getCodigoReferencia()); 
         }
 
         if (productoDTO.getPrecio() < 0) {
@@ -178,7 +177,7 @@ ResponseEntity<List<ProductoDTO>> getProductos() {
                 .orElseThrow(()->new ResourceNotFoundException("Tipo Publico",productoDTO.getIdPublico()));
         
         producto.setNombreProducto(productoDTO.getNombreProducto());
-        producto.setCodigoReferencia(codigoReferencia);
+        producto.setCodigoReferencia(codigoNuevo);
         producto.setDescripcion(productoDTO.getDescripcion());
         producto.setPrecio(productoDTO.getPrecio());
         producto.setFechaModificacion(LocalDate.now());

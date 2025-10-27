@@ -25,7 +25,6 @@ import com.backend.proyect.repository.productos.ProductoRepository;
 import com.backend.proyect.repository.productos.StockRepository;
 import com.backend.proyect.repository.productos.VariacionRepository;
 import com.backend.proyect.service.productos.GetStockService;
-import com.backend.proyect.service.productos.PostStockService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -34,8 +33,6 @@ public class StockController {
 
     @Autowired
     private GetStockService getStockService;
-    @Autowired
-    private PostStockService postStockService;
     @Autowired
     private StockRepository stockRepository;
     @Autowired

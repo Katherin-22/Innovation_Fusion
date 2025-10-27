@@ -17,6 +17,7 @@ import CreateProducto from "../pages/administrador/producto/CreateProducto";
 import UpdateProducto from "../pages/administrador/producto/UpdateProducto";
 import ProductoGen from "../pages/home/productoGen";
 import CreateImagen from "../pages/administrador/imagen/CreateImagen";
+import GetCategoria from "../pages/administrador/categoria/GetCategoria";
 
 
 
@@ -37,6 +38,8 @@ export default function AppRoutes() {
       <Route path="/producto/:idProducto" element={<UpdateProducto/>}></Route>
       <Route path="/home/:codigoReferencia" element={<ProductoGen />} />
       <Route path="/producto/:idProducto/imagenes" element={<CreateImagen/>} > </Route>
+      <Route path="/ver_categoria" element={<GetCategoria/>}></Route> 
+
       
     </Routes>
   );

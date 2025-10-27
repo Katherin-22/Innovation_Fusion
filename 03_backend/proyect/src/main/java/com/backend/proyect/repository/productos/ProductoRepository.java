@@ -11,6 +11,9 @@ public interface ProductoRepository extends JpaRepository<Producto,Integer>{
     // Verifica si ya existe un producto con ese código de referencia
     boolean existsByCodigoReferencia(String codigoReferencia);
 
+    //Verifica si existe otro producto con el mismo código de referencia al actualizar
+    boolean existsByCodigoReferenciaAndIdProductoNot (String codigoReferencia, Integer IdProducto);
+
     // Opcional: obtener un producto por su código
     Optional<Producto> findByCodigoReferencia(String codigoReferencia);
 

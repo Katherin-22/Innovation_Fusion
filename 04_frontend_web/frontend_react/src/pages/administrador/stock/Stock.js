@@ -58,7 +58,7 @@ export default function Stock() {
                 <h1 className="mb-0">STOCK</h1>
             </div>
             <div className="col-9 d-flex align-items-end px-1 gap-2 w-50">
-                <a href="./REGISTRO_PRODUCTO.HTML" className="btn custom-btn btn-light">Categoria</a>
+                <Link to="/ver_categoria" className="btn custom-btn btn-light">Categoria</Link>
                 <Link to="/ver_producto" className="btn custom-btn btn-light">Producto</Link>
                 <a href="./REGISTRO_DESCUENTO.HTML" className="btn custom-btn btn-light">Descuento</a>
             </div>
