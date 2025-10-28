@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /*Cuándo usarla: cuando el cliente manda datos inválidos 
 (ejemplo: precio negativo, fecha en formato incorrecto).
 Sirve para: POST y PUT (validaciones de entrada). */
-
-
-/*404 → Cuando no encuentras algo → ResourceNotFoundException.
+ /*404 → Cuando no encuentras algo → ResourceNotFoundException.
 400 → Cuando los datos son inválidos → IllegalArgumentException.
 409 → Cuando hay un conflicto → ConflictException.
 500 → Cualquier error inesperado → Exception. */

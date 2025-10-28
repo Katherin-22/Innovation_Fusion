@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {getStock, deleteStock  } from "../../../services/administrador/StockService";
+import {getStockById, deleteStock  } from "../../../services/administrador/StockService";
 import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
 
 import "../../../styles/Administrador/inventario.css";
@@ -14,10 +14,9 @@ export default function Stock() {
 
   // Traer los stocks al cargar la página
   useEffect(() => {
-    const fetchStock = async () => {
+    const fetchStockId = async (idStock) => {
       try {
-        const response = await getStock();
-        console.log("Stock desde API:", response.data); // <-- aquí revisa los nombres
+        const response = await getStockById(idStock);
         setStock(response.data);
       } catch (error) {
         console.error("Error al cargar stock", error);
@@ -26,8 +25,10 @@ export default function Stock() {
       }
     };
 
-    fetchStock();
-  }, []);
+    if (idStock) {
+        fetchStockId(idStock); //  solo se ejecuta si hay id en la URL
+    }
+  }, [idStock]);
 
   // Función para eliminar un stock directamente desde el service
   const handleDeleteStock = async (idStock) => {
@@ -83,14 +84,10 @@ export default function Stock() {
                         <tbody>
                         {stock.map((s) => (
                             <tr>
-                            <td>{s.codigoReferencia}</td>
-                            <td>{s.nombreProducto}</td>
-                            <td>{s.nombreTipoProducto}</td>
-                            <td>{s.precio}</td>
                             <td>{s.nombre}</td>
                             <td>{s.nombreColor}</td>
                             <td>{s.stockActual}</td>
-                            <td>{s.estadoProducto}</td>
+                            <td>{s.stockMinimo}</td>
                             <td><Link to="/Administrador/stock" id="boton_agregar" className="btn btn-light">Editar</Link>
                             <button
                             className="btn btn-light"
@@ -98,7 +95,7 @@ export default function Stock() {
                             >
                             Eliminar
                             </button>
-                                <Link to={`/stock/${s.idStock}`} id="boton_eliminar" className="btn btn-light">Agregar Stock</Link>
+                                <Link to="/Administrador/stock" id="boton_eliminar" className="btn btn-light">Agregar Tallas/colores</Link>
                             </td>
 
                             </tr>

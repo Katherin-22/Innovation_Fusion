@@ -87,12 +87,8 @@ public class StockController {
             stockDTOs.setCodigoReferencia(stock.getProducto().getCodigoReferencia());
             stockDTOs.setNombreProducto(stock.getProducto().getNombreProducto());
             stockDTOs.setNombreTipoProducto(stock.getProducto().getCategoria().getTipoProducto().getNombreTipoProducto());
-            stockDTOs.setNombreCategoria(stock.getProducto().getCategoria().getNombreCategoria());
-            stockDTOs.setDescripcion(stock.getProducto().getDescripcion());
             stockDTOs.setStockActual(stock.getStockActual());
             stockDTOs.setPrecio(stock.getProducto().getPrecio());
-            stockDTOs.setNombreMarca(stock.getProducto().getMarca().getNombreMarca());
-            stockDTOs.setNombreMaterial(stock.getProducto().getMaterial().getNombreMaterial());
             stockDTOs.setNombrePublico(stock.getProducto().getTipoPublico().getNombrePublico());
             stockDTOs.setEstadoProducto(stock.getProducto().getEstadoProducto());
 

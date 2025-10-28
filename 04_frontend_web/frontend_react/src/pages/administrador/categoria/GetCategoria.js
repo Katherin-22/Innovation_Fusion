@@ -56,7 +56,7 @@ export default function GetCategoria() {
                 <h1 className="mb-0">CATEGORIAS</h1>
             </div>
             <div className="col-9 d-flex align-items-end px-1 gap-2 w-50">
-                <Link to="/crear_producto" className="btn custom-btn btn-light">Registrar Categoria</Link>
+                <Link to="/categoria" className="btn custom-btn btn-light">Registrar Categoria</Link>
             </div>
         </div>
     </div>      

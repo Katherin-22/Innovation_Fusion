@@ -65,13 +65,6 @@ Y lo guarda en user con setUsers.*/}
 {/*después de guardar, te lleva a la página principal */}
         navigate("/ver_producto")
     }
-console.log({ categorias, marcas, materiales, tipoPublicos, promociones });
-console.log("categorias:", categorias);
-console.log("marcas:", marcas);
-console.log("materiales:", materiales);
-console.log("tipoPublicos:", tipoPublicos);
-console.log("promociones:", promociones);
-
 
   return (
 
