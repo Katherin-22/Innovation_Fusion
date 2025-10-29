@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../styles/Galeria.css";
+/* import "../styles/Galeria.css";*/
 
 // Importa todas las imágenes estáticas desde la carpeta assets
 
