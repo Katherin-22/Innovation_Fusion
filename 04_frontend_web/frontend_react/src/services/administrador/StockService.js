@@ -10,9 +10,9 @@ export const getStock = async () => {
     return await api_url.get("/stocks");
 };
 
-// Obtener un stock por ID
-export const getStockById  = async (idStock) => {
-    return await api_url.get(`/stock/${idStock}`);
+// Obtener un stock por ID de producto
+export const getStockByProducto = async (idProducto) => {
+    return await api_url.get(`/stock/producto/${idProducto}`);
 };
 
 // Actualizar un stock

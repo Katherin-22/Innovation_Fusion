@@ -57,7 +57,7 @@ export default function CreateCategoria() {
     const onSubmit=async (e)=>{
         e.preventDefault();
         await handleCreateCategoria(categoria); // manda datos al backend
-        navigate("/ver_producto")
+        navigate("/ver_categoria")
     }
 
   return (
@@ -113,7 +113,7 @@ export default function CreateCategoria() {
 
 
             {/* esto es para cancelar el formulario*/} 
-            <Link className="btn btn-outline-danger mx-2" to="/ver_producto">
+            <Link className="btn btn-outline-danger mx-2" to="/ver_categoria">
                 Cancel
             </Link>
         </div>

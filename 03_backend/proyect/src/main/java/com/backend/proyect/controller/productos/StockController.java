@@ -84,6 +84,7 @@ public class StockController {
         List<StockDTO> listaStockDTO = stockRepository.findAll().stream().map(stock -> {
             StockDTO stockDTOs = new StockDTO();
             stockDTOs.setIdStock(stock.getIdStock());  // <- importante, para eliminar
+            stockDTOs.setIdProducto(stock.getProducto().getIdProducto()); // <- importante, para ir al stock por idProducto
             stockDTOs.setCodigoReferencia(stock.getProducto().getCodigoReferencia());
             stockDTOs.setNombreProducto(stock.getProducto().getNombreProducto());
             stockDTOs.setNombreTipoProducto(stock.getProducto().getCategoria().getTipoProducto().getNombreTipoProducto());
@@ -104,11 +105,26 @@ public class StockController {
         return ResponseEntity.ok(listaStockDTO);
     }
 
-    @GetMapping("/stock/{idStock}")
-    ResponseEntity<Stock> getOneStock(@PathVariable Integer idStock) {
-        Stock stock = stockRepository.findById(idStock)
-                .orElseThrow(() -> new ResourceNotFoundException("Stock", idStock));
-        return ResponseEntity.ok(stock); // 200 OK
+    @GetMapping("/stock/producto/{idProducto}")
+    ResponseEntity<List<StockDTO>> getStockByProducto(@PathVariable Integer idProducto) {
+        List<StockDTO> IdStockProducto = stockRepository.findByProductoIdProducto(idProducto).stream().map(stock -> {
+            StockDTO dto = new StockDTO();
+            dto.setIdStock(stock.getIdStock());  // <- importante, para eliminar
+            dto.setIdProducto(stock.getProducto().getIdProducto()); // <- importante, para ir al stock por idProducto
+            dto.setNombreProducto(stock.getProducto().getNombreProducto());
+            dto.setStockMinimo(stock.getStockMinimo());
+            dto.setStockActual(stock.getStockActual());
+
+            //esto permite que este null no de error
+            dto.setNombre(
+                    stock.getVariacion() != null ? stock.getVariacion().getNombre() : "Sin variación"
+            );
+            dto.setNombreColor(
+                    stock.getColor() != null ? stock.getColor().getNombreColor() : "Sin color"
+            );
+            return dto;
+        }).toList();
+        return ResponseEntity.ok(IdStockProducto);
     }
 
     @PutMapping("/stock/{idStock}")

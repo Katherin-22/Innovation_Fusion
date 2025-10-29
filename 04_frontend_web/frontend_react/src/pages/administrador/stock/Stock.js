@@ -8,9 +8,7 @@ import { Link, useParams } from 'react-router-dom';
 
 export default function Stock() {
   const [stock, setStock] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const { idStock } = useParams();
+  const [loading, setLoading] = useState(true);  
 
   // Traer los stocks al cargar la página
   useEffect(() => {
@@ -55,12 +53,12 @@ export default function Stock() {
     <div className="header">    
         <div className="row custom-header">
             <div className="col-3 d-flex align-items-center justify-content-between">
-                <h1 className="mb-0">STOCK</h1>
+                <h1 className="mb-0">STOCK GENERAL</h1>
             </div>
             <div className="col-9 d-flex align-items-end px-1 gap-2 w-50">
                 <Link to="/ver_categoria" className="btn custom-btn btn-light">Categoria</Link>
                 <Link to="/ver_producto" className="btn custom-btn btn-light">Producto</Link>
-                <a href="./REGISTRO_DESCUENTO.HTML" className="btn custom-btn btn-light">Descuento</a>
+                <Link to="/ver_promocion" className="btn custom-btn btn-light">Promoción</Link>
             </div>
         </div>
     </div>      
@@ -91,14 +89,14 @@ export default function Stock() {
                             <td>{s.nombreColor}</td>
                             <td>{s.stockActual}</td>
                             <td>{s.estadoProducto}</td>
-                            <td><Link to="/Administrador/stock" id="boton_agregar" className="btn btn-light">Editar</Link>
+                            <td>
                             <button
                             className="btn btn-light"
                             onClick={() => handleDeleteStock(s.idStock)}
                             >
                             Eliminar
                             </button>
-                                <Link to={`/stock/${s.idStock}`} id="boton_eliminar" className="btn btn-light">Agregar Stock</Link>
+                            <Link to={`/stock/producto/${s.idProducto}`} id="boton_eliminar" className="btn btn-light">Agregar Stock</Link>
                             </td>
 
                             </tr>

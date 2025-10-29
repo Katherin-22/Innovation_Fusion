@@ -20,6 +20,7 @@ import CreateImagen from "../pages/administrador/imagen/CreateImagen";
 import GetCategoria from "../pages/administrador/categoria/GetCategoria";
 import CreateCategoria from "../pages/administrador/categoria/CreateCategoria";
 import GetIDStock from "../pages/administrador/stock/GetIDStock";
+import GetPromocion from "../pages/administrador/promocion/GetPromocion";
 
 
 
@@ -42,7 +43,9 @@ export default function AppRoutes() {
       <Route path="/producto/:idProducto/imagenes" element={<CreateImagen/>} > </Route>
       <Route path="/ver_categoria" element={<GetCategoria/>}></Route>
       <Route path="/categoria" element={<CreateCategoria/>}></Route> 
-      <Route path="/stock/:idStock" element={<GetIDStock/>}></Route> 
+      <Route path="/stock/producto/:idProducto" element={<GetIDStock/>}></Route> 
+      <Route path="/ver_promocion" element={<GetPromocion/>}></Route> 
+
 
     </Routes>
   );

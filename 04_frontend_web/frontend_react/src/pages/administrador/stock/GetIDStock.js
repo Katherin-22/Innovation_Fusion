@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {getStockById, deleteStock  } from "../../../services/administrador/StockService";
+import {getStockByProducto , deleteStock  } from "../../../services/administrador/StockService";
 import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
 
 import "../../../styles/Administrador/inventario.css";
@@ -10,14 +10,23 @@ export default function Stock() {
   const [stock, setStock] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const { idStock } = useParams();
+  const { idProducto } = useParams();
+
+  const [nombreProducto, setNombreProducto] = useState("");
+
+
+console.log("idProducto desde URL:", idProducto);
+
 
   // Traer los stocks al cargar la página
   useEffect(() => {
-    const fetchStockId = async (idStock) => {
+    const fetchStockId = async (idProducto) => {
       try {
-        const response = await getStockById(idStock);
+        const response = await getStockByProducto (idProducto);
         setStock(response.data);
+      if (response.data.length > 0) {
+        setNombreProducto(response.data[0].nombreProducto);
+      }
       } catch (error) {
         console.error("Error al cargar stock", error);
       } finally {
@@ -25,10 +34,10 @@ export default function Stock() {
       }
     };
 
-    if (idStock) {
-        fetchStockId(idStock); //  solo se ejecuta si hay id en la URL
+    if (idProducto) {
+        fetchStockId(idProducto); //  solo se ejecuta si hay id en la URL
     }
-  }, [idStock]);
+  }, [idProducto]);
 
   // Función para eliminar un stock directamente desde el service
   const handleDeleteStock = async (idStock) => {
@@ -56,12 +65,12 @@ export default function Stock() {
     <div className="header">    
         <div className="row custom-header">
             <div className="col-3 d-flex align-items-center justify-content-between">
-                <h1 className="mb-0">STOCK</h1>
+                <h1 className="mb-0">Stock {nombreProducto}</h1>
             </div>
             <div className="col-9 d-flex align-items-end px-1 gap-2 w-50">
-                <Link to="/ver_categoria" className="btn custom-btn btn-light">Categoria</Link>
-                <Link to="/ver_producto" className="btn custom-btn btn-light">Producto</Link>
-                <a href="./REGISTRO_DESCUENTO.HTML" className="btn custom-btn btn-light">Descuento</a>
+                <Link to="/ver_categoria" className="btn custom-btn btn-light">Registrar Stock</Link>
+                {/*<Link to="/ver_producto" className="btn custom-btn btn-light">Producto</Link>}
+                {/*<a href="./REGISTRO_DESCUENTO.HTML" className="btn custom-btn btn-light">Descuento</a>*/}
             </div>
         </div>
     </div>      
@@ -70,14 +79,10 @@ export default function Stock() {
                 <table>
                     <thead>
                         <tr>
-                        <th>Código</th>
-                        <th>Nombre</th>
-                        <th>Tipo Producto</th>
-                        <th>Precio de Venta</th>
                         <th>Talla Disponible</th>
                         <th>Color Disponible</th>
                         <th>Stock Actual</th>
-                        <th>Estado</th>
+                        <th>Stock Minimo</th>
                         <th>Acciones</th>
                         </tr>
                     </thead>
@@ -95,7 +100,6 @@ export default function Stock() {
                             >
                             Eliminar
                             </button>
-                                <Link to="/Administrador/stock" id="boton_eliminar" className="btn btn-light">Agregar Tallas/colores</Link>
                             </td>
 
                             </tr>
