@@ -34,15 +34,15 @@ export default function GetPromocion() {
 
     try {
       await deletePromocion(idPromocion);
-      setStock(stock.filter(s => s.idPromocion !== idPromocion)); // actualizamos la lista
+      setPromocion(promocion.filter(s => s.idPromocion !== idPromocion)); // actualizamos la lista
       alert("Promocion eliminada");
     } catch (error) {
       console.error("Error al eliminar la promocion", error);
-      alert("No se pudo eliminar el stock. Revisa si tiene relaciones activas.");
+      alert("No se pudo eliminar el promocion. Revisa si tiene relaciones activas.");
     }
   };
 
-  if (loading) return <p>Cargando stock...</p>;
+  if (loading) return <p>Cargando promocion...</p>;
 
   return (
 
@@ -88,7 +88,7 @@ export default function GetPromocion() {
                             <td>
                             <button
                             className="btn btn-light"
-                            onClick={() => handleDeleteStock(p.idStock)}
+                            onClick={() => deletePromocion(p.idPromocion)}
                             >
                             Eliminar
                             </button>
