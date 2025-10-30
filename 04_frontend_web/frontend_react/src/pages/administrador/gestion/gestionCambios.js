@@ -1,6 +1,6 @@
 import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
-import "../../../styles/Administrador/gestion_producto.css";
-import "../../../styles/Administrador/inventario.css";
+import "../../../styles/administrador/gestion_producto.css";
+import "../../../styles/administrador/inventario.css";
 
 const GestionCambios = () => {
     return (

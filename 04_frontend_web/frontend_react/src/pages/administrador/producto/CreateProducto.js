@@ -8,8 +8,8 @@ import {useGetMaterial} from "../../../hooks/material/useGetMaterial";
 import {useGetTipoPublicos} from "../../../hooks/tipoPublico/useGetTipoPublico";
 import {useGetPromociones} from "../../../hooks/promocion/useGetPromocion";
 import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
-import "../../../styles/Administrador/inventario.css";
-import "../../../styles/Administrador/gestion_producto.css";
+import "../../../styles/administrador/inventario.css";
+import "../../../styles/administrador/gestion_producto.css";
 
 export default function CreateProducto() {
 {/*navigate=useNavigate():Sirve para moverte entre páginas desde el código */}
