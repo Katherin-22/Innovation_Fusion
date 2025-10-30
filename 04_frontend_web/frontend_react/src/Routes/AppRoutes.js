@@ -21,7 +21,11 @@ import GetCategoria from "../pages/administrador/categoria/GetCategoria";
 import CreateCategoria from "../pages/administrador/categoria/CreateCategoria";
 import GetIDStock from "../pages/administrador/stock/GetIDStock";
 import GetPromocion from "../pages/administrador/promocion/GetPromocion";
-
+import Login from '../components/Login';
+import RegistrarUsuarios from '../components/RegistrarUsuarios';
+import RecuperarContraseña from '../components/RecuperarContraseña';
+import Principal from '../components/Principal';
+import CollageLogin from '../pages/Collage-Login';
 
 
 export default function AppRoutes() {
@@ -45,7 +49,20 @@ export default function AppRoutes() {
       <Route path="/categoria" element={<CreateCategoria/>}></Route> 
       <Route path="/stock/producto/:idProducto" element={<GetIDStock/>}></Route> 
       <Route path="/ver_promocion" element={<GetPromocion/>}></Route> 
+        {/* Ruta para el Login*/}
+        <Route  path='/login' element={<Login/>}/>
 
+        {/* Ruta para el Registro*/}
+        <Route  path='/registrarusuarios' element={<RegistrarUsuarios/>}/>
+
+        {/* Ruta para Restablecer contraseña*/}
+        <Route  path='/recuperarcontraseña' element={<RecuperarContraseña/>}/>
+
+        {/* Ruta principal*/}
+        <Route  path='/principal' element={<Principal/>}/>
+
+        {/* Ruta para el collage*/}
+        <Route  path='/collage-login' element={<CollageLogin/>}/>
 
     </Routes>
   );

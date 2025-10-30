@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+{/*import React, { useState, useEffect } from 'react';
 import {getPromociones, deletePromocion } from "../../../services/administrador/PromocionService";
 import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
 
@@ -103,4 +103,4 @@ export default function GetPromocion() {
         </div>
 </div>
   )
-}
+}*/}
