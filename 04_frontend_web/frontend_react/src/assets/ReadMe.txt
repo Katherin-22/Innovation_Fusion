@@ -1,0 +1,1 @@
+Recursos estáticos del proyecto: imágenes, íconos, fuentes, backgrounds

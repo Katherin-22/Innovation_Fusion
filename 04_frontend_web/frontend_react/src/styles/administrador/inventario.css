@@ -1,0 +1,340 @@
+@import url("./gestion_producto.css");
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --body-color: #e4e9f7;
+    --slidebar-color: #fff;
+    --primary-color: #E0B253;
+    --toggle-color: #ddd;
+    --text-color: #000000;
+
+    /* Transiciones */
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.4s ease;
+    --tran-05: all 0.5s ease;
+}
+
+body {
+    height: 100vh;
+    background-color: var(--body-color);
+}
+
+/* ==================== SLIDEBAR ==================== */
+.slidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    padding: 10px 14px;
+    background-color: var(--slidebar-color);
+    transition: var(--tran-05);
+    z-index: 1000;
+}
+
+.slidebar.close {
+    width: 100px;
+}
+
+/* Slidebar Text */
+.slidebar .text {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-color);
+    transition: var(--tran-03);
+}
+
+.slidebar.close .text {
+    opacity: 0;
+    transition: var(--tran-02);
+}
+
+/* Slidebar Header */
+.slidebar header {
+    position: relative;
+}
+
+.slidebar .image-text {
+    display: flex;
+    align-items: center;
+}
+
+.slidebar .image-text img {
+    width: 50px;
+    border-radius: 6px;
+}
+
+.slidebar.close .image-text img {
+    display: flex;
+    align-items: center;
+    margin-left: 3px;
+}
+
+header .image-text .header-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.header-text .name {
+    font-weight: 600;
+}
+
+/* Toggle Button */
+.slidebar header .toggle {
+    position: absolute;
+    top: 50%;
+    right: -25px;
+    transform: translateY(-50%);
+    height: 30px;
+    width: 30px;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 40%;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* ==================== LIST ITEMS ==================== */
+.slidebar li {
+    height: 50px;
+    margin-top: 10px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.slidebar li img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 25px;
+    font-size: 20px;
+}
+
+.slidebar li img,
+.slidebar li .text {
+    color: var(--text-color);
+    transition: var(--tran-03);
+}
+
+.slidebar li a {
+    height: 100%;
+    width: 100%;
+    padding-left: 10px;
+    margin-left: -17px;
+    gap: 15px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+    transition: var(--tran-04);
+}
+
+.slidebar.close li a {
+    display: flex;
+    align-items: center;
+    width: calc(100% + 4px);
+}
+
+.slidebar li a:hover {
+    background: var(--primary-color);
+    border-radius: 8px;
+    transition: var(--tran-04);
+    position: relative;
+    overflow: visible;
+}
+
+.door {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-image: url("../../assets/door-closed.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: background-image 0.5s ease;
+}
+
+a:hover .door {
+    background-image: url("../../assets/door-open.svg");
+}
+
+
+
+.slidebar.close li a:hover .text {
+    opacity: 1;
+    visibility: visible;
+    transition: var(--tran-04);
+    position: absolute;
+    left: 100%;
+    white-space: nowrap;
+    background: var(--primary-color);
+    padding: 8px 10px;
+    border-radius: 6px;
+    margin-left: 10px;
+    color: var(--text-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 100;
+}
+
+
+/* ==================== MENU / FOOTER ==================== */
+.slidebar .menu-bar {
+    height: calc(100% - 50px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.botton-content {
+    margin-left: 30px;
+}
+
+
+
+/* ==================== IMAGE ==================== */
+.slidebar .image {
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+}
+
+/*======================INVENTARIO========================*/
+.main-content {
+    margin-left: 250px; /* ancho del slidebar abierto */
+    padding: 20px;
+    transition: var(--tran-05);
+}
+
+.slidebar.close ~ .main-content {
+    margin-left: 100px; /* ancho cuando el sidebar está cerrado */
+}
+
+.custom-header{
+    margin-top: -18px;
+    margin-left: -20px;
+    height: 69px;
+    border-bottom: 1px solid black;
+}
+
+.custom-btn {
+  background: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  text-decoration: none;
+  transition: var(--tran-03);
+}
+
+.custom-btn:hover {
+  border: 2px solid var(--primary-color);
+  background: var(--body-color);
+  color: var(--primary-color);
+}
+
+/* Ocultar h1 en pantallas pequeñas */
+@media (max-width: 1200px) {
+  .header-container {
+    justify-content: space-between;
+  }
+}
+
+/* Large (≥992px y <1200px) */
+@media (max-width: 992px) {
+  .header-container {
+    justify-content: space-between;
+  }
+}
+
+/* Medium (≥768px y <992px) */
+@media (max-width: 768px) {
+  h1 {
+    display: none;
+  }
+
+  .header-container {
+    justify-content: flex-end;
+  }
+}
+
+/* Menor a 724px */
+@media (max-width: 724px) {
+  .header-container {
+    justify-content: flex-end;
+  }
+}
+
+/* Small (≥576px y <768px) */
+@media (max-width: 576px) {
+  .header-container {
+    justify-content: flex-end;
+  }
+}
+
+/* Extra small (<576px) */
+@media (max-width: 400px) {
+  .header-container {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+}
+
+/* ========================= TABLA ========================= */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+  white-space: normal;
+  word-wrap: break-word;
+  vertical-align: middle;
+  max-width: 200px;
+}
+
+th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: 600;
+}
+
+tr:hover {
+  background-color: #f9f9f9;
+  transition: background-color 0.3s ease;
+}
+
+/* Ajustes responsive de tabla */
+@media (max-width: 992px) {
+  table {
+    font-size: 13px;
+  }
+
+  td, th {
+    padding: 8px;
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 576px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
