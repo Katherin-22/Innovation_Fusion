@@ -33,6 +33,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // desactiva CSRF
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll() // login y registro públicos
+                        //permisos de acceso libre
+                        .requestMatchers("/publico/**").permitAll() // login y registro públicos
                         .anyRequest().authenticated() // lo demás requiere autenticación
                 )
                 .sessionManagement(session -> session
