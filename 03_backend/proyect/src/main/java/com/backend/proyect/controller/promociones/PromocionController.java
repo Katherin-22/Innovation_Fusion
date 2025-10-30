@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ public class PromocionController {
     // tipoProductoRepository este se pone en los return
     private PromocionRepository promocionRepository;  
 
+    @PreAuthorize("hasAuthority('administrador')")
     @PostMapping("/promocion")
     Promocion newPromocion(@RequestBody PromocionDTO promocionDTO) {
         Promocion promocion = new Promocion();
@@ -48,17 +50,18 @@ public class PromocionController {
         return promocionRepository.save(promocion);
     }
 
-    @GetMapping("/promociones")
+    @GetMapping("/publico/promociones")
     List<Promocion> getAllPromocion(){
         return promocionRepository.findAll();
     }
 
-    @GetMapping("/promocion/{idPromocion}")
+    @GetMapping("/publico/promocion/{idPromocion}")
     Promocion getOnePromocion(@PathVariable Integer idPromocion) {
         return promocionRepository.findById(idPromocion)
                 .orElseThrow(() -> new ResourceNotFoundException("Promocion", idPromocion));
     }
     
+    @PreAuthorize("hasAuthority('administrador')")
     @PutMapping("/promocion/{idPromocion}")
     Promocion updatePromocion (@RequestBody PromocionDTO promocionDTO, @PathVariable Integer idPromocion){
         return promocionRepository.findById(idPromocion)
@@ -80,6 +83,7 @@ public class PromocionController {
             }).orElseThrow(()->new ResourceNotFoundException("Promocion", idPromocion));
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @DeleteMapping("/promocion/{idPromocion}")
     String deletePromocion (@PathVariable Integer idPromocion){
         if(!promocionRepository.existsById(idPromocion)){

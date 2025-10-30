@@ -80,13 +80,13 @@ System.out.println("ID producto: " + producto.getIdProducto()); // imprime el va
         return ResponseEntity.ok(imagen);
     }
 
-    @GetMapping("/producto/imagenes")
+    @GetMapping("/publico/producto/imagenes")
     ResponseEntity<List<Imagen>> getAllimagenes() {
         List<Imagen> productos = imagenRepository.findAll();
         return ResponseEntity.ok(productos); // 200 OK
     }
 
-    @GetMapping("/producto/{idProducto}/imagenes")
+    @GetMapping("/publico/producto/{idProducto}/imagenes")
     public ResponseEntity<List<Imagen>> getOneImagenes(@PathVariable Integer idProducto) {
         List<Imagen> imagenes = imagenRepository.findByProductoIdProducto(idProducto);
         return ResponseEntity.ok(imagenes);

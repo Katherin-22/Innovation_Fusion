@@ -14,12 +14,12 @@ export const createImagen = async (idProducto, file) => {
 
 // Obtener todos los Imagen
 export const getImagen = async () => {
-    return await api_url.get("/producto/imagenes");
+    return await api_url.get("/publico/producto/imagenes");
 };
 
 // Obtener un Imagen por ID
 export const getImagenById  = async (idProducto) => {
-    return await api_url.get(`/producto/${idProducto}/imagenes`);
+    return await api_url.get(`/publico/producto/${idProducto}/imagenes`);
 };
 
 // Actualizar una imagen existente

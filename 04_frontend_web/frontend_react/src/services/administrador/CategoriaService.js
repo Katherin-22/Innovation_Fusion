@@ -7,12 +7,12 @@ export const createCategoria = async (categoriaData) => {
 
 // Obtener todos los stocks
 export const getCategorias = async () => {
-    return await api_url.get("/categorias");
+    return await api_url.get("/publico/categorias");
 };
 
 // Obtener un stock por ID
 export const getCategoriaById  = async (idCategoria) => {
-    return await api_url.get(`/categoria/${idCategoria}`);
+    return await api_url.get(`/publico/categoria/${idCategoria}`);
 };
 
 // Actualizar un stock

@@ -7,12 +7,12 @@ export const createStock = async (stockData) => {
 
 // Obtener todos los stocks
 export const getStock = async () => {
-    return await api_url.get("/stocks");
+    return await api_url.get("/publico/stocks");
 };
 
 // Obtener un stock por ID de producto
 export const getStockByProducto = async (idProducto) => {
-    return await api_url.get(`/stock/producto/${idProducto}`);
+    return await api_url.get(`/publico/stock/producto/${idProducto}`);
 };
 
 // Actualizar un stock
@@ -27,7 +27,7 @@ export const deleteStock = async (idStock) => {
 
 // Obtener variaciones de un producto
 export const getVariationsByProductId = async (idProducto) => {
-    return await api_url.get(`/stock/variaciones/${idProducto}`);
+    return await api_url.get(`/publico/stock/variaciones/${idProducto}`);
 };
 
 

@@ -16,6 +16,9 @@ import com.backend.proyect.exception.productos.ResourceNotFoundException;
 import com.backend.proyect.model.productos.Marca;
 import com.backend.proyect.repository.productos.MarcaRepository;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class MarcaController {
@@ -24,22 +27,25 @@ public class MarcaController {
     // tipoProductoRepository este se pone en los return
     private MarcaRepository marcaRepository;
 
+    @PreAuthorize("hasAuthority('administrador')")
     @PostMapping("/marca")
     Marca newMarca(@RequestBody Marca newMarca) {
         return marcaRepository.save(newMarca);
     }
 
-    @GetMapping("/marcas")
+
+    @GetMapping("/publico/marcas")
     List<Marca> getAllMarca() {
         return marcaRepository.findAll();
     }
 
-    @GetMapping("/marca/{idMarca}")
+    @GetMapping("/publico/marca/{idMarca}")
     Marca getOneidMarca(@PathVariable Integer idMarca) {
         return marcaRepository.findById(idMarca)
                 .orElseThrow(() -> new ResourceNotFoundException("Marca", idMarca));
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @PutMapping("/marca/{idMarca}")
     Marca updateMarca(@RequestBody Marca updateMarca, @PathVariable Integer idMarca) {
         return marcaRepository.findById(idMarca)
@@ -50,6 +56,7 @@ public class MarcaController {
                 }).orElseThrow(() -> new ResourceNotFoundException("Marca", idMarca));
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @DeleteMapping("/marca/{idMarca}")
     String deleteMarca(@PathVariable Integer idMarca) {
         if (!marcaRepository.existsById(idMarca)) {

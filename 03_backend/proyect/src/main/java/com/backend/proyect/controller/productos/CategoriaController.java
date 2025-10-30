@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.proyect.dto.productos.CategoriaDTO;
-import com.backend.proyect.dto.productos.ProductoDTO;
 import com.backend.proyect.exception.productos.ResourceNotFoundException;
 import com.backend.proyect.model.productos.Categoria;
 import com.backend.proyect.model.productos.TipoProducto;
 import com.backend.proyect.repository.productos.CategoriaRepository;
 import com.backend.proyect.repository.productos.TipoProductoRepository;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -33,6 +35,7 @@ public class CategoriaController {
     @Autowired
     private TipoProductoRepository tipoProductoRepository;
 
+    @PreAuthorize("hasAuthority('administrador')")
     @PostMapping("/categoria")
     Categoria newCategoria(@RequestBody CategoriaDTO categoriaDTO) {
         // Buscar el tipo de producto por ID
@@ -46,7 +49,7 @@ public class CategoriaController {
         return categoriaRepository.save(newCategoria);
     }
 
-@GetMapping("/categorias")
+@GetMapping("/publico/categorias")
 ResponseEntity<List<CategoriaDTO>> getAllCategoria() {
     List<CategoriaDTO> lista = categoriaRepository.findAll().stream().map(categoria -> {
         CategoriaDTO dto = new CategoriaDTO();
@@ -59,12 +62,13 @@ ResponseEntity<List<CategoriaDTO>> getAllCategoria() {
     return ResponseEntity.ok(lista);
 }
 
-    @GetMapping("/categoria/{idCategoria}")
+    @GetMapping("/publico/categoria/{idCategoria}")
     Categoria getOneCategoria(@PathVariable Integer idCategoria) {
         return categoriaRepository.findById(idCategoria)
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria", idCategoria));
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @PutMapping("/categoria/{idCategoria}")
     Categoria updateCategoria(@RequestBody CategoriaDTO categoriaDTO, @PathVariable Integer idCategoria) {
         return categoriaRepository.findById(idCategoria)
@@ -80,6 +84,7 @@ ResponseEntity<List<CategoriaDTO>> getAllCategoria() {
                 }).orElseThrow(() -> new ResourceNotFoundException("Categoria", idCategoria));
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @DeleteMapping("/categoria/{idCategoria}")
     public ResponseEntity<String> deleteCategoria(@PathVariable Integer idCategoria) {
         if (!categoriaRepository.existsById(idCategoria)) {

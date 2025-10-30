@@ -3,6 +3,7 @@ package com.backend.proyect.controller.productos;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,27 +25,29 @@ public class VariacionController {
     // tipoProductoRepository este se pone en los return
     private VariacionRepository variacionRepository;  
 
+    @PreAuthorize("hasAuthority('administrador')")
     @PostMapping("/variacion")
     Variacion newVariacion(@RequestBody Variacion newVariacion) {
         return variacionRepository.save(newVariacion);
     }
 
-    @GetMapping("/variaciones")
+    @GetMapping("/publico/variaciones")
     List<Variacion> getAllVariacion(){
         return variacionRepository.findAll();
     }
 
-    @GetMapping("/variacion/{idVariacion}")
+    @GetMapping("/publico/variacion/{idVariacion}")
     Variacion getOneVariacion(@PathVariable Integer idVariacion) {
         return variacionRepository.findById(idVariacion)
                 .orElseThrow(() -> new ResourceNotFoundException("Variacion", idVariacion));
     }
 
-    @GetMapping("/variacion/tipo/{tipo}")
+    @GetMapping("/publico/variacion/tipo/{tipo}")
     List<Variacion> getVariacionesPorTipo(@PathVariable Variacion.Tipo tipo) {
         return variacionRepository.findByTipo(tipo);
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @PutMapping("/variacion/{idVariacion}")
     Variacion updateVariacion (@RequestBody Variacion updateVariacion, @PathVariable Integer idVariacion){
         return variacionRepository.findById(idVariacion)
@@ -55,6 +58,7 @@ public class VariacionController {
             }).orElseThrow(()->new ResourceNotFoundException("Variacion", idVariacion));
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @DeleteMapping("/variacion/{idVariacion}")
     String deleteVariacion (@PathVariable Integer idVariacion){
         if(!variacionRepository.existsById(idVariacion)){

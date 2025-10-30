@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import com.backend.proyect.exception.productos.ResourceNotFoundException;
 import com.backend.proyect.model.productos.TipoProducto;
 import com.backend.proyect.repository.productos.TipoProductoRepository;
@@ -24,22 +26,24 @@ public class TipoProductoController {
     // tipoProductoRepository este se pone en los return
     private TipoProductoRepository tipoProductoRepository;
 
+    @PreAuthorize("hasAuthority('administrador')")
     @PostMapping("/tipo_producto")
     TipoProducto newTipoProducto(@RequestBody TipoProducto newTipoProducto) {
         return tipoProductoRepository.save(newTipoProducto);
     }
 
-    @GetMapping("/tipo_productos")
+    @GetMapping("/publico/tipo_productos")
     List<TipoProducto> getAllTipoProducto() {
         return tipoProductoRepository.findAll();
     }
 
-    @GetMapping("/tipo_producto/{idTipoProducto}")
+    @GetMapping("/publico/tipo_producto/{idTipoProducto}")
     TipoProducto getOneTipoProducto(@PathVariable Integer idTipoProducto) {
         return tipoProductoRepository.findById(idTipoProducto)
                 .orElseThrow(() -> new ResourceNotFoundException("TipoProducto", idTipoProducto));
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @PutMapping("/tipo_producto/{idTipoProducto}")
     TipoProducto updateTipoProducto(@RequestBody TipoProducto updateTipoProducto, @PathVariable Integer idTipoProducto) {
         return tipoProductoRepository.findById(idTipoProducto)
@@ -50,6 +54,7 @@ public class TipoProductoController {
                 }).orElseThrow(() -> new ResourceNotFoundException("TipoProducto", idTipoProducto));
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @DeleteMapping("/tipo_producto/{idTipoProducto}")
     String deleteTipoProducto(@PathVariable Integer idTipoProducto) {
         if (!tipoProductoRepository.existsById(idTipoProducto)) {

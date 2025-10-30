@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,6 +51,7 @@ public class ProductoController {
     @Autowired
     private MarcaRepository marcaRepository; 
 
+    @PreAuthorize("hasAuthority('administrador')")
     @PostMapping("/producto")
     ResponseEntity<Producto> newProducto(@RequestBody ProductoDTO productoDTO) {
 
@@ -102,6 +104,7 @@ public class ProductoController {
     }
 
 //OJO: Aca se muestra todos los productos, tanto activos como inactivos
+@PreAuthorize("hasAuthority('administrador')")
 @GetMapping("/productos")
 ResponseEntity<List<ProductoDTO>> getProductos() {
     List<ProductoDTO> lista = productoRepository.findAll().stream().map(producto -> {
@@ -127,19 +130,20 @@ ResponseEntity<List<ProductoDTO>> getProductos() {
 }
 
 //OJO: Aca se muestra solo los productos activos- para el cliente final
-    @GetMapping("/productos_activos")
+    @GetMapping("/publico/productos_activos")
     ResponseEntity<List<Producto>> getProductosActivos(){
         List<Producto> productos = productoRepository.findByEstadoProducto(Producto.EstadoProducto.Activo);
         return ResponseEntity.ok(productos); // 200 OK
     }
 
-    @GetMapping("/producto/{idProducto}")
+    @GetMapping("/publico/producto/{idProducto}")
     ResponseEntity<Producto> getOneProducto(@PathVariable Integer idProducto) {
         Producto producto = productoRepository.findById(idProducto)
                 .orElseThrow(() -> new ResourceNotFoundException("Producto", idProducto));
     return ResponseEntity.ok(producto); // 200 OK
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @GetMapping("/buscar_producto/{codigoReferencia}")
     public ResponseEntity<?> buscarPorCodigo(@PathVariable String codigoReferencia) {
         return productoRepository.findByCodigoReferencia(codigoReferencia.toLowerCase())
@@ -148,6 +152,7 @@ ResponseEntity<List<ProductoDTO>> getProductos() {
                         .body(Map.of("error", "El producto con código " + codigoReferencia + " no existe.")));
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @PutMapping("/producto/{idProducto}")
     ResponseEntity<Producto> updateProducto( @RequestBody ProductoDTO productoDTO, @PathVariable Integer idProducto) {
     return productoRepository.findById(idProducto)
@@ -201,6 +206,7 @@ ResponseEntity<List<ProductoDTO>> getProductos() {
         .orElseThrow(() -> new ResourceNotFoundException("Producto", idProducto));
 }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @DeleteMapping("/producto/{idProducto}")
     public ResponseEntity<String> deleteProducto(@PathVariable Integer idProducto) {
         if (!productoRepository.existsById(idProducto)) {

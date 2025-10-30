@@ -3,6 +3,7 @@ package com.backend.proyect.controller.productos;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,22 +25,24 @@ public class ColorController {
     // tipoProductoRepository este se pone en los return
     private ColorRepository colorRepository;
 
+    @PreAuthorize("hasAuthority('administrador')")
     @PostMapping("/color")
     Color newColor(@RequestBody Color newColor) {
         return colorRepository.save(newColor);
     }
 
-    @GetMapping("/colores")
+    @GetMapping("/publico/colores")
     List<Color> getAllColor() {
         return colorRepository.findAll();
     }
 
-    @GetMapping("/color/{idColor}")
+    @GetMapping("/publico/color/{idColor}")
     Color getOneColor(@PathVariable Integer idColor) {
         return colorRepository.findById(idColor)
                 .orElseThrow(() -> new ResourceNotFoundException("Color", idColor));
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @PutMapping("/color/{idColor}")
     Color updateColor(@RequestBody Color updateColor, @PathVariable Integer idColor) {
         return colorRepository.findById(idColor)
@@ -50,6 +53,7 @@ public class ColorController {
                 }).orElseThrow(() -> new ResourceNotFoundException("Color", idColor));
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @DeleteMapping("/color/{idColor}")
     String deleteColor(@PathVariable Integer idColor) {
         if (!colorRepository.existsById(idColor)) {

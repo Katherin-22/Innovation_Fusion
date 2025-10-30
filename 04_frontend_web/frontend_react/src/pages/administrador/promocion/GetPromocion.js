@@ -1,9 +1,9 @@
-{/*import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {getPromociones, deletePromocion } from "../../../services/administrador/PromocionService";
 import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
 
-import "../../../styles/Administrador/inventario.css";
-import "../../../styles/Administrador/gestion_producto.css";
+import "../../../styles/administrador/inventario.css";
+import "../../../styles/administrador/gestion_producto.css";
 import { Link, useParams } from 'react-router-dom';
 
 export default function GetPromocion() {
@@ -103,4 +103,4 @@ export default function GetPromocion() {
         </div>
 </div>
   )
-}*/}
+}

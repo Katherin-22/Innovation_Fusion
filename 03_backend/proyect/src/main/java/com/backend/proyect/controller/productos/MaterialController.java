@@ -3,6 +3,7 @@ package com.backend.proyect.controller.productos;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,23 +24,24 @@ public class MaterialController {
     // tipoProductoRepository este se pone en los return
     private MaterialRepository materialRepository;  
 
+    @PreAuthorize("hasAuthority('administrador')")
     @PostMapping("/material")
     Material newMaterial(@RequestBody Material newMaterial) {
         return materialRepository.save(newMaterial);
     }
 
-    @GetMapping("/materiales")
+    @GetMapping("/publico/materiales")
     List<Material> getAllMaterial(){
         return materialRepository.findAll();
     }
 
-    @GetMapping("/material/{idMaterial}")
+    @GetMapping("/publico/material/{idMaterial}")
     Material getOneMaterial(@PathVariable Integer idMaterial) {
         return materialRepository.findById(idMaterial)
                 .orElseThrow(() -> new ResourceNotFoundException("Material", idMaterial));
     }
 
-
+    @PreAuthorize("hasAuthority('administrador')")
     @PutMapping("/material/{idMaterial}")
     Material updateMaterial (@RequestBody Material updateMaterial, @PathVariable Integer idMaterial){
         return materialRepository.findById(idMaterial)
@@ -50,6 +52,7 @@ public class MaterialController {
             }).orElseThrow(()->new ResourceNotFoundException("Material", idMaterial));
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @DeleteMapping("/material/{idMaterial}")
     String deleteMaterial (@PathVariable Integer idMaterial){
         if(!materialRepository.existsById(idMaterial)){

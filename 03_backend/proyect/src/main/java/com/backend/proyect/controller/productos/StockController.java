@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,7 @@ public class StockController {
     @Autowired
     private ProductoRepository productoRepository;
 
+    @PreAuthorize("hasAuthority('administrador')")
     @PostMapping("/stock")
     ResponseEntity<Stock> newStock(@RequestBody StockDTO stockDTO) {
         Producto producto = productoRepository.findById(stockDTO.getIdProducto())
@@ -74,12 +76,13 @@ public class StockController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved); // 201 Created
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @GetMapping("/stock/variaciones/{idProducto}")
     List<Variacion> obtenerVariacionesPorProducto(@PathVariable Integer idProducto) {
         return getStockService.listarVariacionesPorProducto(idProducto);
     }
 
-    @GetMapping("/stocks")
+    @GetMapping("/publico/stocks")
     ResponseEntity<List<StockDTO>> getAllStock() {
         List<StockDTO> listaStockDTO = stockRepository.findAll().stream().map(stock -> {
             StockDTO stockDTOs = new StockDTO();
@@ -105,7 +108,7 @@ public class StockController {
         return ResponseEntity.ok(listaStockDTO);
     }
 
-    @GetMapping("/stock/producto/{idProducto}")
+    @GetMapping("/publico/stock/producto/{idProducto}")
     ResponseEntity<List<StockDTO>> getStockByProducto(@PathVariable Integer idProducto) {
         List<StockDTO> IdStockProducto = stockRepository.findByProductoIdProducto(idProducto).stream().map(stock -> {
             StockDTO dto = new StockDTO();
@@ -127,6 +130,7 @@ public class StockController {
         return ResponseEntity.ok(IdStockProducto);
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @PutMapping("/stock/{idStock}")
     ResponseEntity<Stock> updateStock(@RequestBody StockDTO updateStockDTO, @PathVariable Integer idStock) {
         return stockRepository.findById(idStock)
@@ -162,6 +166,7 @@ public class StockController {
                 }).orElseThrow(() -> new ResourceNotFoundException("Stock", idStock));
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @DeleteMapping("/stock/{idStock}")
     ResponseEntity<Void> deleteStock(@PathVariable Integer idStock) {
         if (!stockRepository.existsById(idStock)) {

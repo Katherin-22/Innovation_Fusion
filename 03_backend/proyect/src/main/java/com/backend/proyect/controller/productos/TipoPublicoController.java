@@ -3,6 +3,7 @@ package com.backend.proyect.controller.productos;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,22 +25,24 @@ public class TipoPublicoController {
     // tipoProductoRepository este se pone en los return
     private TipoPublicoRepository tipoPublicoRepository;
 
+    @PreAuthorize("hasAuthority('administrador')")
     @PostMapping("/tipo_publico")
     TipoPublico newTipoPublico(@RequestBody TipoPublico newTipoPublico) {
         return tipoPublicoRepository.save(newTipoPublico);
     }
 
-    @GetMapping("/tipo_publicos")
+    @GetMapping("/publico/tipo_publicos")
     List<TipoPublico> getAllTipoPublico() {
         return tipoPublicoRepository.findAll();
     }
 
-    @GetMapping("/tipo_publico/{idPublico}")
+    @GetMapping("/publico/tipo_publico/{idPublico}")
     TipoPublico getOneTipoPublico(@PathVariable Integer idPublico) {
         return tipoPublicoRepository.findById(idPublico)
                 .orElseThrow(() -> new ResourceNotFoundException("TipoPublico", idPublico));
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @PutMapping("/tipo_publico/{idPublico}")
     TipoPublico updateTipoPublico(@RequestBody TipoPublico updateTipoPublico, @PathVariable Integer idPublico) {
         return tipoPublicoRepository.findById(idPublico)
@@ -50,6 +53,7 @@ public class TipoPublicoController {
                 }).orElseThrow(() -> new ResourceNotFoundException("TipoPublico", idPublico));
     }
 
+    @PreAuthorize("hasAuthority('administrador')")
     @DeleteMapping("/tipo_publico/{idPublico}")
     String deleteTipoPublico(@PathVariable Integer idPublico) {
         if (!tipoPublicoRepository.existsById(idPublico)) {
