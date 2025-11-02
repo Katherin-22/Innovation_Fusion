@@ -26,7 +26,7 @@ public class Categoria {
     private String nombreCategoria;
 
     // Relación muchos a uno con TipoProducto
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idTipoProducto", nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private TipoProducto tipoProducto;
