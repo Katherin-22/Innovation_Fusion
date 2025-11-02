@@ -22,7 +22,6 @@ export default function CreateCategoria() {
     const [loading, setLoad] = useState(false);
     const [success, setSuccess] = useState(false);
     
-    const estadoProductos = ['Activo', 'Inactivo', 'Descontinuado'];
     const { nombreCategoria } = categoria;
 
     const handleCreateCategoria = async (data) => {

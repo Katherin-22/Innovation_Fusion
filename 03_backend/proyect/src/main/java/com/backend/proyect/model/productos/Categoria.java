@@ -16,50 +16,52 @@ import jakarta.persistence.Table;
 @Table(name = "Categoria")
 
 public class Categoria {
-  @Id
-  @GeneratedValue(strategy=GenerationType.IDENTITY) // Autoincrement en MySQL
-  @Column(name="idCategoria")
-  private Integer idCategoria;
 
-  @Column(name="nombreCategoria", nullable=false, length=45)
-  private String nombreCategoria;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Autoincrement en MySQL
+    @Column(name = "idCategoria")
+    private Integer idCategoria;
 
-  
-  // Relación muchos a uno con TipoProducto
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "idTipoProducto", nullable = false)
-  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-  private TipoProducto tipoProducto;
+    @Column(name = "nombreCategoria", nullable = false, length = 45)
+    private String nombreCategoria;
 
-  public Categoria() {}
+    // Relación muchos a uno con TipoProducto
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idTipoProducto", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private TipoProducto tipoProducto;
 
-  public Categoria(String nombreCategoria, TipoProducto tipoProducto) {
-    this.nombreCategoria = nombreCategoria;
-    this.tipoProducto = tipoProducto;
-  }
-  // getters y setters
-  public Integer getIdCategoria() {
-    return idCategoria;
-  }
+    public Categoria() {
+    }
 
-  public void setIdCategoria(Integer idCategoria) {
-    this.idCategoria = idCategoria;
-  }
+    public Categoria(String nombreCategoria, TipoProducto tipoProducto) {
+        this.nombreCategoria = nombreCategoria;
+        this.tipoProducto = tipoProducto;
+    }
+    // getters y setters
 
-  public String getNombreCategoria() {
-    return nombreCategoria;
-  }
+    public Integer getIdCategoria() {
+        return idCategoria;
+    }
 
-  public void setNombreCategoria(String nombreCategoria) {
-    this.nombreCategoria = nombreCategoria;
-  }
+    public void setIdCategoria(Integer idCategoria) {
+        this.idCategoria = idCategoria;
+    }
 
-  public TipoProducto getTipoProducto() {
-    return tipoProducto;
-  }
+    public String getNombreCategoria() {
+        return nombreCategoria;
+    }
 
-  public void setTipoProducto(TipoProducto tipoProducto) {
-    this.tipoProducto = tipoProducto;
-  }
+    public void setNombreCategoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
+    }
+
+    public TipoProducto getTipoProducto() {
+        return tipoProducto;
+    }
+
+    public void setTipoProducto(TipoProducto tipoProducto) {
+        this.tipoProducto = tipoProducto;
+    }
 
 }

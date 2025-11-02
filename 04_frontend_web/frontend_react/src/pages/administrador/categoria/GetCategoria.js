@@ -67,6 +67,7 @@ export default function GetCategoria() {
                         <tr>
                         <th>Nombre</th>
                         <th>Tipo de Producto</th>
+                        <th>id Tipo de Producto</th>
                         <th>Acciones</th>
                         </tr>
                     </thead>
@@ -75,13 +76,14 @@ export default function GetCategoria() {
                             <tr key={categoria.idCategoria}>
                             <td>{categoria.nombreCategoria}</td>
                             <td>{categoria.nombreTipoProducto}</td>
-                            <td><Link to={`/producto/${categoria.idCategoria}`} id="boton_agregar" className="btn btn-light">Editar</Link>
+                            <td>{categoria.idTipoProducto}</td>
+                            <td><Link to={`/categoria/${categoria.idCategoria}`} id="boton_agregar" className="btn btn-light">Editar</Link>
                             
                             <button
                             className="btn btn-light"
                             onClick={() => {
                                 if (window.confirm("¿Estás seguro de eliminar este producto?")) {
-                                handleDeleteCategoria(categoria.idProducto);
+                                handleDeleteCategoria(categoria.idCategoria);
                                 }
                             }}
                             >

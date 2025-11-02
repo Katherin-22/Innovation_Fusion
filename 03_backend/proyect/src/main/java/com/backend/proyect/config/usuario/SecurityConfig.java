@@ -35,6 +35,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll() // login y registro públicos
                         //permisos de acceso libre
                         .requestMatchers("/publico/**").permitAll() // login y registro públicos
+                        //para pruebas
+                        .requestMatchers("/categoria", "/categoria/{idCategoria}").permitAll() // login y registro públicos
                         .anyRequest().authenticated() // lo demás requiere autenticación
                 )
                 .sessionManagement(session -> session
