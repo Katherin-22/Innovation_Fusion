@@ -65,7 +65,7 @@ const Footer = () => {
           {/* Derechos reservados */}
           <div className="col-12 mt-3">
             <hr className="my-2 bg-light border-2" />
-            <p className="text-center mb-0">
+            <p className="text-center reserve mb-0">
               © 2025 Innovation Fusion. Todos los derechos reservados.
             </p>
           </div>
