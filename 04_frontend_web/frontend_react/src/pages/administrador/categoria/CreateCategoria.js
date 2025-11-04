@@ -36,8 +36,6 @@ export default function CreateCategoria() {
         // Verifica si el backend envió un mensaje
         if (error.response && error.response.data && error.response.data.errorMessage) {
         alert("⚠️ " + error.response.data.errorMessage);
-        } else if (error.response && error.response.data && error.response.data.message) {
-        alert("⚠️ " + error.response.data.message);
         } else {
         alert("⚠️ Error desconocido al crear la categoria");
         }
