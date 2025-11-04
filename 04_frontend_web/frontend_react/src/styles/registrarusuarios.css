@@ -11,7 +11,7 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: linear-gradient(to right bottom, #0F0F0F 50%, #E0B253 50%);
+    background: linear-gradient(to right bottom, #0F0F0F 50%, #E0B253 50%) !important;
 }
 
 /* 1. Contenedor Principal (.container)
@@ -26,7 +26,7 @@ body {
     /* El fondo del contenido y los bordes redondeados se definen en los hijos */
     overflow: hidden; /* CLAVE: Corta cualquier contenido de los hijos que se salga, garantizando las esquinas limpias. */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    position: relative; 
+    position: relative;
 }
 
 /* 2. Contenedor del Formulario (.form-container)

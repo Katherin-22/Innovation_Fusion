@@ -60,9 +60,6 @@ export default function AppRoutes() {
         {/* Ruta para Restablecer contraseña*/}
         <Route  path='/recuperarcontraseña' element={<RecuperarContraseña/>}/>
 
-        {/* Ruta principal*/}
-        <Route  path='/principal' element={<Principal/>}/>
-
         {/* Ruta para el collage*/}
         <Route  path='/collage-login' element={<CollageLogin/>}/>
 

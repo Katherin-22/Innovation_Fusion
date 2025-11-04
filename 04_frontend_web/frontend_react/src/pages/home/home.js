@@ -90,7 +90,7 @@ const Home = () => {
                         {/* Card 1 */}
                         <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-4">
                         <div className="card text-center h-100">
-                            <img src="../../principal/img/im13.jpg" className="card-img-top" alt="Bolso 1" />
+                            <img src="/iamgenes_prueba/bolso/im13.jpg" className="card-img-top" alt="Bolso 1" />
                             <div className="card-body">
                             <h5 className="card-title">Bolso</h5>
                             <p className="card-text">Texto de ejemplo para el producto.</p>
@@ -103,7 +103,7 @@ const Home = () => {
                         {/* Card 2 */}
                         <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-4">
                         <div className="card text-center h-100">
-                            <img src="../../principal/img/im14.jpg" className="card-img-top" alt="Bolso 2" />
+                            <img src="/iamgenes_prueba/bolso/im14.jpg" className="card-img-top" alt="Bolso 2" />
                             <div className="card-body">
                             <h5 className="card-title">Bolso</h5>
                             <p className="card-text">Texto de ejemplo para el producto.</p>
@@ -116,7 +116,7 @@ const Home = () => {
                         {/* Card 3 */}
                         <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-4">
                         <div className="card text-center h-100">
-                            <img src="../../principal/img/im15.jpg" className="card-img-top" alt="Bolso 3" />
+                            <img src="/iamgenes_prueba/bolso/im16.jpg" className="card-img-top" alt="Bolso 3" />
                             <div className="card-body">
                             <h5 className="card-title">Bolso</h5>
                             <p className="card-text">Texto de ejemplo para el producto.</p>
@@ -129,7 +129,7 @@ const Home = () => {
                         {/* Card 4 */}
                         <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-4">
                         <div className="card text-center h-100">
-                            <img src="../../principal/img/im17.jpg" className="card-img-top" alt="Bolso 4" />
+                            <img src="/iamgenes_prueba/bolso/im17.jpg" className="card-img-top" alt="Bolso 4" />
                             <div className="card-body">
                             <h5 className="card-title">Bolso</h5>
                             <p className="card-text">Texto de ejemplo para el producto.</p>

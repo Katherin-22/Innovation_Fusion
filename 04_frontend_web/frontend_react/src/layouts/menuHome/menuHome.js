@@ -106,7 +106,7 @@ const MenuHome = () => {
 
             {/* Perfil */}
             <li className="nav-item">
-              <Link className="nav-link" to="/Administrador/stock">
+              <Link className="nav-link" to="/login">
                 <i className="bi bi-person-fill"></i>
               </Link>
             </li>
@@ -134,17 +134,19 @@ const MenuHome = () => {
           </ul>
 
           {/* Search */}
-          <form className="d-flex" role="search">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
+            <li className="nav-item">
+                <div className="d-flex">
+                    <input
+                        className="form-control me-2 search"
+                        type="search"
+                        placeholder="Buscar"
+                        aria-label="Buscar"
+                    />
+                    <button type={"submit"} className={"button-search"}>
+                        Buscar
+                    </button>
+                </div>
+            </li>
         </div>
       </div>
       <Outlet />
