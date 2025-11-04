@@ -113,7 +113,7 @@ const MenuHome = () => {
 
             {/* Favoritos */}
             <li className="nav-item">
-              <Link className="nav-link" to="#">
+              <Link className="nav-link" to={"/Administrador/stock"}>
                 <i className="bi bi-heart-fill"></i>
               </Link>
             </li>
