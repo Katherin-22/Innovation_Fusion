@@ -22,11 +22,12 @@ import com.backend.proyect.repository.promociones.PromocionRepository;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class PromocionController {
+
     @Autowired
     // tipoProductoRepository este se pone en los return
-    private PromocionRepository promocionRepository;  
+    private PromocionRepository promocionRepository;
 
-    @PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('administrador')")
     @PostMapping("/promocion")
     Promocion newPromocion(@RequestBody PromocionDTO promocionDTO) {
         Promocion promocion = new Promocion();
@@ -35,7 +36,7 @@ public class PromocionController {
         promocion.setFechaInicio(LocalDate.now());
 
         // Validar que la fechaFin ingresada no sea anterior a hoy
-        if(promocionDTO.getFechaFin().isBefore(LocalDate.now())){
+        if (promocionDTO.getFechaFin().isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("La fecha fin no puede ser anterior a la fecha actual.");
         }
         promocion.setFechaFin(promocionDTO.getFechaFin());
@@ -51,7 +52,7 @@ public class PromocionController {
     }
 
     @GetMapping("/publico/promociones")
-    List<Promocion> getAllPromocion(){
+    List<Promocion> getAllPromocion() {
         return promocionRepository.findAll();
     }
 
@@ -60,33 +61,33 @@ public class PromocionController {
         return promocionRepository.findById(idPromocion)
                 .orElseThrow(() -> new ResourceNotFoundException("Promocion", idPromocion));
     }
-    
+
     @PreAuthorize("hasAuthority('administrador')")
     @PutMapping("/promocion/{idPromocion}")
-    Promocion updatePromocion (@RequestBody PromocionDTO promocionDTO, @PathVariable Integer idPromocion){
+    Promocion updatePromocion(@RequestBody PromocionDTO promocionDTO, @PathVariable Integer idPromocion) {
         return promocionRepository.findById(idPromocion)
-            .map(promocion ->{
-                // Validar que la fechaFin ingresada no sea anterior a hoy
-                if(promocionDTO.getFechaFin().isBefore(LocalDate.now())){
-                    throw new IllegalArgumentException("La fecha fin no puede ser anterior a la fecha actual.");
-                }
-                promocion.setFechaFin(promocionDTO.getFechaFin());
+                .map(promocion -> {
+                    // Validar que la fechaFin ingresada no sea anterior a hoy
+                    if (promocionDTO.getFechaFin().isBefore(LocalDate.now())) {
+                        throw new IllegalArgumentException("La fecha fin no puede ser anterior a la fecha actual.");
+                    }
+                    promocion.setFechaFin(promocionDTO.getFechaFin());
 
-                // Solo actualizamos lo que viene en el DTO
-                promocion.setNombrePromocion(promocionDTO.getNombrePromocion());
-                promocion.setCodigoPromocion(promocionDTO.getCodigoPromocion());
-                promocion.setDescuento(promocionDTO.getDescuento());
-                promocion.setDescripcion(promocionDTO.getDescripcion());
-                promocion.setEstadoPromocion(promocionDTO.getEstadoPromocion());
+                    // Solo actualizamos lo que viene en el DTO
+                    promocion.setNombrePromocion(promocionDTO.getNombrePromocion());
+                    promocion.setCodigoPromocion(promocionDTO.getCodigoPromocion());
+                    promocion.setDescuento(promocionDTO.getDescuento());
+                    promocion.setDescripcion(promocionDTO.getDescripcion());
+                    promocion.setEstadoPromocion(promocionDTO.getEstadoPromocion());
 
-                return promocionRepository.save(promocion);
-            }).orElseThrow(()->new ResourceNotFoundException("Promocion", idPromocion));
+                    return promocionRepository.save(promocion);
+                }).orElseThrow(() -> new ResourceNotFoundException("Promocion", idPromocion));
     }
 
     @PreAuthorize("hasAuthority('administrador')")
     @DeleteMapping("/promocion/{idPromocion}")
-    String deletePromocion (@PathVariable Integer idPromocion){
-        if(!promocionRepository.existsById(idPromocion)){
+    String deletePromocion(@PathVariable Integer idPromocion) {
+        if (!promocionRepository.existsById(idPromocion)) {
             throw new ResourceNotFoundException("Promocion", idPromocion);
         }
         promocionRepository.deleteById(idPromocion);

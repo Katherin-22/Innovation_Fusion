@@ -26,7 +26,9 @@ import RegistrarUsuarios from '../components/RegistrarUsuarios';
 import RecuperarContraseña from '../components/RecuperarContraseña';
 import Principal from '../components/Principal';
 import CollageLogin from '../pages/Collage-Login';
-
+import UpdateCategoria  from "../pages/administrador/categoria/UpdateCategoria";
+import CreatePromocion from "../pages/administrador/promocion/CreatePromocion";
+import CreateStock from "../pages/administrador/stock/CreateStock";
 
 export default function AppRoutes() {
   return (
@@ -63,6 +65,10 @@ export default function AppRoutes() {
 
         {/* Ruta para el collage*/}
         <Route  path='/collage-login' element={<CollageLogin/>}/>
+
+      <Route path="/categoria/:idCategoria" element={<UpdateCategoria/>}></Route> 
+      <Route path="/crear_promocion" element={<CreatePromocion/>}></Route> 
+      <Route path="/stock/:idProducto" element={<CreateStock/>}></Route> 
 
     </Routes>
   );

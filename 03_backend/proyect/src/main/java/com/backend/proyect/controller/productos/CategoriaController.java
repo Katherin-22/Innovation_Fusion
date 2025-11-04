@@ -35,7 +35,7 @@ public class CategoriaController {
     @Autowired
     private TipoProductoRepository tipoProductoRepository;
 
-    @PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('administrador')")
     @PostMapping("/categoria")
     Categoria newCategoria(@RequestBody CategoriaDTO categoriaDTO) {
         // Buscar el tipo de producto por ID
@@ -55,6 +55,7 @@ ResponseEntity<List<CategoriaDTO>> getAllCategoria() {
         CategoriaDTO dto = new CategoriaDTO();
         dto.setIdCategoria(categoria.getIdCategoria());
         dto.setNombreCategoria(categoria.getNombreCategoria());
+        dto.setIdTipoProducto(categoria.getTipoProducto().getIdTipoProducto());
         dto.setNombreTipoProducto(categoria.getTipoProducto().getNombreTipoProducto());
         return dto;
     }).toList();
@@ -68,7 +69,7 @@ ResponseEntity<List<CategoriaDTO>> getAllCategoria() {
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria", idCategoria));
     }
 
-    @PreAuthorize("hasAuthority('administrador')")
+    // @PreAuthorize("hasAuthority('administrador')")
     @PutMapping("/categoria/{idCategoria}")
     Categoria updateCategoria(@RequestBody CategoriaDTO categoriaDTO, @PathVariable Integer idCategoria) {
         return categoriaRepository.findById(idCategoria)
@@ -84,7 +85,7 @@ ResponseEntity<List<CategoriaDTO>> getAllCategoria() {
                 }).orElseThrow(() -> new ResourceNotFoundException("Categoria", idCategoria));
     }
 
-    @PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('administrador')")
     @DeleteMapping("/categoria/{idCategoria}")
     public ResponseEntity<String> deleteCategoria(@PathVariable Integer idCategoria) {
         if (!categoriaRepository.existsById(idCategoria)) {

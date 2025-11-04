@@ -32,13 +32,15 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable()) // desactiva CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() // login y registro públicos
-                        //permisos de acceso libre
-                        .requestMatchers("/publico/**").permitAll() // login y registro públicos
-                        .anyRequest().authenticated() // lo demás requiere autenticación
+                .requestMatchers("/api/auth/**").permitAll() // login y registro públicos
+                //permisos de acceso libre
+                .requestMatchers("/publico/**").permitAll() // login y registro públicos
+                //para pruebas
+                .requestMatchers("/categoria", "/categoria/{idCategoria}", "/promocion", "/stock/{idProducto}", "stock/variaciones/{idProducto}").permitAll() // login y registro públicos
+                .anyRequest().authenticated() // lo demás requiere autenticación
                 )
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // sin sesiones
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // sin sesiones
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

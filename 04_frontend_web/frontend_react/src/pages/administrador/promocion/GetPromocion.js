@@ -56,7 +56,7 @@ export default function GetPromocion() {
                 <h1 className="mb-0">Promoción</h1>
             </div>
             <div className="col-9 d-flex align-items-end px-1 gap-2 w-50">
-                <a href="./REGISTRO_DESCUENTO.HTML" className="btn custom-btn btn-light">Registrar promoción</a>
+                <Link to="/crear_promocion" className="btn custom-btn btn-light">Registrar promoción</Link>
             </div>
         </div>
     </div>      

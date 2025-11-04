@@ -28,6 +28,7 @@ import com.backend.proyect.repository.productos.VariacionRepository;
 import com.backend.proyect.service.productos.GetStockService;
 
 @CrossOrigin(origins = "http://localhost:3000")
+
 @RestController
 
 public class StockController {
@@ -43,11 +44,11 @@ public class StockController {
     @Autowired
     private ProductoRepository productoRepository;
 
-    @PreAuthorize("hasAuthority('administrador')")
-    @PostMapping("/stock")
-    ResponseEntity<Stock> newStock(@RequestBody StockDTO stockDTO) {
-        Producto producto = productoRepository.findById(stockDTO.getIdProducto())
-                .orElseThrow(() -> new ResourceNotFoundException("Producto", stockDTO.getIdProducto()));
+    //@PreAuthorize("hasAuthority('administrador')")
+    @PostMapping("/stock/{idProducto}")
+    ResponseEntity<Stock> newStock(@RequestBody StockDTO stockDTO, @PathVariable Integer idProducto) {
+        Producto producto = productoRepository.findById(idProducto)
+                .orElseThrow(() -> new ResourceNotFoundException("Producto", idProducto));
 
         Stock stock = new Stock();
         stock.setStockMinimo(stockDTO.getStockMinimo());
@@ -76,8 +77,7 @@ public class StockController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved); // 201 Created
     }
 
-    @PreAuthorize("hasAuthority('administrador')")
-    @GetMapping("/stock/variaciones/{idProducto}")
+    @GetMapping("/publico/stock/variaciones/{idProducto}")
     List<Variacion> obtenerVariacionesPorProducto(@PathVariable Integer idProducto) {
         return getStockService.listarVariacionesPorProducto(idProducto);
     }
