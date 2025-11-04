@@ -1,5 +1,7 @@
 package com.backend.proyect.config.usuario;
 
+import java.util.stream.Collectors;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,8 +16,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.backend.proyect.security.usuario.JwtFilter;
-
-import java.util.stream.Collectors;
 
 @Configuration
 @EnableMethodSecurity
@@ -32,15 +32,15 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable()) // desactiva CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() // login y registro públicos
-                        //permisos de acceso libre
-                        .requestMatchers("/publico/**").permitAll() // login y registro públicos
-                        //para pruebas
-                        .requestMatchers("/categoria", "/categoria/{idCategoria}").permitAll() // login y registro públicos
-                        .anyRequest().authenticated() // lo demás requiere autenticación
+                .requestMatchers("/api/auth/**").permitAll() // login y registro públicos
+                //permisos de acceso libre
+                .requestMatchers("/publico/**").permitAll() // login y registro públicos
+                //para pruebas
+                .requestMatchers("/categoria", "/categoria/{idCategoria}", "/promocion", "/stock/{idProducto}", "stock/variaciones/{idProducto}").permitAll() // login y registro públicos
+                .anyRequest().authenticated() // lo demás requiere autenticación
                 )
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // sin sesiones
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // sin sesiones
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

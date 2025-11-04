@@ -1,8 +1,8 @@
 import api_url from "./api";
 
 // Crear un nuevo stock
-export const createStock = async (stockData) => {
-    return await api_url.post("/stock",stockData);
+export const createStock = async (idProducto, stockData) => {
+    return await api_url.post(`/stock/${idProducto}`,stockData);
 };
 
 // Obtener todos los stocks

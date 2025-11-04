@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { getStockById } from "../../services/administrador/StockService";
+import { getColorById } from "../../services/administrador/ColorService";
 
-export const usIDGetStock = (idStock) => {
-  const [stock, setStock] = useState(null); // un solo objeto
+export const usIDGetColor = (idColor) => {
+  const [Color, setColor] = useState(null); // un solo objeto
   const [load, setLoad] = useState(true);
 
   useEffect(() => {
-    if (!idStock) return; // si no hay id, no hago nada
-    getStockById(idStock)
-      .then((res) => setStock(res.data))
+    if (!idColor) return; // si no hay id, no hago nada
+    getColorById(idColor)
+      .then((res) => setColor(res.data))
       .finally(() => setLoad(false));
-  }, [idStock]); // se ejecuta cada vez que cambia el id
+  }, [idColor]); // se ejecuta cada vez que cambia el id
 
-  return { stock, load };
+  return { Color, load };
 };

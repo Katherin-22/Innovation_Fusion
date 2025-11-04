@@ -12,14 +12,16 @@ export default function CreatePromocion() {
 
         const [promocion,setPromocion]=useState({ 
         nombrePromocion:"",
-        codigo_Promocion: "",
+        codigoPromocion: "",
         descuento: "",
         descripcion: "",
-        fecha_fin: "",
+        fechaFin: "",
         estadoPromocion: ""
     });
 
-    const estadoPromocion = ['Activo', 'Inactivo'];
+    const opcionesEstado = ['Activo', 'Inactivo'];
+    const { nombrePromocion, codigoPromocion, descuento, descripcion, fechaFin, estadoPromocion } = promocion;
+
 
     const [loading, setLoad] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -29,6 +31,7 @@ export default function CreatePromocion() {
         try {
         await createPromocion(data); // paso 2: enviar datos al backend
         setSuccess(true);        // paso 3: si todo ok → marcar éxito
+        navigate("/ver_categoria")
         } catch (error) {
         console.error("Error al crear la promción:", error);
 
@@ -51,7 +54,6 @@ export default function CreatePromocion() {
     const onSubmit=async (e)=>{
         e.preventDefault();
         await handleCreatePromocion(promocion); // manda datos al backend
-        navigate("/ver_categoria")
     }
 
   return (
@@ -88,10 +90,10 @@ export default function CreatePromocion() {
             <div className="col">
                 <label className="form-label">Código</label>
                 <input type="text" 
-                name="nombrePromocion" 
+                name="codigoPromocion" 
                 placeholder="Ingresa el codigo de la promoción"
                 className="form-control" 
-                value={nombrePromocion} 
+                value={codigoPromocion} 
                 onChange={(e)=>onInputChange(e)}
                 />
             </div>
@@ -120,11 +122,11 @@ export default function CreatePromocion() {
 
             <div className="col">
                 <label className="form-label">Fecha de fin</label>
-                <input type="number" 
-                name="fecha_fin" 
+                <input type="date" 
+                name="fechaFin" 
                 placeholder="Ingresa la fecha de finalización"
                 className="form-control" 
-                value={fecha_fin} 
+                value={fechaFin} 
                 onChange={(e)=>onInputChange(e)}
                 />
             </div>
@@ -133,7 +135,7 @@ export default function CreatePromocion() {
                 <label className="form-label">Estado de la Promoción</label>
                 <select name="estadoPromocion" value={estadoPromocion} onChange={(e)=>onInputChange(e)} className="form-select">
                 <option value="">-- Selecciona una opción --</option>
-                {estadoPromocion.map((estado) => (
+                {opcionesEstado.map((estado) => (
                 <option key={estado} value={estado}>
                     {estado}
                 </option>
