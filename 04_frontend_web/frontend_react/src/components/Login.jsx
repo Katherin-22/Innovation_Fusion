@@ -36,7 +36,7 @@ function Login() {
         }
 
         setTimeout(() => {
-          navigate  ('/Principal');
+          navigate  ('/');
         }, 1000);
 
       } else {
