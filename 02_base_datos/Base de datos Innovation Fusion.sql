@@ -291,10 +291,35 @@ INSERT INTO Color (nombreColor) VALUES ("Rojo");
 INSERT INTO Color (nombreColor) VALUES ("Negro");
 
 -- Variaciones (tallas y tamaños)
-INSERT INTO Variacion (nombre, tipo) VALUES ("35", "Talla_Calzado");
-INSERT INTO Variacion (nombre, tipo) VALUES ("37", "Talla_Calzado");
-INSERT INTO Variacion (nombre, tipo) VALUES ("Pequeño", "Tamano_Bolso");
-INSERT INTO Variacion (nombre, tipo) VALUES ("Grande", "Tamano_Bolso");
+INSERT INTO Variacion (nombre, tipo) VALUES 
+("Pequeño", "Tamano_Bolso"),
+("Mediano", "Tamano_Bolso"),
+("Grande", "Tamano_Bolso"),
+("21", "Talla_Calzado"),
+("22", "Talla_Calzado"),
+("23", "Talla_Calzado"),
+("24", "Talla_Calzado"),
+("25", "Talla_Calzado"),
+("26", "Talla_Calzado"),
+("27", "Talla_Calzado"),
+("28", "Talla_Calzado"),
+("29", "Talla_Calzado"),
+("30", "Talla_Calzado"),
+("31", "Talla_Calzado"),
+("32", "Talla_Calzado"),
+("33", "Talla_Calzado"),
+("34", "Talla_Calzado"),
+("35", "Talla_Calzado"),
+("36", "Talla_Calzado"),
+("37", "Talla_Calzado"),
+("38", "Talla_Calzado"),
+("39", "Talla_Calzado"),
+("40", "Talla_Calzado"),
+("41", "Talla_Calzado"),
+("42", "Talla_Calzado"),
+("43", "Talla_Calzado"),
+("44", "Talla_Calzado");
+
 
 -- Stock
 INSERT INTO Stock (stockMinimo, stockActual, idColor, idVariacion, idProducto) 
