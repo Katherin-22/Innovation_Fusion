@@ -57,6 +57,8 @@ export default function GetProducto() {
             </div>
             <div className="col-9 d-flex align-items-end px-1 gap-2 w-50">
                 <Link to="/crear_producto" className="btn custom-btn btn-light">Registrar Producto</Link>
+                <Link to="/ver_marca" className="btn custom-btn btn-light">Marca</Link>
+                <Link to="/ver_material" className="btn custom-btn btn-light">Material</Link>
             </div>
         </div>
     </div>      

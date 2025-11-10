@@ -51,18 +51,18 @@ public class ProductoController {
     @Autowired
     private MarcaRepository marcaRepository; 
 
-    @PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('administrador')")
     @PostMapping("/producto")
     ResponseEntity<Producto> newProducto(@RequestBody ProductoDTO productoDTO) {
 
         String codigoReferencia = productoDTO.getCodigoReferencia().toLowerCase();
 
         if (productoRepository.existsByCodigoReferencia(codigoReferencia)) {
-            throw new ConflictException("Ya existe un producto con el código " + codigoReferencia);
+            throw new ConflictException("Ya existe una promocion con el código " + codigoReferencia);
         }
 
         if (productoDTO.getPrecio() < 0) {
-            throw new IllegalArgumentException("El precio no puede ser negativo");
+            throw new IllegalArgumentException("El descuento no puede ser negativo");
         }
 
         Producto producto = new Producto();
@@ -104,7 +104,7 @@ public class ProductoController {
     }
 
 //OJO: Aca se muestra todos los productos, tanto activos como inactivos
-@PreAuthorize("hasAuthority('administrador')")
+//@PreAuthorize("hasAuthority('administrador')")
 @GetMapping("/productos")
 ResponseEntity<List<ProductoDTO>> getProductos() {
     List<ProductoDTO> lista = productoRepository.findAll().stream().map(producto -> {
@@ -152,7 +152,7 @@ ResponseEntity<List<ProductoDTO>> getProductos() {
                         .body(Map.of("error", "El producto con código " + codigoReferencia + " no existe.")));
     }
 
-    @PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('administrador')")
     @PutMapping("/producto/{idProducto}")
     ResponseEntity<Producto> updateProducto( @RequestBody ProductoDTO productoDTO, @PathVariable Integer idProducto) {
     return productoRepository.findById(idProducto)
@@ -162,11 +162,11 @@ ResponseEntity<List<ProductoDTO>> getProductos() {
 
         if (!codigoActual.equals(codigoNuevo)){
             if (productoRepository.existsByCodigoReferenciaAndIdProductoNot(codigoNuevo, idProducto))
-            throw new ConflictException("Ya existe un producto con el código " + productoDTO.getCodigoReferencia()); 
+            throw new ConflictException("Ya existe una promoción con el código " + productoDTO.getCodigoReferencia()); 
         }
 
         if (productoDTO.getPrecio() < 0) {
-            throw new IllegalArgumentException("El precio no puede ser negativo");
+            throw new IllegalArgumentException("El descuento no puede ser negativo");
         }
         // Buscar y asignar entidades relacionadas (llaves foráneas)
         Categoria categoria = categoriaRepository.findById(productoDTO.getIdCategoria())
@@ -206,7 +206,7 @@ ResponseEntity<List<ProductoDTO>> getProductos() {
         .orElseThrow(() -> new ResourceNotFoundException("Producto", idProducto));
 }
 
-    @PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('administrador')")
     @DeleteMapping("/producto/{idProducto}")
     public ResponseEntity<String> deleteProducto(@PathVariable Integer idProducto) {
         if (!productoRepository.existsById(idProducto)) {

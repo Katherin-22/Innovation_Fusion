@@ -6,7 +6,7 @@ import "../../../styles/administrador/inventario.css";
 import "../../../styles/administrador/gestion_producto.css";
 import { Link, useParams } from 'react-router-dom';
 
-export default function Stock() {
+export default function GetIDStock() {
   const [stock, setStock] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -70,6 +70,7 @@ console.log("idProducto desde URL:", idProducto);
             </div>
             <div className="col-9 d-flex align-items-end px-1 gap-2 w-50">
                 <Link to={`/stock/${idProducto}`}className="btn custom-btn btn-light">Registrar Stock</Link>
+                <Link to="/ver_color" className="btn custom-btn btn-light">Color</Link>
             </div>
         </div>
     </div>      
@@ -92,7 +93,7 @@ console.log("idProducto desde URL:", idProducto);
                             <td>{s.nombreColor}</td>
                             <td>{s.stockActual}</td>
                             <td>{s.stockMinimo}</td>
-                            <td><Link to="/Administrador/stock" id="boton_agregar" className="btn btn-light">Editar</Link>
+                            <td><Link to={`/producto/${s.idProducto}/stock/${s.idStock}`} id="boton_agregar" className="btn btn-light">Editar</Link>
                             <button
                             className="btn btn-light"
                             onClick={() => handleDeleteStock(s.idStock)}

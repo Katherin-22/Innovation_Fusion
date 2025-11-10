@@ -1,64 +1,58 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getCategoriaById, updateCategoria } from "../../../services/administrador/CategoriaService";
-import {useGetTipoProducto} from "../../../hooks/tipoProducto/useGetTipoProducto";
+import { getMarcaById, updateMarca } from "../../../services/administrador/MarcaService";
 import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
 import "../../../styles/administrador/inventario.css";
 import "../../../styles/administrador/gestion_producto.css";
 
-export default function UpdateCategoria() {
+export default function UpdateMarca() {
 {/*navigate=useNavigate():Sirve para moverte entre páginas desde el código */}
 {/*navigate("/"); // me lleva a la página principal */}
     
     let navigate=useNavigate();
 
-    // este valor sale al final de usefect: }, [idProducto]); (useIDGetProductoId)
-    // ademas lo que este en const {}, debe ir en : await handleUpdateProducto(idProducto, producto);
-    const { idCategoria } = useParams(); // esto se usa cuando se va a editar
+    const { idMarca } = useParams(); // esto se usa cuando se va a editar
 
     const [loading, setLoading] = useState(true);
     const [success, setSuccess] = useState(false);
 
-    const [categorias,setCategorias]=useState({ 
-        nombreCategoria: "",
-        idTipoProducto: ""
+    const [marcas, setMarcas]=useState({ 
+        nombreMarca:""
     });
 
-    const { nombreCategoria } = categorias;
-    const { TipoProducto } = useGetTipoProducto();
+    const { nombreMarca } = marcas;
 
     // Traer los productos al cargar la página
     useEffect(() => {
-    const fetchCategoriaId = async () => {
+    const fetchMarcaId = async () => {
         try {
-        const response = await getCategoriaById(idCategoria);
+        const response = await getMarcaById(idMarca);
         const data = response.data;
 
         // Desanidar el tipoProducto, trae el idTipoProducto directamente
-        setCategorias({
-            nombreCategoria: data.nombreCategoria,
-            idTipoProducto: data.tipoProducto?.idTipoProducto || ""
+        setMarcas({
+            nombreMarca: data.nombreMarca,
         });
         } catch (error) {
-        console.error("Error al cargar la Categoria", error);
+        console.error("Error al cargar la marca", error);
         } finally {
         setLoading(false);
         }
     };
 
-    if (idCategoria) fetchCategoriaId();
-    }, [idCategoria]);
+    if (idMarca) fetchMarcaId();
+    }, [idMarca]);
 
     
 
-    const handleUpdateCategoria = async (idCategoria, data) => {
+    const handleUpdateMarca = async (idMarca, data) => {
         setLoading(true); // paso 1: activar "cargando"
         try {
-        await updateCategoria(idCategoria, data); // paso 2: enviar datos al backend
+        await updateMarca(idMarca, data); // paso 2: enviar datos al backend
         setSuccess(true);        // paso 3: si todo ok → marcar éxito
-        navigate("/ver_categoria")
+        navigate("/ver_marca")
         } catch (error) {
-        console.error("Error al actualizar la categoria:", error);
+        console.error("Error al actualizar la marca:", error);
         setSuccess(false);      // si falla → marcar como no exitoso
         } finally {
         setLoading(false);         // paso 4: quitar "cargando"
@@ -69,16 +63,16 @@ export default function UpdateCategoria() {
     // return { tipoPublicos, loading };
 
     const onInputChange=(e)=>{
-        setCategorias({...categorias, [e.target.name]: e.target.value});
+        setMarcas({...marcas, [e.target.name]: e.target.value});
     };
 
     const onSubmit=async (e)=>{
         e.preventDefault();
-        await handleUpdateCategoria(idCategoria, categorias); // acá le pasas el id y los datos(como esta en el hook)
+        await handleUpdateMarca(idMarca, marcas); // acá le pasas el id y los datos(como esta en el hook)
     }
 
   // Mostrar loading mientras trae el producto
-  if (loading) return <p>Cargando categoria...</p>;
+  if (loading) return <p>Cargando marca...</p>;
 
   return (
 
@@ -89,7 +83,7 @@ export default function UpdateCategoria() {
     <div className="header">    
         <div className="row custom-header">
             <div className="col-12 d-flex align-items-center justify-content-between px-4 w-100">
-                <h1 className="mb-0">Editar Categoria</h1>
+                <h1 className="mb-0">Editar Marca</h1>
                 <a href="./INVENTARIO(PRINCIPAL).HTML" className="btn btn-light custom-btn-exit">
                     <img src="../img/caret-left.png" alt=""/>
                 </a>
@@ -101,31 +95,14 @@ export default function UpdateCategoria() {
         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
             <div className="col">
-                <label className="form-label">Tipo de Producto</label>
-                <select 
-                name="idTipoProducto" 
-                value={categorias.idTipoProducto}
-                onChange={(e)=>onInputChange(e)} 
-                className="form-select">
-                <option value="">-- Selecciona una opción --</option>
-                {TipoProducto.map((Tp) => (
-                <option key={Tp.idTipoProducto} value={Tp.idTipoProducto}>
-                    {Tp.nombreTipoProducto}
-                </option>
-                ))}
-                </select>
-            </div>
-
-            <div className="col">
-                <label className="form-label">Nombre de la categoria</label>
-                <input 
-                type="text" 
-                name="nombreCategoria" 
-                placeholder="Ingresa nombre de la categoria"
+                <label className="form-label">Nombre de marca</label>
+                <input type="text" 
+                name="nombreMarca" 
+                placeholder="Ingresa nombre de la marca"
                 className="form-control" 
-                value={nombreCategoria} 
+                value={nombreMarca} 
                 onChange={(e)=>onInputChange(e)}
-                /> 
+                />
             </div>
 
             </div>
@@ -138,7 +115,7 @@ export default function UpdateCategoria() {
 
 
             {/* esto es para cancelar el formulario*/} 
-            <Link to="/ver_categoria" className="btn btn-outline-danger mx-2">
+            <Link to="/ver_marca" className="btn btn-outline-danger mx-2">
                 Cancel
             </Link>
         </div>

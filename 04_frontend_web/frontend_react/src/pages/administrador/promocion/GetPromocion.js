@@ -27,20 +27,22 @@ export default function GetPromocion() {
     fetchPromocion();
   }, []);
 
-  // Función para eliminar un stock directamente desde el service
-  const handleDeletePromocion = async (idPromocion) => {
-    console.log("Intentando eliminar idPromocion:", idPromocion); // <--- revisa esto
-    if (!window.confirm("¿Estás seguro de eliminar esta promocion?")) return;
 
+  // Eliminar producto directamente desde el service
+  const handleDeletePromocion = async (idPromocion) => {
     try {
-      await deletePromocion(idPromocion);
-      setPromocion(promocion.filter(s => s.idPromocion !== idPromocion)); // actualizamos la lista
-      alert("Promocion eliminada");
+        await deletePromocion(idPromocion);
+        setPromocion(promocion.filter(p => p.idPromocion !== idPromocion));
+        alert("Promoción eliminada");
     } catch (error) {
-      console.error("Error al eliminar la promocion", error);
-      alert("No se pudo eliminar el promocion. Revisa si tiene relaciones activas.");
+        if (error.response?.status === 409) {
+            alert(error.response.data); // "No se puede eliminar el producto porque tiene stocks asociados"
+        } else {
+        alert("No se pudo eliminar la promocion. Revisa si tiene relaciones activas.");
+        }
     }
   };
+
 
   if (loading) return <p>Cargando promocion...</p>;
 
@@ -88,11 +90,15 @@ export default function GetPromocion() {
                             <td>
                             <button
                             className="btn btn-light"
-                            onClick={() => deletePromocion(p.idPromocion)}
+                            onClick={() => {
+                                if (window.confirm("¿Estás seguro de eliminar esta promoción?")) {
+                                handleDeletePromocion(p.idPromocion);
+                                }
+                            }}
                             >
                             Eliminar
                             </button>
-                            <Link to={`/stock/producto/${p.idProducto}`} id="boton_eliminar" className="btn btn-light">Agregar Stock</Link>
+                            <Link to={`/promocion/${p.idPromocion}`} id="boton_eliminar" className="btn btn-light">Editar</Link>
                             </td>
 
                             </tr>

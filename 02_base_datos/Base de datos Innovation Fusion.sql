@@ -123,7 +123,7 @@ CREATE TABLE Producto (
   fechaModificacion DATE NOT NULL,
   estadoProducto ENUM('Activo', 'Inactivo', 'Descontinuado') NOT NULL,
   idCategoria INT NOT NULL,
-  idMarca INT NOT NULL,
+  idMarca INT NOT NULL ,
   idMaterial INT NOT NULL,
   idPublico INT NOT NULL,
   idPromocion INT NULL,
@@ -157,8 +157,8 @@ CREATE TABLE Variacion (
 -- Tabla Inventario
 CREATE TABLE Stock (
   idStock INT AUTO_INCREMENT NOT NULL,
-  stockMinimo INT NOT NULL,
-  stockActual INT NOT NULL,
+  stockMinimo INT NOT NULL DEFAULT 1,
+  stockActual INT NOT NULL DEFAULT 0,
   idColor INT NULL,
   idVariacion INT NULL,
   idProducto INT NOT NULL,
@@ -199,22 +199,6 @@ CREATE TABLE mensajes (
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     fecha_respuesta TIMESTAMP NULL
 );
-								-- cosultas avanzadas:
--- -----------------------------------------------------
--- Disparadores
--- -----------------------------------------------------
--- trigger para que cuando se cree un producto, se guarde en un stoc vacio
-DELIMITER $$
-
-CREATE TRIGGER trg_producto_after_insert
-AFTER INSERT ON Producto
-FOR EACH ROW
-BEGIN
-    INSERT INTO Stock (stockMinimo, stockActual, idColor, idVariacion, idProducto)
-    VALUES (0, 0, NULL, NULL, NEW.idProducto);
-END$$
-
-DELIMITER ;
 
 								-- DML: Insert - Insertar registros de las tablas:
 -- -----------------------------------------------------
@@ -322,6 +306,42 @@ VALUES (5, 15, 2, 2, 1);
 INSERT INTO Stock (stockMinimo, stockActual, idColor, idVariacion, idProducto) 
 VALUES (2, 10, 2, 3, 2);
 
--- TipoPublico
-INSERT INTO Imagen (urlImagen, idProducto) VALUES ("eje de link imagen",1);
+								-- cosultas avanzadas:
+-- -----------------------------------------------------
+-- Disparadores
+-- -----------------------------------------------------
+-- trigger para que cuando se cree un producto, se guarde en un stoc vacio
+DELIMITER $$
+
+CREATE TRIGGER trg_producto_after_insert
+AFTER INSERT ON Producto
+FOR EACH ROW
+BEGIN
+    INSERT INTO Stock (stockMinimo, stockActual, idColor, idVariacion, idProducto)
+    VALUES (0, 0, Null, Null, NEW.idProducto);
+END$$
+
+DELIMITER ;
+
+-- consulta para agrupar el stok segun el idProducto
+
+SELECT 
+    p.idProducto,
+    ANY_VALUE(p.codigoReferencia) AS codigoReferencia,
+    ANY_VALUE(p.nombreProducto) AS nombreProducto,
+    ANY_VALUE(tp.nombreTipoProducto) AS nombreTipoProducto, 
+    ANY_VALUE(p.precio) AS precio,
+    GROUP_CONCAT(DISTINCT v.nombre SEPARATOR ', ') AS nombre,
+    GROUP_CONCAT(DISTINCT c.nombreColor SEPARATOR ', ') AS nombreColor,
+    SUM(s.stockActual) AS stockActual,
+    ANY_VALUE(p.estadoProducto) AS estadoProducto
+FROM Stock s
+JOIN Producto p ON s.idProducto = p.idProducto
+JOIN Categoria cat ON p.idCategoria = cat.idCategoria
+JOIN TipoProducto tp ON cat.idTipoProducto = tp.idTipoProducto
+LEFT JOIN Variacion v ON v.idVariacion = s.idVariacion
+LEFT JOIN Color c ON c.idColor = s.idColor
+GROUP BY p.idProducto
+ORDER BY p.nombreProducto ASC;
+
 

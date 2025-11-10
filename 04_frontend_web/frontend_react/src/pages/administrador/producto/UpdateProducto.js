@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import {useUpdateProducto} from "../../../hooks/producto/useUpdateProducto";
-import {useIDGetProductoId} from "../../../hooks/producto/useIDGetProducto";
+import {getProductoId, updateProducto} from "../../../services/administrador/ProductoService";
+
 import {useGetCategorias} from "../../../hooks/categoria/useGetCategoria";
 import {useGetMarca} from "../../../hooks/marca/useGetMarca";
 import {useGetMaterial} from "../../../hooks/material/useGetMaterial";
@@ -16,13 +16,12 @@ export default function UpdateProducto() {
 {/*navigate("/"); // me lleva a la página principal */}
     
     let navigate=useNavigate();
-
-    // este valor sale al final de usefect: }, [idProducto]); (useIDGetProductoId)
-    // ademas lo que este en const {}, debe ir en : await handleUpdateProducto(idProducto, producto);
     const { idProducto } = useParams(); // esto se usa cuando se va a editar
 
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
 
-        const [producto,setproducto]=useState({ 
+    const [producto,setproducto]=useState({ 
         nombreProducto:"",
         codigoReferencia:"",
         descripcion:"",
@@ -38,31 +37,6 @@ export default function UpdateProducto() {
     const estadoProductos = ['Activo', 'Inactivo', 'Descontinuado'];
     const { nombreProducto, codigoReferencia, descripcion, precio, estadoProducto } = producto;
 
-    // 🔹 Hook para traer el producto desde la BD
-    const { producto: productoDB, load: loadProducto } = useIDGetProductoId(idProducto);
-
-    // Cuando llegue el producto desde la BD → actualizamos el estado local
-useEffect(() => {
-    if (productoDB) {
-        console.log("Producto desde BD:", productoDB);
-        setproducto({
-            nombreProducto: productoDB.nombreProducto || "",
-            codigoReferencia: productoDB.codigoReferencia || "",
-            descripcion: productoDB.descripcion || "",
-            precio: productoDB.precio || "",
-            estadoProducto: productoDB.estadoProducto || "",
-            idCategoria: productoDB.categoria?.idCategoria || "",
-            idMarca: productoDB.marca?.idMarca || "",
-            idMaterial: productoDB.material?.idMaterial || "",
-            idPublico: productoDB.tipoPublico?.idPublico || "",
-            idPromocion: productoDB.promocion?.idPromocion || ""
-});
-
-    }
-}, [productoDB]);
-
-    // Hooks personalizados para cargar selects
-
     //aca se pone los return de los hooks, por ejemplo: 
     // return { tipoPublicos, loading };
     const { categorias } = useGetCategorias();
@@ -71,33 +45,73 @@ useEffect(() => {
     const { tipoPublicos } = useGetTipoPublicos();
     const { promociones } = useGetPromociones();
 
-    // Hook personalizado para crear producto
-    const { handleUpdateProducto, load, success } = useUpdateProducto();
+    // Traer los productos al cargar la página
+    useEffect(() => {
+    const fetchProductoId = async () => {
+        try {
+        const response = await getProductoId(idProducto);
+        const data = response.data;
+
+        // Desanidar el tipoProducto, trae el idTipoProducto directamente
+        setproducto({
+            nombreProducto: data.nombreProducto || "",
+            codigoReferencia: data.codigoReferencia || "",
+            descripcion: data.descripcion || "",
+            precio: data.precio || "",
+            estadoProducto: data.estadoProducto || "",
+            idCategoria: data.categoria?.idCategoria || "",
+            idMarca: data.marca?.idMarca || "",
+            idMaterial: data.material?.idMaterial || "",
+            idPublico: data.tipoPublico?.idPublico || "",
+            idPromocion: data.promocion?.idPromocion || ""
+        });
+        } catch (error) {
+        console.error("Error al cargar el producto", error);
+        } finally {
+        setLoading(false);
+        }
+    };
+
+    if (idProducto) fetchProductoId();
+    }, [idProducto]);
+
     
-  
-{/*...user: copia lo que ya tenga el objeto user (username: "ana23" // agrega un campo nuevo)*/}   
-{/*e.target.name: se vincula con name=email */}    
-{/*e.target.value → el valor que escribió el usuario. */}
-{/*onInputChange(e)= Lo guarda en el estado user.
-Cuando escribes algo, React captura ese valor (e.target.value)
-Y lo guarda en user con setUsers.*/}
+
+    const handleUpdateProducto = async (idProducto, data) => {
+        setLoading(true); // paso 1: activar "cargando"
+        try {
+        await updateProducto(idProducto, data); // paso 2: enviar datos al backend
+        setSuccess(true);        // paso 3: si todo ok → marcar éxito
+        navigate("/ver_producto")
+        } catch (error) {
+        console.error("Error al crear la categoria:", error);
+
+        // Verifica si el backend envió un mensaje
+        if (error.response && error.response.data && error.response.data.errorMessage) {
+        alert("⚠️ " + error.response.data.errorMessage);
+        } else {
+        alert("⚠️ Error desconocido al crear la categoria");
+        }
+        setSuccess(false);      // si falla → marcar como no exitoso
+        } finally {
+        setLoading(false);         // paso 4: quitar "cargando"
+        }
+    };
+
+    //aca se pone los return de los hooks, por ejemplo: 
+    // return { tipoPublicos, loading };
+
     const onInputChange=(e)=>{
         setproducto({...producto, [e.target.name]: e.target.value});
     };
 
     const onSubmit=async (e)=>{
-{/*evita que se recargue la página */}
         e.preventDefault();
-{/*manda los datos (user) al backend.*/}
         await handleUpdateProducto(idProducto, producto); // acá le pasas el id y los datos(como esta en el hook)
-{/*después de guardar, te lleva a la página principal */}
-        navigate("/Administrador/stock")
     }
 
   // Mostrar loading mientras trae el producto
-  if (loadProducto) return <p>Cargando producto...</p>;
-
-
+  if (loading) return <p>Cargando producto...</p>;
   return (
 
 <div className="main-content">
@@ -120,10 +134,10 @@ Y lo guarda en user con setUsers.*/}
 
             <div className="col">
                 <label className="form-label">Categoria</label>
-                <select name="idCategoria" value={String(producto.idCategoria || "")} onChange={(e)=>onInputChange(e)} className="form-select">
+                <select name="idCategoria" value={producto.idCategoria} onChange={(e)=>onInputChange(e)} className="form-select">
                 <option value="">-- Selecciona una opción --</option>
                 {categorias.map((categoria) => (
-                <option key={categoria.idCategoria} value={String(categoria.idCategoria)}>
+                <option key={categoria.idCategoria} value={categoria.idCategoria}>
                     {categoria.nombreCategoria}
                 </option>
                 ))}
@@ -154,10 +168,10 @@ Y lo guarda en user con setUsers.*/}
 
             <div className="col">
                 <label className="form-label">Marca</label>
-                <select name="idMarca" value={String(producto.idMarca || "")} onChange={(e)=>onInputChange(e)} className="form-select">
+                <select name="idMarca" value={producto.idMarca} onChange={(e)=>onInputChange(e)} className="form-select">
                 <option value="">-- Selecciona una opción --</option>
                 {marcas.map((marca) => (
-                <option key={marca.idMarca} value={String(marca.idMarca)}>
+                <option key={marca.idMarca} value={marca.idMarca}>
                     {marca.nombreMarca}
                 </option>
                 ))}
@@ -188,13 +202,12 @@ Y lo guarda en user con setUsers.*/}
 
             <div className="col">
                 <label className="form-label">Material</label>
-                <select name="idMaterial" value={String(producto.idMaterial || "")} onChange={(e)=>onInputChange(e)} className="form-select">
+                <select name="idMaterial" value={producto.idMaterial} onChange={(e)=>onInputChange(e)} className="form-select">
                 <option value="">-- Selecciona una opción --</option>
                 {materiales.map((material) => (
-                <option key={material.idMaterial} value={String(material.idMaterial)}>
+                <option key={material.idMaterial} value={material.idMaterial}>
                     {material.nombreMaterial}
                 </option>
-
                 ))}
                 </select>
             </div>
@@ -202,10 +215,10 @@ Y lo guarda en user con setUsers.*/}
 
             <div className="col">
                 <label className="form-label">Sexo Biologico</label>
-                <select name="idPublico" value={String(producto.idPublico || "")} onChange={(e)=>onInputChange(e)} className="form-select">
+                <select name="idPublico" value={producto.idPublico} onChange={(e)=>onInputChange(e)} className="form-select">
                 <option value="">-- Selecciona una opción --</option>
                 {tipoPublicos.map((publico) => (
-                <option key={publico.idPublico} value={String(publico.idPublico)}>
+                <option key={publico.idPublico} value={publico.idPublico}>
                     {publico.nombrePublico}
                 </option>
                 ))}
@@ -230,7 +243,7 @@ Y lo guarda en user con setUsers.*/}
                 onChange={(e)=>onInputChange(e)} className="form-select">
                 <option value="">-- Selecciona una opción --</option>
                 {promociones.map((promocion) => (
-                <option key={promocion.idPromocion} value={String(promocion.idPromocion)}>
+                <option key={promocion.idPromocion} value={promocion.idPromocion}>
                     {promocion.nombrePromocion}
                 </option>
                 ))}
@@ -241,13 +254,13 @@ Y lo guarda en user con setUsers.*/}
 
 <div className="row row-cols-1">
 {/* esto es para enviar el formulario*/} 
-            <button type="submit" className="btn btn-outline-primary" disabled={load}>
-            {load ? "Guardando..." : "Submit"}
+            <button type="submit" className="btn btn-outline-primary" disabled={loading}>
+            {loading ? "Guardando..." : "Submit"}
             </button>
 
 
             {/* esto es para cancelar el formulario*/} 
-            <Link className="btn btn-outline-danger mx-2" to="/Administrador/stock">
+            <Link to="/ver_producto" className="btn btn-outline-danger mx-2" >
                 Cancel
             </Link>
         </div>

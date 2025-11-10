@@ -7,7 +7,7 @@ export const createProducto = async (productoData) => {
 
 // Obtener todos los productos
 export const getProductos = async () => {
-    return await api_url.get("/publico/productos");
+    return await api_url.get("/productos");
 };
 
 // Obtener los productos activos

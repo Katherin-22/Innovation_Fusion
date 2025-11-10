@@ -1,43 +1,40 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {createCategoria} from "../../../services/administrador/CategoriaService";
-
-import {useGetTipoProducto} from "../../../hooks/tipoProducto/useGetTipoProducto";
+import { createColor } from "../../../services/administrador/ColorService";
 
 import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
 import "../../../styles/administrador/inventario.css";
 import "../../../styles/administrador/gestion_producto.css";
 
-export default function CreateCategoria() {
+export default function CreateColor() {
 {/*navigate=useNavigate():Sirve para moverte entre páginas desde el código */}
 {/*navigate("/"); // me lleva a la página principal */}
     
     let navigate=useNavigate();
 
-        const [categoria,setcategoria]=useState({ 
-        nombreCategoria:"",
-        idTipoProducto: ""
+    const [colores,setColores]=useState({ 
+        nombreColor:""
     });
 
-    const [loading, setLoad] = useState(false);
-    const [success, setSuccess] = useState(false);
-    
-    const { nombreCategoria } = categoria;
+    const { nombreColor } = colores;    
 
-    const handleCreateCategoria = async (data) => {
+    const [loading, setLoad] = useState(false);
+    const [success, setSuccess] = useState(false)
+
+    const handleCreateColores = async (data) => {
         setLoad(true); // paso 1: activar "cargando"
         try {
-        await createCategoria(data); // paso 2: enviar datos al backend
+        await createColor(data); // paso 2: enviar datos al backend
         setSuccess(true);        // paso 3: si todo ok → marcar éxito
-        navigate("/ver_categoria")
+        navigate("/ver_color")
         } catch (error) {
-        console.error("Error al crear la categoria:", error);
+        console.error("Error al crear el color:", error);
 
         // Verifica si el backend envió un mensaje
         if (error.response && error.response.data && error.response.data.errorMessage) {
         alert("⚠️ " + error.response.data.errorMessage);
         } else {
-        alert("⚠️ Error desconocido al crear la categoria");
+        alert("⚠️ Error desconocido al crear el color");
         }
         setSuccess(false);      // si falla → marcar como no exitoso
         } finally {
@@ -45,15 +42,14 @@ export default function CreateCategoria() {
         }
     };
 
-    const { TipoProducto } = useGetTipoProducto();
-
     const onInputChange=(e)=>{
-        setcategoria({...categoria, [e.target.name]: e.target.value});
+        setColores({...colores, [e.target.name]: e.target.value});
     };
 
     const onSubmit=async (e)=>{
         e.preventDefault();
-        await handleCreateCategoria(categoria); // manda datos al backend
+        await handleCreateColores(colores); // manda datos al backend
+        
     }
 
   return (
@@ -65,7 +61,7 @@ export default function CreateCategoria() {
     <div className="header">    
         <div className="row custom-header">
             <div className="col-12 d-flex align-items-center justify-content-between px-4 w-100">
-                <h1 className="mb-0">Registrar Categoria</h1>
+                <h1 className="mb-0">Registrar Color</h1>
                 <a href="./INVENTARIO(PRINCIPAL).HTML" className="btn btn-light custom-btn-exit">
                     <img src="../img/caret-left.png" alt=""/>
                 </a>
@@ -77,24 +73,12 @@ export default function CreateCategoria() {
         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
             <div className="col">
-                <label className="form-label">Tipo de Producto</label>
-                <select name="idTipoProducto" value={categoria.idTipoProducto} onChange={(e)=>onInputChange(e)} className="form-select">
-                <option value="">-- Selecciona una opción --</option>
-                {TipoProducto.map((Tp) => (
-                <option key={Tp.idTipoProducto} value={Tp.idTipoProducto}>
-                    {Tp.nombreTipoProducto}
-                </option>
-                ))}
-                </select>
-            </div>
-
-            <div className="col">
-                <label className="form-label">Nombre de Categoria</label>
+                <label className="form-label">Nombre Color</label>
                 <input type="text" 
-                name="nombreCategoria" 
-                placeholder="Ingresa nombre de la categoria"
+                name="nombreColor" 
+                placeholder="Ingresa el nombre del color"
                 className="form-control" 
-                value={nombreCategoria} 
+                value={nombreColor} 
                 onChange={(e)=>onInputChange(e)}
                 />
             </div>
@@ -109,7 +93,7 @@ export default function CreateCategoria() {
 
 
             {/* esto es para cancelar el formulario*/} 
-            <Link to="/ver_categoria" className="btn btn-outline-danger mx-2">
+            <Link className="btn btn-outline-danger mx-2" to="/ver_color">
                 Cancel
             </Link>
         </div>

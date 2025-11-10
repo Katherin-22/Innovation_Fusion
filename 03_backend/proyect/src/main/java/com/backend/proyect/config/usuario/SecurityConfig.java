@@ -32,11 +32,9 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable()) // desactiva CSRF
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll() // login y registro públicos
-                //permisos de acceso libre
-                .requestMatchers("/publico/**").permitAll() // login y registro públicos
+                .requestMatchers("/api/auth/**", "/publico/**", "/uploads/**").permitAll() // login y registro públicos
                 //para pruebas
-                .requestMatchers("/categoria", "/categoria/{idCategoria}", "/promocion", "/stock/{idProducto}", "stock/variaciones/{idProducto}").permitAll() // login y registro públicos
+                .requestMatchers("/categoria", "/categoria/{idCategoria}", "/promocion", "/stock/{idProducto}", "stock/variaciones/{idProducto}", "/stock/{idStock}", "/producto/{idProducto}/stock/{idStock}", "/promocion/{idPromocion}", "/productos", "/producto", "/producto/{idProducto}", "/producto/{idProducto}/imagenes","/producto/{idProducto}/imagen/{idImagen}", "/color", "/color/{idColor}", "/imagen/{idImagen}", "/marca","/marca/{idMarca}" , "/material/{idMaterial}", "/material","/api/banners").permitAll() // login y registro públicos
                 .anyRequest().authenticated() // lo demás requiere autenticación
                 )
                 .sessionManagement(session -> session

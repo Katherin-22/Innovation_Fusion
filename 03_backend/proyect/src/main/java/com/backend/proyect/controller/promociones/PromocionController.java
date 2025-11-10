@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.proyect.dto.promociones.PromocionDTO;
+import com.backend.proyect.exception.productos.ConflictException;
 import com.backend.proyect.exception.productos.ResourceNotFoundException;
 import com.backend.proyect.model.promociones.Promocion;
 import com.backend.proyect.repository.promociones.PromocionRepository;
@@ -41,9 +42,20 @@ public class PromocionController {
         }
         promocion.setFechaFin(promocionDTO.getFechaFin());
 
+        String codigoPromocion = promocionDTO.getCodigoPromocion().toLowerCase();
+
+        if (promocionRepository.existsByCodigoPromocion(codigoPromocion)) {
+            throw new ConflictException("Ya existe un producto con el código " + codigoPromocion);
+        }
+
+        if (promocionDTO.getDescuento() < 0) {
+            throw new IllegalArgumentException("El precio no puede ser negativo");
+        }
+
+        
         // Solo actualizamos lo que viene en el DTO
         promocion.setNombrePromocion(promocionDTO.getNombrePromocion());
-        promocion.setCodigoPromocion(promocionDTO.getCodigoPromocion());
+        promocion.setCodigoPromocion(codigoPromocion);
         promocion.setDescuento(promocionDTO.getDescuento());
         promocion.setDescripcion(promocionDTO.getDescripcion());
         promocion.setEstadoPromocion(promocionDTO.getEstadoPromocion());
@@ -62,11 +74,25 @@ public class PromocionController {
                 .orElseThrow(() -> new ResourceNotFoundException("Promocion", idPromocion));
     }
 
-    @PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('administrador')")
     @PutMapping("/promocion/{idPromocion}")
     Promocion updatePromocion(@RequestBody PromocionDTO promocionDTO, @PathVariable Integer idPromocion) {
         return promocionRepository.findById(idPromocion)
                 .map(promocion -> {
+
+                    String codigoNuevo = promocionDTO.getCodigoPromocion().toLowerCase();
+                    String codigoActual = promocion.getCodigoPromocion();
+
+                    if (!codigoActual.equals(codigoNuevo)){
+                        if (promocionRepository.existsByCodigoPromocionAndIdPromocionNot(codigoNuevo, idPromocion))
+                        throw new ConflictException("Ya existe un producto con el código " + promocionDTO.getCodigoPromocion()); 
+                    }
+
+                    if (promocionDTO.getDescuento() < 0) {
+                        throw new IllegalArgumentException("El precio no puede ser negativo");
+                    }
+
+
                     // Validar que la fechaFin ingresada no sea anterior a hoy
                     if (promocionDTO.getFechaFin().isBefore(LocalDate.now())) {
                         throw new IllegalArgumentException("La fecha fin no puede ser anterior a la fecha actual.");
@@ -75,7 +101,7 @@ public class PromocionController {
 
                     // Solo actualizamos lo que viene en el DTO
                     promocion.setNombrePromocion(promocionDTO.getNombrePromocion());
-                    promocion.setCodigoPromocion(promocionDTO.getCodigoPromocion());
+                    promocion.setCodigoPromocion(codigoNuevo);
                     promocion.setDescuento(promocionDTO.getDescuento());
                     promocion.setDescripcion(promocionDTO.getDescripcion());
                     promocion.setEstadoPromocion(promocionDTO.getEstadoPromocion());
@@ -84,7 +110,7 @@ public class PromocionController {
                 }).orElseThrow(() -> new ResourceNotFoundException("Promocion", idPromocion));
     }
 
-    @PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('administrador')")
     @DeleteMapping("/promocion/{idPromocion}")
     String deletePromocion(@PathVariable Integer idPromocion) {
         if (!promocionRepository.existsById(idPromocion)) {

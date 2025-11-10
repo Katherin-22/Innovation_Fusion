@@ -86,11 +86,25 @@ System.out.println("ID producto: " + producto.getIdProducto()); // imprime el va
         return ResponseEntity.ok(productos); // 200 OK
     }
 
+    //para mostrar todas las imagenes de un producto en especifico
     @GetMapping("/publico/producto/{idProducto}/imagenes")
-    public ResponseEntity<List<Imagen>> getOneImagenes(@PathVariable Integer idProducto) {
+    public ResponseEntity<List<Imagen>> getAllImagenesId(@PathVariable Integer idProducto) {
         List<Imagen> imagenes = imagenRepository.findByProductoIdProducto(idProducto);
         return ResponseEntity.ok(imagenes);
     }
+
+    //para mostrar una imagen en especifico de un producto
+    @GetMapping("/publico/producto/{idProducto}/imagen/{idImagen}")
+    public ResponseEntity<Imagen> getOneImagen(@PathVariable Integer idProducto, @PathVariable Integer idImagen) {
+        Imagen imagen = imagenRepository.findById(idImagen)
+                .orElseThrow(() -> new ResourceNotFoundException("Imagen", idImagen));
+
+        // Validar que la imagen pertenece al producto
+        if (!imagen.getProducto().getIdProducto().equals(idProducto)) {
+            throw new ResourceNotFoundException("La imagen no pertenece al producto con id " + idProducto, idProducto);
+        }
+        return ResponseEntity.ok(imagen);
+    }    
 
     @PutMapping("/producto/{idProducto}/imagen/{idImagen}")
     public ResponseEntity<Imagen> updateImagen(
@@ -145,25 +159,14 @@ System.out.println("ID producto: " + producto.getIdProducto()); // imprime el va
 
             return ResponseEntity.ok(updated);
         }
-        
 
-    @DeleteMapping("/producto/{idProducto}/imagen/{idImagen}")
-    ResponseEntity<Void> deleteImagen (@PathVariable Integer idProducto, 
-    @PathVariable Integer idImagen){
-    // Verificar que el producto exista
-    if (!productoRepository.existsById(idProducto)) {
-        throw new ResourceNotFoundException("Producto", idProducto);
+    @DeleteMapping("/imagen/{idImagen}")
+        ResponseEntity<Void> deleteImagen(@PathVariable Integer idImagen){
+        if (!imagenRepository.existsById(idImagen)) {
+            throw new ResourceNotFoundException("Imagen", idImagen);
+        }
+        imagenRepository.deleteById(idImagen);
+        return ResponseEntity.noContent().build();// 204 No Content
     }
-
-    // Verificar que la imagen exista
-    if (!imagenRepository.existsById(idImagen)) {
-        throw new ResourceNotFoundException("Imagen", idImagen);
-    }
-
-    // Borrar la imagen
-    imagenRepository.deleteById(idImagen);
-
-    // Responder 204 No Content
-    return ResponseEntity.noContent().build();
 }
-}
+

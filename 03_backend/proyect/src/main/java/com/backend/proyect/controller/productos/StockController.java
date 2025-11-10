@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.proyect.dto.productos.StockDTO;
+import com.backend.proyect.dto.productos.StockGeneralProjection;
 import com.backend.proyect.exception.productos.ResourceNotFoundException;
 import com.backend.proyect.model.productos.Color;
 import com.backend.proyect.model.productos.Producto;
@@ -83,29 +84,9 @@ public class StockController {
     }
 
     @GetMapping("/publico/stocks")
-    ResponseEntity<List<StockDTO>> getAllStock() {
-        List<StockDTO> listaStockDTO = stockRepository.findAll().stream().map(stock -> {
-            StockDTO stockDTOs = new StockDTO();
-            stockDTOs.setIdStock(stock.getIdStock());  // <- importante, para eliminar
-            stockDTOs.setIdProducto(stock.getProducto().getIdProducto()); // <- importante, para ir al stock por idProducto
-            stockDTOs.setCodigoReferencia(stock.getProducto().getCodigoReferencia());
-            stockDTOs.setNombreProducto(stock.getProducto().getNombreProducto());
-            stockDTOs.setNombreTipoProducto(stock.getProducto().getCategoria().getTipoProducto().getNombreTipoProducto());
-            stockDTOs.setStockActual(stock.getStockActual());
-            stockDTOs.setPrecio(stock.getProducto().getPrecio());
-            stockDTOs.setNombrePublico(stock.getProducto().getTipoPublico().getNombrePublico());
-            stockDTOs.setEstadoProducto(stock.getProducto().getEstadoProducto());
-
-            //esto permite que este null no de error
-            stockDTOs.setNombre(
-                    stock.getVariacion() != null ? stock.getVariacion().getNombre() : "Sin variación"
-            );
-            stockDTOs.setNombreColor(
-                    stock.getColor() != null ? stock.getColor().getNombreColor() : "Sin color"
-            );
-            return stockDTOs;
-        }).toList();
-        return ResponseEntity.ok(listaStockDTO);
+    public ResponseEntity<List<StockGeneralProjection>> getAllStock() {
+        List<StockGeneralProjection> listaStock = stockRepository.obtenerStockAgrupado();
+        return ResponseEntity.ok(listaStock);
     }
 
     @GetMapping("/publico/stock/producto/{idProducto}")
@@ -130,43 +111,50 @@ public class StockController {
         return ResponseEntity.ok(IdStockProducto);
     }
 
-    @PreAuthorize("hasAuthority('administrador')")
-    @PutMapping("/stock/{idStock}")
-    ResponseEntity<Stock> updateStock(@RequestBody StockDTO updateStockDTO, @PathVariable Integer idStock) {
-        return stockRepository.findById(idStock)
-                .map(stock -> {
-                    // Buscar las entidades relacionadas por ID
-                    Producto producto = productoRepository.findById(updateStockDTO.getIdProducto())
-                            .orElseThrow(() -> new ResourceNotFoundException("Producto", updateStockDTO.getIdProducto()));
-
-                    // Color opcional
-                    if (updateStockDTO.getIdColor() != null) {
-                        Color color = colorRepository.findById(updateStockDTO.getIdColor())
-                                .orElseThrow(() -> new ResourceNotFoundException("Color", updateStockDTO.getIdColor()));
-                        stock.setColor(color);
-                    } else {
-                        stock.setColor(null);
-                    }
-
-                    // Variación opcional
-                    if (updateStockDTO.getIdVariacion() != null) {
-                        Variacion variacion = variacionRepository.findById(updateStockDTO.getIdVariacion())
-                                .orElseThrow(() -> new ResourceNotFoundException("Variacion", updateStockDTO.getIdVariacion()));
-                        stock.setVariacion(variacion);
-                    } else {
-                        stock.setVariacion(null);
-                    }
-
-                    stock.setStockMinimo(updateStockDTO.getStockMinimo());
-                    stock.setStockActual(updateStockDTO.getStockActual());
-                    stock.setProducto(producto);
-
-                    Stock actualizado = stockRepository.save(stock);
-                    return ResponseEntity.ok(actualizado); // 200 OK
-                }).orElseThrow(() -> new ResourceNotFoundException("Stock", idStock));
+    @GetMapping("/publico/stock/{idStock}")
+    ResponseEntity<Stock> getOneStock(@PathVariable Integer idStock) {
+        Stock stock = stockRepository.findById(idStock)
+                .orElseThrow(() -> new ResourceNotFoundException("Stock", idStock));
+        return ResponseEntity.ok(stock); // 200 OK
     }
 
-    @PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('administrador')")
+    @PutMapping("/producto/{idProducto}/stock/{idStock}")
+    ResponseEntity<Stock> updateStock(@RequestBody StockDTO updateStockDTO, @PathVariable Integer idProducto, @PathVariable Integer idStock) {
+        return stockRepository.findById(idStock)
+            .map(stock -> {
+                // Buscar las entidades relacionadas por ID
+                Producto producto = productoRepository.findById(idProducto)
+                        .orElseThrow(() -> new ResourceNotFoundException("Producto", idProducto));
+
+                // Color opcional
+                if (updateStockDTO.getIdColor() != null) {
+                    Color color = colorRepository.findById(updateStockDTO.getIdColor())
+                            .orElseThrow(() -> new ResourceNotFoundException("Color", updateStockDTO.getIdColor()));
+                    stock.setColor(color);
+                } else {
+                    stock.setColor(null);
+                }
+
+                // Variación opcional
+                if (updateStockDTO.getIdVariacion() != null) {
+                    Variacion variacion = variacionRepository.findById(updateStockDTO.getIdVariacion())
+                            .orElseThrow(() -> new ResourceNotFoundException("Variacion", updateStockDTO.getIdVariacion()));
+                    stock.setVariacion(variacion);
+                } else {
+                    stock.setVariacion(null);
+                }
+
+                stock.setStockMinimo(updateStockDTO.getStockMinimo());
+                stock.setStockActual(updateStockDTO.getStockActual());
+                stock.setProducto(producto);
+
+                Stock actualizado = stockRepository.save(stock);
+                return ResponseEntity.ok(actualizado); // 200 OK
+            }).orElseThrow(() -> new ResourceNotFoundException("Stock", idStock));
+    }
+
+    //@PreAuthorize("hasAuthority('administrador')")
     @DeleteMapping("/stock/{idStock}")
     ResponseEntity<Void> deleteStock(@PathVariable Integer idStock) {
         if (!stockRepository.existsById(idStock)) {

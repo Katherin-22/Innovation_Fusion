@@ -29,6 +29,18 @@ import CollageLogin from '../pages/Collage-Login';
 import UpdateCategoria  from "../pages/administrador/categoria/UpdateCategoria";
 import CreatePromocion from "../pages/administrador/promocion/CreatePromocion";
 import CreateStock from "../pages/administrador/stock/CreateStock";
+import UpdateStock from "../pages/administrador/stock/UpdateStock";
+import UpdatePromocion from "../pages/administrador/promocion/UpdatePromocion";
+import UpdateImagen from "../pages/administrador/imagen/UpdateImagen";  
+import GetColor from "../pages/administrador/color/GetColor";
+import CreateColor from "../pages/administrador/color/CreateColor";
+import UpdateColor from "../pages/administrador/color/UpdateColor";
+import GetMarca from "../pages/administrador/marca/GetMarca";
+import CreateMarca from "../pages/administrador/marca/CreateMarca";
+import UpdateMarca from "../pages/administrador/marca/UpdateMarca";
+import GetMaterial from "../pages/administrador/material/GetMaterial";
+import CreateMaterial from "../pages/administrador/material/CreateMaterial";
+import UpdateMaterial from "../pages/administrador/material/UpdateMaterial";
 
 export default function AppRoutes() {
   return (
@@ -66,6 +78,18 @@ export default function AppRoutes() {
       <Route path="/categoria/:idCategoria" element={<UpdateCategoria/>}></Route> 
       <Route path="/crear_promocion" element={<CreatePromocion/>}></Route> 
       <Route path="/stock/:idProducto" element={<CreateStock/>}></Route> 
+      <Route path="/producto/:idProducto/stock/:idStock" element={<UpdateStock/>}></Route> 
+      <Route path="/promocion/:idPromocion" element={<UpdatePromocion/>}></Route> 
+      <Route path="/producto/:idProducto/imagen/:idImagen" element={<UpdateImagen/>}></Route> 
+      <Route path="/ver_color" element={<GetColor/>}></Route> 
+      <Route path="/crear_color" element={<CreateColor/>}></Route> 
+      <Route path="/color/:idColor" element={<UpdateColor/>}></Route> 
+      <Route path="/ver_marca" element={<GetMarca/>}></Route> 
+      <Route path="/crear_marca" element={<CreateMarca/>}></Route> 
+      <Route path="/marca/:idMarca" element={<UpdateMarca/>}></Route> 
+      <Route path="/ver_material" element={<GetMaterial/>}></Route> 
+      <Route path="/crear_material" element={<CreateMaterial/>}></Route>
+      <Route path="/material/:idMaterial" element={<UpdateMaterial/>}></Route>  
 
     </Routes>
   );

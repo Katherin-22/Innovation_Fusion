@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { deleteCategoria, getCategorias } from "../../../services/administrador/CategoriaService";
+import { getColor, deleteColor } from "../../../services/administrador/ColorService";
 import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
 
 import "../../../styles/administrador/inventario.css";
@@ -7,43 +7,43 @@ import "../../../styles/administrador/gestion_producto.css";
 import { Link } from "react-router-dom";
 
 
-export default function GetCategoria() {
+export default function GetColor() {
   // Usamos el hook
-  const [categorias, setCategorias] = useState([]);
+  const [colores, setColores] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Traer los productos al cargar la página
   useEffect(() => {
-    const fetchcategorias = async () => {
+    const fetchColor = async () => {
       try {
-        const response = await getCategorias(); // llama tu endpoint
-        setCategorias(response.data); // guarda productos en el estado
+        const response = await getColor(); // llama tu endpoint
+        setColores(response.data); // guarda productos en el estado
       } catch (error) {
-        console.error("Error al cargar la Categoria", error);
+        console.error("Error al cargar el color", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchcategorias();
+    fetchColor();
   }, []);
 
   // Eliminar producto directamente desde el service
-  const handleDeleteCategoria = async (idCategoria) => {
+  const handleDeleteColor = async (idColor) => {
     try {
-        await deleteCategoria(idCategoria);
-        setCategorias(categorias.filter(p => p.idCategoria !== idCategoria));
-        alert("Categoria eliminada");
+        await deleteColor(idColor);
+        setColores(colores.filter(c => c.idColor !== idColor));
+        alert("Color eliminado");
     } catch (error) {
         if (error.response?.status === 409) {
             alert(error.response.data); // "No se puede eliminar el producto porque tiene stocks asociados"
         } else {
-            alert("No se pudo eliminar la categoria");
+            alert("No se pudo eliminar el color");
         }
     }
   };
 
-  if (loading) return <p>Cargando categorias...</p>;
+  if (loading) return <p>Cargando color...</p>;
   return (
 
 <div className="main-content">
@@ -53,10 +53,10 @@ export default function GetCategoria() {
     <div className="header">    
         <div className="row custom-header">
             <div className="col-3 d-flex align-items-center justify-content-between">
-                <h1 className="mb-0">CATEGORIAS</h1>
+                <h1 className="mb-0">Colores</h1>
             </div>
             <div className="col-9 d-flex align-items-end px-1 gap-2 w-50">
-                <Link to="/categoria" className="btn custom-btn btn-light">Registrar Categoria</Link>
+                <Link to={"/crear_color"}  className="btn custom-btn btn-light">Registrar Color</Link>
             </div>
         </div>
     </div>      
@@ -66,24 +66,20 @@ export default function GetCategoria() {
                     <thead>
                         <tr>
                         <th>Nombre</th>
-                        <th>Tipo de Producto</th>
-                        <th>id Tipo de Producto</th>
                         <th>Acciones</th>
                         </tr>
                     </thead>
                         <tbody>
-                        {categorias.map((categoria) => (
-                            <tr key={categoria.idCategoria}>
-                            <td>{categoria.nombreCategoria}</td>
-                            <td>{categoria.nombreTipoProducto}</td>
-                            <td>{categoria.idTipoProducto}</td>
-                            <td><Link to={`/categoria/${categoria.idCategoria}`} id="boton_agregar" className="btn btn-light">Editar</Link>
+                        {colores.map((colores) => (
+                            <tr key={colores.idColor}>
+                            <td>{colores.nombreColor}</td>
+                            <td><Link to={`/color/${colores.idColor}`} id="boton_agregar" className="btn btn-light">Editar</Link>
                             
                             <button
                             className="btn btn-light"
                             onClick={() => {
-                                if (window.confirm("¿Estás seguro de eliminar esta categoria?")) {
-                                handleDeleteCategoria(categoria.idCategoria);
+                                if (window.confirm("¿Estás seguro de eliminar este color?")) {
+                                handleDeleteColor(colores.idColor);
                                 }
                             }}
                             >

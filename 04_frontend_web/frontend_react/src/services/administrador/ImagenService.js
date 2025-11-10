@@ -17,9 +17,14 @@ export const getImagen = async () => {
     return await api_url.get("/publico/producto/imagenes");
 };
 
-// Obtener un Imagen por ID
+//para mostrar TODAS las imagenes de un producto en especifico
 export const getImagenById  = async (idProducto) => {
     return await api_url.get(`/publico/producto/${idProducto}/imagenes`);
+};
+
+    //para mostrar UNA imagen en especifico de un producto
+export const OneGetImagenById  = async (idProducto, idImagen) => {
+    return await api_url.get(`/publico/producto/${idProducto}/imagen/${idImagen}`);
 };
 
 // Actualizar una imagen existente
@@ -28,9 +33,7 @@ export const updateImagen = async (idProducto, idImagen, file) => {
   formData.append("urlImagen", file); // mismo nombre que espera el backend
 
   return await api_url.put(
-    `/producto/${idProducto}/imagen/${idImagen}`,
-    formData,
-    {
+    `/producto/${idProducto}/imagen/${idImagen}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -39,8 +42,8 @@ export const updateImagen = async (idProducto, idImagen, file) => {
 };
 
 // Eliminar un Imagen
-export const deleteImagen = async (idProducto,idImagen) => {
-    return await api_url.delete(`/producto/${idProducto}/imagen/${idImagen}`);
+export const deleteImagen = async (idImagen) => {
+    return await api_url.delete(`/imagen/${idImagen}`);
 };
 
 

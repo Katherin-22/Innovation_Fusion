@@ -24,7 +24,7 @@ public class MaterialController {
     // tipoProductoRepository este se pone en los return
     private MaterialRepository materialRepository;  
 
-    @PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('administrador')")
     @PostMapping("/material")
     Material newMaterial(@RequestBody Material newMaterial) {
         return materialRepository.save(newMaterial);
@@ -41,7 +41,7 @@ public class MaterialController {
                 .orElseThrow(() -> new ResourceNotFoundException("Material", idMaterial));
     }
 
-    @PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('administrador')")
     @PutMapping("/material/{idMaterial}")
     Material updateMaterial (@RequestBody Material updateMaterial, @PathVariable Integer idMaterial){
         return materialRepository.findById(idMaterial)
@@ -52,7 +52,7 @@ public class MaterialController {
             }).orElseThrow(()->new ResourceNotFoundException("Material", idMaterial));
     }
 
-    @PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('administrador')")
     @DeleteMapping("/material/{idMaterial}")
     String deleteMaterial (@PathVariable Integer idMaterial){
         if(!materialRepository.existsById(idMaterial)){

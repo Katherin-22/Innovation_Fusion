@@ -1,14 +1,23 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import {createPromocion} from "../../../services/administrador/PromocionService";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import {getPromocionById, updatePromocion} from "../../../services/administrador/PromocionService";
 
 import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
 import "../../../styles/administrador/inventario.css";
 import "../../../styles/administrador/gestion_producto.css";
 
-export default function CreatePromocion() {
+export default function UpdatePromocion() {
+{/*navigate=useNavigate():Sirve para moverte entre páginas desde el código */}
+{/*navigate("/"); // me lleva a la página principal */}
     
     let navigate=useNavigate();
+
+    // este valor sale al final de usefect: }, [idProducto]); (useIDGetProductoId)
+    // ademas lo que este en const {}, debe ir en : await handleUpdateProducto(idProducto, producto);
+    const { idPromocion } = useParams(); // esto se usa cuando se va a editar
+
+    const [loading, setLoading] = useState(true);
+    const [success, setSuccess] = useState(false);
 
     const [promocion,setPromocion]=useState({ 
         nombrePromocion:"",
@@ -20,32 +29,52 @@ export default function CreatePromocion() {
     });
 
     const opcionesEstado = ['Activo', 'Inactivo'];
-    const { nombrePromocion, codigoPromocion, descuento, descripcion, fechaFin, estadoPromocion } = promocion;
+    const { nombrePromocion, codigoPromocion, descuento, descripcion, fechaFin, estadoPromocion} = promocion;
 
-
-    const [loading, setLoad] = useState(false);
-    const [success, setSuccess] = useState(false);
-    
-    const handleCreatePromocion = async (data) => {
-        setLoad(true); // paso 1: activar "cargando"
+    // Traer los productos al cargar la página
+    useEffect(() => {
+    const fetchPromocionId = async () => {
         try {
-        await createPromocion(data); // paso 2: enviar datos al backend
+        const response = await getPromocionById(idPromocion);
+        const data = response.data;
+
+        // Desanidar el tipoProducto, trae el idTipoProducto directamente
+        setPromocion({
+            nombrePromocion: data.nombrePromocion,
+            codigoPromocion: data.codigoPromocion,
+            descuento: data.descuento,
+            descripcion: data.descripcion,
+            fechaFin: data.fechaFin,
+            estadoPromocion: data.estadoPromocion
+        });
+        } catch (error) {
+        console.error("Error al cargar la promocion", error);
+        } finally {
+        setLoading(false);
+        }
+    };
+
+    if (idPromocion) fetchPromocionId();
+    }, [idPromocion]);
+
+    
+
+    const handleUpdatePromocion = async (idPromocion, data) => {
+        setLoading(true); // paso 1: activar "cargando"
+        try {
+        await updatePromocion(idPromocion, data); // paso 2: enviar datos al backend
         setSuccess(true);        // paso 3: si todo ok → marcar éxito
         navigate("/ver_promocion")
         } catch (error) {
-        console.error("Error al crear la promción:", error);
-
-        // Verifica si el backend envió un mensaje
-        if (error.response && error.response.data && error.response.data.errorMessage) {
-        alert("⚠️ " + error.response.data.errorMessage);
-        } else {
-        alert("⚠️ Error desconocido al crear la promoción");
-        }
+        console.error("Error al actualizar la promocion:", error);
         setSuccess(false);      // si falla → marcar como no exitoso
         } finally {
-        setLoad(false);         // paso 4: quitar "cargando"
+        setLoading(false);         // paso 4: quitar "cargando"
         }
     };
+
+    //aca se pone los return de los hooks, por ejemplo: 
+    // return { tipoPublicos, loading };
 
     const onInputChange=(e)=>{
         setPromocion({...promocion, [e.target.name]: e.target.value});
@@ -53,8 +82,11 @@ export default function CreatePromocion() {
 
     const onSubmit=async (e)=>{
         e.preventDefault();
-        await handleCreatePromocion(promocion); // manda datos al backend
+        await handleUpdatePromocion(idPromocion, promocion); // acá le pasas el id y los datos(como esta en el hook)
     }
+
+  // Mostrar loading mientras trae el producto
+  if (loading) return <p>Cargando categoria...</p>;
 
   return (
 
@@ -65,7 +97,7 @@ export default function CreatePromocion() {
     <div className="header">    
         <div className="row custom-header">
             <div className="col-12 d-flex align-items-center justify-content-between px-4 w-100">
-                <h1 className="mb-0">Registrar Promoción</h1>
+                <h1 className="mb-0">Editar Promocion</h1>
                 <a href="./INVENTARIO(PRINCIPAL).HTML" className="btn btn-light custom-btn-exit">
                     <img src="../img/caret-left.png" alt=""/>
                 </a>
@@ -143,13 +175,15 @@ export default function CreatePromocion() {
                 </select>
             </div>
 
-        </div>
+
+            </div>
 
 <div className="row row-cols-1">
 {/* esto es para enviar el formulario*/} 
             <button type="submit" className="btn btn-outline-primary" disabled={loading}>
-            {loading ? "Guardando..." : "Submit"}
+            {loading  ? "Guardando..." : "Submit"}
             </button>
+
 
             {/* esto es para cancelar el formulario*/} 
             <Link to="/ver_promocion" className="btn btn-outline-danger mx-2">

@@ -90,12 +90,6 @@ export default function Stock() {
                             <td>{s.stockActual}</td>
                             <td>{s.estadoProducto}</td>
                             <td>
-                            <button
-                            className="btn btn-light"
-                            onClick={() => handleDeleteStock(s.idStock)}
-                            >
-                            Eliminar
-                            </button>
                             <Link to={`/stock/producto/${s.idProducto}`} id="boton_eliminar" className="btn btn-light">Agregar Stock</Link>
                             </td>
 

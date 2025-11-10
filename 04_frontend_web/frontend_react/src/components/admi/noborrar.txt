@@ -1,0 +1,194 @@
+PARA LOS ALERT:
+
+ESTRUCTURA: 
+{success && (
+  <AlertMessage
+    type="success"
+    icon="check-circle-fill"
+    message="✅ ¡Stock actualizado correctamente!"
+    // OPCIONAL: duration={4000} // ← segundos antes de ocultarse (en milisegundos)
+  />
+)}
+
+DATOS:
+| Propiedad | Qué representa                                                   | Ejemplo de uso                                        |
+| --------- | ---------------------------------------------------------------- | ----------------------------------------------------- |
+| `type`    | Define la clase de Bootstrap que da el color y estilo del alert. | `"success"`, `"danger"`, `"warning"`, `"info"`        |
+| `icon`    | Indica cuál de los símbolos SVG usar.                            | `"check-circle-fill"` o `"exclamation-triangle-fill"` |
+| `message` | Es el texto que quieres mostrar dentro del alert.                | `"Stock actualizado correctamente"`                   |
+
+💬 Ejemplos de uso
+
+1️⃣ Éxito (verde):
+
+<AlertMessage
+  type="success"
+  icon="check-circle-fill"
+  message="✅ ¡Stock actualizado correctamente!"
+/>
+
+
+2️⃣ Error (rojo):
+
+<AlertMessage
+  type="danger"
+  icon="exclamation-triangle-fill"
+  message="❌ Error al guardar el stock"
+/>
+
+
+3️⃣ Información (azul):
+
+<AlertMessage
+  type="info"
+  icon="info-fill"
+  message="ℹ️ Recuerda llenar todos los campos."
+/>
+
+
+
+Perfecto 🔥 — quieres que el AlertMessage se muestre inmediatamente después de actualizar el stock, antes de que cambie la página.
+
+Esto se puede lograr de dos formas:
+
+Mostrando el mensaje en la misma página actual, y luego redirigiendo después de unos segundos.
+
+Pasando el mensaje al navegar, para que se muestre en la página destino (/Administrador/stock).
+
+Te explico ambas 👇
+
+✅ Opción 1: Mostrar y luego redirigir (la más sencilla)
+
+Modifica tu función handleUpdateStock así:
+
+const handleUpdateStock = async (idProducto, idStock, data) => {
+  setLoading(true);
+  try {
+    await updateStock(idProducto, idStock, data);
+    setSuccess(true); // mostrar mensaje
+
+    navigate("/Administrador/stock");
+  } catch (error) {
+    console.error("Error al actualizar el stock:", error);
+    setSuccess(false);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+Y en el return de tu componente:
+
+return (
+  <div>
+    {success && (
+      <AlertMessage
+        type="success"
+        icon="check-circle-fill"
+        message="✅ ¡Stock actualizado correctamente!"
+      />
+    )}
+
+    {/* el resto del formulario */}
+  </div>
+);
+
+
+🔹 Esto hará que el mensaje se muestre en la misma página durante 2 segundos, y luego cambie de vista.
+🔹 Puedes ajustar el tiempo (por ejemplo, 3000 para 3 segundos).
+
+⚙️ Opción 2: Mostrar mensaje en la página destino
+
+Si prefieres que el alert se muestre en la página /Administrador/stock, puedes pasar el mensaje al navegar usando el estado de React Router:
+
+navigate("/Administrador/stock", { state: { successMessage: "✅ ¡Stock actualizado correctamente!" } });
+
+
+Y en tu página StockList.jsx (la que muestra todos los stocks):
+
+import { useLocation } from "react-router-dom";
+import AlertMessage from "../../components/AlertMessage";
+
+function StockList() {
+  const location = useLocation();
+  const successMessage = location.state?.successMessage;
+
+  return (
+    <div>
+      {successMessage && (
+        <AlertMessage
+          type="success"
+          icon="check-circle-fill"
+          message={successMessage}
+        />
+      )}
+      {/* resto del contenido */}
+    </div>
+  );
+}
+
+
+🔹 Así el mensaje se muestra justo al entrar a la lista de stock.
+🔹 Ideal si la creación o edición redirige de inmediato.
+
+¿Quieres que te deje lista la versión completa del código con la Opción 1 (mostrar y luego redirigir)?
+
+
+Excelente pregunta 👏 — te explico paso a paso por qué se pasan esas props (type, icon, message) al componente <AlertMessage /> 👇
+
+💡 Contexto rápido
+
+Cuando tú creas un componente reutilizable en React (como un alert), lo ideal es que no quede fijo a un solo tipo de mensaje.
+Por ejemplo, podrías usarlo para:
+
+Éxitos ✅
+
+Errores ❌
+
+Advertencias ⚠️
+
+Información ℹ️
+
+Entonces, le pasas valores personalizados como propiedades (“props”) para que cambie según el caso.
+
+🧩 Qué hace cada prop
+Propiedad	Qué representa	Ejemplo de uso
+type	Define la clase de Bootstrap que da el color y estilo del alert.	"success", "danger", "warning", "info"
+icon	Indica cuál de los símbolos SVG usar.	"check-circle-fill" o "exclamation-triangle-fill"
+message	Es el texto que quieres mostrar dentro del alert.	"Stock actualizado correctamente"
+⚙️ Cómo se usa dentro del componente
+
+Tu componente AlertMessage.jsx podría verse así:
+
+import React from "react";
+
+export default function AlertMessage({ type, icon, message }) {
+  return (
+    <>
+      <svg xmlns="http://www.w3.org/2000/svg" className="d-none">
+        <symbol id="check-circle-fill" viewBox="0 0 16 16">
+          <path d="M16 8A8 8..." />
+        </symbol>
+        <symbol id="info-fill" viewBox="0 0 16 16">
+          <path d="M8 16A8 8..." />
+        </symbol>
+        <symbol id="exclamation-triangle-fill" viewBox="0 0 16 16">
+          <path d="M8.982 1.566..." />
+        </symbol>
+      </svg>
+
+      <div className={`alert alert-${type} d-flex align-items-center`} role="alert">
+        <svg className="bi flex-shrink-0 me-2" role="img" aria-label="icon">
+          <use xlinkHref={`#${icon}`} />
+        </svg>
+        <div>{message}</div>
+      </div>
+    </>
+  );
+}
+
+
+
+👉 En resumen:
+Estas props hacen que tu componente sea dinámico y reutilizable, sin tener que duplicar el mismo código del alert cada vez.
+Solo cambias los valores y el componente se adapta al mensaje que quieras mostrar.

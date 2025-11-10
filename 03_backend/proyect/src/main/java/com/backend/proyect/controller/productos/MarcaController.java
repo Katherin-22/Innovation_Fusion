@@ -27,7 +27,7 @@ public class MarcaController {
     // tipoProductoRepository este se pone en los return
     private MarcaRepository marcaRepository;
 
-    @PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('administrador')")
     @PostMapping("/marca")
     Marca newMarca(@RequestBody Marca newMarca) {
         return marcaRepository.save(newMarca);
@@ -45,7 +45,7 @@ public class MarcaController {
                 .orElseThrow(() -> new ResourceNotFoundException("Marca", idMarca));
     }
 
-    @PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('administrador')")
     @PutMapping("/marca/{idMarca}")
     Marca updateMarca(@RequestBody Marca updateMarca, @PathVariable Integer idMarca) {
         return marcaRepository.findById(idMarca)
@@ -56,7 +56,7 @@ public class MarcaController {
                 }).orElseThrow(() -> new ResourceNotFoundException("Marca", idMarca));
     }
 
-    @PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('administrador')")
     @DeleteMapping("/marca/{idMarca}")
     String deleteMarca(@PathVariable Integer idMarca) {
         if (!marcaRepository.existsById(idMarca)) {
