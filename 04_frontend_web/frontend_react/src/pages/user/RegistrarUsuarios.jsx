@@ -208,6 +208,7 @@ function RegistrarUsuarios() {
               <button
                 type="button"
                 className="col btn btn-outline-secondary btn-cancelar"
+                onClick={() => (window.location = "/Login")}
               >
                 Cancelar
               </button>

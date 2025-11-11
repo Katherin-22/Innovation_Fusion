@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import MenuHome from "../../layouts/home/menuHome";
 import BannerCarousel from "../../hooks/carrrousel/carrousel";
 import Footer from "../../layouts/home/footer";
+import { Link } from "react-router-dom";
 
 import "../../styles/home/paginaInicio.css";
 
@@ -37,8 +38,6 @@ const Home = () => {
                             <div className="card-body">
                             <h5 className="card-title">Zapato</h5>
                             <p className="card-text">Texto de ejemplo para el producto.</p>
-                            <a href="#" className="btn custom-btn">Carrito</a>
-                            <a href="../../productos/html/producto.html" className="btn custom-btn">Ver</a>
                             </div>
                         </div>
                         </div>
@@ -50,8 +49,6 @@ const Home = () => {
                             <div className="card-body">
                             <h5 className="card-title">Zapato</h5>
                             <p className="card-text">Texto de ejemplo para el producto.</p>
-                            <a href="#" className="btn custom-btn">Carrito</a>
-                            <a href="../../productos/html/producto.html" className="btn custom-btn">Ver</a>
                             </div>
                         </div>
                         </div>
@@ -63,8 +60,6 @@ const Home = () => {
                             <div className="card-body">
                             <h5 className="card-title">Zapato</h5>
                             <p className="card-text">Texto de ejemplo para el producto.</p>
-                            <a href="../" className="btn custom-btn">Carrito</a>
-                            <a href="../../productos/html/producto.html" className="btn custom-btn">Ver</a>
                             </div>
                         </div>
                         </div>
@@ -76,8 +71,6 @@ const Home = () => {
                             <div className="card-body">
                             <h5 className="card-title">Zapato</h5>
                             <p className="card-text">Texto de ejemplo para el producto.</p>
-                            <a href="#" className="btn custom-btn">Carrito</a>
-                            <a href="../../productos/html/producto.html" className="btn custom-btn">Ver</a>
                             </div>
                         </div>
                         </div>
@@ -94,8 +87,6 @@ const Home = () => {
                             <div className="card-body">
                             <h5 className="card-title">Bolso</h5>
                             <p className="card-text">Texto de ejemplo para el producto.</p>
-                            <a href="#" className="btn custom-btn">Carrito</a>
-                            <a href="../../productos/html/producto.html" className="btn custom-btn">Ver</a>
                             </div>
                         </div>
                         </div>
@@ -107,8 +98,6 @@ const Home = () => {
                             <div className="card-body">
                             <h5 className="card-title">Bolso</h5>
                             <p className="card-text">Texto de ejemplo para el producto.</p>
-                            <a href="#" className="btn custom-btn">Carrito</a>
-                            <a href="../../productos/html/producto.html" className="btn custom-btn">Ver</a>
                             </div>
                         </div>
                         </div>
@@ -120,8 +109,6 @@ const Home = () => {
                             <div className="card-body">
                             <h5 className="card-title">Bolso</h5>
                             <p className="card-text">Texto de ejemplo para el producto.</p>
-                            <a href="#" className="btn custom-btn">Carrito</a>
-                            <a href="../../productos/html/producto.html" className="btn custom-btn">Ver</a>
                             </div>
                         </div>
                         </div>
@@ -130,11 +117,9 @@ const Home = () => {
                         <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-4">
                         <div className="card text-center h-100">
                             <img src="/iamgenes_prueba/bolso/im17.jpg" className="card-img-top" alt="Bolso 4" />
-                            <div className="card-body">
+                            <div className="card-body" to="/ProductoGen">
                             <h5 className="card-title">Bolso</h5>
                             <p className="card-text">Texto de ejemplo para el producto.</p>
-                            <a href="../" className="btn custom-btn">Carrito</a>
-                            <a href="../../productos/html/producto.html" className="btn custom-btn">Ver</a>
                             </div>
                         </div>
                         </div>
