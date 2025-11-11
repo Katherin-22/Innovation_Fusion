@@ -4,7 +4,7 @@ import MenuAdmin from "../../../layouts/administrador/menuAdmin";
 
 import "../../../styles/administrador/inventario.css";
 import "../../../styles/administrador/gestion_producto.css";
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function GetPromocion() {
   const [promocion, setPromocion] = useState([]);
