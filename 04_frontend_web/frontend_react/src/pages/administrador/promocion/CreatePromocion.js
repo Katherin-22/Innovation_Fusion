@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {createPromocion} from "../../../services/administrador/PromocionService";
 
-import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
+import MenuAdmin from "../../../layouts/administrador/menuAdmin";
 import "../../../styles/administrador/inventario.css";
 import "../../../styles/administrador/gestion_producto.css";
 

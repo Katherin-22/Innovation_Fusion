@@ -1,1 +1,0 @@
-Páginas completas asociadas a rutas (Login, Dashboard, Profile, etc.).

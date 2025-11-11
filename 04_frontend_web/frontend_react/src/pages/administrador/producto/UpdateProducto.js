@@ -7,7 +7,7 @@ import {useGetMarca} from "../../../hooks/marca/useGetMarca";
 import {useGetMaterial} from "../../../hooks/material/useGetMaterial";
 import {useGetTipoPublicos} from "../../../hooks/tipoPublico/useGetTipoPublico";
 import {useGetPromociones} from "../../../hooks/promocion/useGetPromocion";
-import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
+import MenuAdmin from "../../../layouts/administrador/menuAdmin";
 import "../../../styles/administrador/inventario.css";
 import "../../../styles/administrador/gestion_producto.css";
 

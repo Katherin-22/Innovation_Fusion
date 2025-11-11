@@ -5,7 +5,7 @@ import {createStock} from "../../../services/administrador/StockService";
 import {useGetColor} from "../../../hooks/color/useGetColor";
 import {useGetVariacionPorProducto} from "../../../hooks/stock/useVariacionStock";
 
-import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
+import MenuAdmin from "../../../layouts/administrador/menuAdmin";
 import "../../../styles/administrador/inventario.css";
 import "../../../styles/administrador/gestion_producto.css";
 

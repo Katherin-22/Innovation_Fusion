@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { deleteMarca, getMarca } from "../../../services/administrador/MarcaService";
-import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
+import MenuAdmin from "../../../layouts/administrador/menuAdmin";
 
 import "../../../styles/administrador/inventario.css";
 import "../../../styles/administrador/gestion_producto.css";
