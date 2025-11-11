@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { getStockById, updateStock } from "../../../services/administrador/StockService";
 import {useGetColor} from "../../../hooks/color/useGetColor";
 import {useGetVariacionPorProducto} from "../../../hooks/stock/useVariacionStock";
-import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
+import MenuAdmin from "../../../layouts/administrador/menuAdmin";
 import AlertMessage from "../../../components/admi/AlertMessage";
 import "../../../styles/administrador/inventario.css";
 import "../../../styles/administrador/gestion_producto.css";

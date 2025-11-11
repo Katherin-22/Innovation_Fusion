@@ -1,4 +1,4 @@
-import MenuAdmin from "../../layouts/Administrador/Menu/menuAdmin";
+import MenuAdmin from "../../layouts/administrador/menuAdmin.js";
 import "../../styles/administrador/gestion_producto.css";
 import "../../styles/administrador/inventario.css";
 import "../../styles/administrador/chat.css";

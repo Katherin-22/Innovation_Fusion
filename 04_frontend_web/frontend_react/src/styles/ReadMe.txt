@@ -1,1 +1,0 @@
-Estilos globales (CSS, Tailwind config, variables SCSS).

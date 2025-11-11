@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { deleteMaterial, getMateriales } from "../../../services/administrador/MaterialService";
-import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
+import MenuAdmin from "../../../layouts/administrador/menuAdmin";
 
 import "../../../styles/administrador/inventario.css";
 import "../../../styles/administrador/gestion_producto.css";

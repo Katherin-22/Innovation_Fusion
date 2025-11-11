@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin.js";
+import MenuAdmin from "../../../layouts/administrador/menuAdmin";
 import "../../../styles/administrador/gestion_producto.css";
 import "../../../styles/administrador/inventario.css";
 import {createImagen, getImagenById, deleteImagen} from "../../../services/administrador/ImagenService.js";

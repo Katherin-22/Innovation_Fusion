@@ -1,1 +1,0 @@
-Componentes reutilizables y pequeños (botones, inputs, modales, etc.).
