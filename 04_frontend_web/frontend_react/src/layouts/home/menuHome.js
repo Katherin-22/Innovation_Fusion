@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 
 import { Link, Outlet } from "react-router-dom";
 import "../../styles/home/paginaInicio.css";
@@ -67,49 +68,53 @@ const MenuHome = () => {
             </li>
 
             {/* --- Novedades --- */}
-            <li className="nav-item dropdown">
+            
               <button
-                className="nav-link dropdown-toggle btn btn-link"
+                className="nav-link btn btn-link"
                 type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
               >
                 Novedades
               </button>
-              <ul className="dropdown-menu">
-                <li><Link className="dropdown-item" to="#">Mujer</Link></li>
-                <li><hr className="dropdown-divider" /></li>
-                <li><Link className="dropdown-item" to="#">Hombre</Link></li>
-                <li><hr className="dropdown-divider" /></li>
-                <li><Link className="dropdown-item" to="#">Niño</Link></li>
-              </ul>
-            </li>
 
-            {/* --- Descuentos --- */}
+            {/* Perfil */}
             <li className="nav-item dropdown">
-              <button
-                className="nav-link dropdown-toggle btn btn-link"
-                type="button"
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="userDropdown"
+                role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Descuentos
-              </button>
-              <ul className="dropdown-menu">
-                <li><Link className="dropdown-item" to="#">Mujer</Link></li>
-                <li><hr className="dropdown-divider" /></li>
-                <li><Link className="dropdown-item" to="#">Hombre</Link></li>
-                <li><hr className="dropdown-divider" /></li>
-                <li><Link className="dropdown-item" to="#">Niño</Link></li>
+                <i className="bi bi-person-fill"></i>
+              </a>
+              <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li>
+                  <Link className="dropdown-item" to="/login">
+                    Iniciar sesión
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/profile">
+                    Perfil
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/profile">
+                    Pedidos
+                  </Link>
+                </li>
+                <li>
+                  <hr className="dropdown-divider" />
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/logout">
+                    Cerrar sesión
+                  </Link>
+                </li>
               </ul>
             </li>
 
-            {/* Perfil */}
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                <i className="bi bi-person-fill"></i>
-              </Link>
-            </li>
 
             {/* Favoritos */}
             <li className="nav-item">
