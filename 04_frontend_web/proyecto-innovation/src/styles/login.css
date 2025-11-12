@@ -10,7 +10,6 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh; 
-    background-image: url(); /* Deja esto vacío o pon la ruta de tu imagen de fondo */
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;

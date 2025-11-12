@@ -5,6 +5,10 @@ import Login from './componentes/Login'
 import RegistrarUsuarios from './componentes/RegistrarUsuarios';
 import RecuperarContraseña from './componentes/RecuperarContraseña';
 import Principal from './componentes/Principal';
+import Dashboard from './componentes/Admin/Dashboard';
+import AdminUsuarios from './componentes/AdminUsuarios';
+import Collage from './componentes/Collage';
+import LoginPage from './pages/LoginPage'
 
 function App() {
   return (
@@ -22,9 +26,21 @@ function App() {
         {/* Ruta para Restablecer contraseña*/}
         <Route  path='/recuperarcontraseña' element={<RecuperarContraseña/>}/>
 
-        
+        {/* Ruta administrador*/}
+        <Route  path='/Admin/Dashboard' element={<Dashboard/>}/>
+
+        {/* Ruta administrador gestion usuarios*/}
+        <Route  path='/adminUsuarios' element={<AdminUsuarios/>}/>
+
         {/* Ruta principal*/}
         <Route  path='/principal' element={<Principal/>}/>
+
+        {/* Ruta para el collage y el login */}
+        <Route  path='/loginpage' element={<LoginPage/>}/>
+
+        {/* Ruta para solo el collage*/}
+        <Route  path='/collage' element={<Collage/>}/>
+
       </Routes>
 
     </div>

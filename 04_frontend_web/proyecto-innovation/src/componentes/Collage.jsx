@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from 'react';
+import "../styles/cuadricula.css";
+import { initCollageEffect } from "../assets/ModuloUsuarios/IniciarSesion/js/java";
 
-import "../styles/Galeria.css";
 
 // Importa todas las imágenes estáticas desde la carpeta assets
 
@@ -105,6 +106,11 @@ const galleryImages = [
 ];
 
 const Galeria = () => {
+
+    useEffect(() => {
+      initCollageEffect(); 
+    }, []);
+
     return (
         <div className="main-content-wrapper">
             {" "}

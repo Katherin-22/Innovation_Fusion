@@ -11,6 +11,9 @@ function Login() {
   const [isError, setIsError] = useState("");
   const navigate = useNavigate();
 
+  const ROL_CLIENTE = 1;
+  const ROL_ADMIN = 2;
+
   async function handleLogin(event) {
     event.preventDefault();
     setIsError("");
@@ -26,18 +29,33 @@ function Login() {
 
       if (response.status === 200 && response.data.success === true) {
 
-        setMessage(response.data.message || '¡Inicio de sesión exitoso!');
-
         const token = response.data.token;
-        if (token) {
+        const userData = response.data.data;
+
+        if (token && userData && userData.rol) {
           localStorage.setItem('authToken', token);
           // Guardar la información del usuario
-          localStorage.setItem('userData', JSON.stringify(response.data.data));
-        }
+          localStorage.setItem('userData', JSON.stringify(userData));
 
-        setTimeout(() => {
-          navigate  ('/Principal');
-        }, 1000);
+          setMessage(response.data.message || '¡Inicio de sesión exitoso!');
+
+          let redirectPath;
+
+          if (userData.rol === ROL_ADMIN) {
+            redirectPath = '/AdminUsuarios'; // Ruta del Administrador
+          } else if (userData.rol === ROL_CLIENTE) {
+            redirectPath = '/Principal'; // Ruta del Cliente
+          } else {
+            redirectPath = '/Principal'; // Por defecto
+          }
+
+          setTimeout(() => {
+            navigate(redirectPath);
+          }, 1000);
+
+        } else {
+          setIsError('No se recibió el token o la información de rol.');
+        }
 
       } else {
         setIsError(response.data.message || 'No se pudo iniciar sesión.')
@@ -57,20 +75,14 @@ function Login() {
             if (err.response?.status === 500) {
               setIsError("Error del servidor. Intente más tarde.");
             } else {
-              setIsError(err.response.data.message || `Error de conexión: ${err.response.status}`);
+              setIsError(err.response.data.message || "Error de conexión . Intente más tarde.");
             }
 
             console.error("error detallado:", err);
 
           }
     }
-
-
-
-
   }
-
-
   return (
 
     <div className="login-container">
@@ -98,7 +110,7 @@ function Login() {
           className="form-control"
           placeholder="Correo Electrónico"
           value={email}
-          onChange={(e) => setEmail (e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
 
@@ -111,7 +123,7 @@ function Login() {
           className="form-control"
           placeholder="Contraseña"
           value={password}
-          onChange={(e) => setPassword (e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
 
@@ -135,7 +147,6 @@ function Login() {
         </div>
       </form>
     </div>
-
   );
 }
 

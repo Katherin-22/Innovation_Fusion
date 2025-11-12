@@ -1,0 +1,302 @@
+/* ================= Base y Reset ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html, #root {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow: hidden; /* Evita scroll */
+    background: linear-gradient(to right bottom, #0F0F0F 50%, #E0B253 50%);
+}
+
+/* ================= Contenedores y Posicionamiento ================= */
+
+/* Contenedor principal: punto de referencia para posición absoluta */
+.main-content-wrapper {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Collage de tarjetas (Fondo) */
+.grid-container-collage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Oscurecimiento de fondo para mejorar contraste del formulario */
+.grid-container-collage::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4); /* Capa oscura */
+    z-index: 2; /* Sobre las tarjetas, pero bajo el login */
+}
+
+
+/* Formulario superpuesto (Login) */
+.login-container {
+    position: absolute;
+    top: 50%;
+    left: 50%; /* Centramos horizontalmente */
+    transform: translate(-50%, -50%); /* Ajustamos para centrado perfecto */
+    z-index: 10;
+    /* Ajustamos el tamaño para que solo cubra el contenido del formulario */
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilo para simular el layout de Bootstrap grid dentro de React sin clases de Bootstrap */
+.grid-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -4px; /* Simula el g-2 */
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px; /* Limita el ancho del collage */
+}
+
+.grid-col {
+    flex: 0 0 16.6666%; /* 1/6 del ancho total (simulando col-2 en un grid de 12) */
+    max-width: 16.6666%;
+    padding: 4px; /* Simula el g-2 */
+}
+
+/* ================= TARJETAS (Collage) ================= */
+
+.custom-card {
+    height: 150px; /* Altura fija para la tarjeta */
+    width: 100%;
+    position: relative;
+    perspective: 1000px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.custom-card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.card-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.card-back {
+    background-color: #E0B253;
+    color: white;
+    transform: rotateY(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.card-back h5 {
+    color: #0F0F0F;
+    font-size: 14px;
+}
+
+/* ================= FORMULARIO (Login) - Estilos del HTML original ================= */
+
+form {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    max-width: 90%; /* Ajuste para móvil */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+    background-color: #FAF9F6;
+}
+
+h2 {
+    text-align: center;
+    font-size: 30px;
+    text-transform: uppercase;
+    color: #0F0F0F;
+    margin-bottom: 25px;
+}
+
+label, .no-tienes-cuenta {
+    font-size: 17px;
+    color: #0F0F0F;
+    margin-bottom: 10px;
+}
+
+input {
+    padding: 10px 15px;
+    border: 1px solid #E0B253;
+    border-radius: 25px;
+    margin-bottom: 15px;
+    background-color: #FAF9F6;
+    outline: none;
+    color: #0F0F0F;
+    font-size: 17px;
+}
+
+input[type="email"], input[type="password"] {
+    width: 100%;
+}
+
+.btn-1 {
+    background-color: #E0B253;
+    font-size: 15px;
+    color: #0F0F0F;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100%;
+    padding: 10px;
+    border-radius: 25px;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.btn-1:hover {
+    background-color: #C49A3D;
+}
+
+.opciones p {
+    text-align: left;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.opciones a {
+    color: #0F0F0F;
+    text-decoration: none;
+    transition: text-decoration 0.3s;
+}
+
+.opciones a:hover {
+    text-decoration: underline;
+}
+
+.boton-inicio {
+    margin-top: 20px;
+}
+
+.registro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.no-tienes-cuenta {
+    font-size: 15px;
+    margin-right: 10px;
+}
+
+.btn-registrarse {
+    background-color: #E0B253;
+    border: 1px solid #E0B253;
+    color: #0F0F0F;
+    padding: 5px 15px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 15px;
+    transition: background-color 0.3s;
+}
+
+.btn-registrarse:hover {
+    background-color: #C49A3D; /* Oscurecer un poco al pasar el ratón */
+    color: #0F0F0F;
+}
+
+/* Mensajes de error/éxito */
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+
+/* ================= MEDIA QUERIES ================= */
+
+@media (max-width: 991px) {
+    .grid-col {
+        flex: 0 0 25%; /* 4 columnas */
+        max-width: 25%;
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-col {
+        flex: 0 0 33.3333%; /* 3 columnas */
+        max-width: 33.3333%;
+    }
+
+    form {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 600px) {
+    .grid-col {
+        flex: 0 0 50%; /* 2 columnas */
+        max-width: 50%;
+    }
+
+    .custom-card {
+        height: 100px; 
+    }
+}
+
+@media (max-width: 480px) {
+    form {
+        width: 90%;
+        padding: 20px;
+    }
+}
