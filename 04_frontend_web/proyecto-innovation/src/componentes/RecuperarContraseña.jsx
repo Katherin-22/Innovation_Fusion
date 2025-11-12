@@ -9,7 +9,7 @@ function RecuperarContraseña() {
         <div className="contenedor">
         <div className="formulario-con-imagenes">
             <div className="imagen-izquierda-contenedor">
-                <img src={img1} alt="Imaen Izquierda" />
+                <img src={img1} alt="Imagen Izquierda" />
             </div>
             <form>
                 <h2>RESTABLECER CONTRASEÑA</h2>

@@ -47,7 +47,7 @@ function RegistrarUsuarios() {
                 telefono: telefono,
                 password: password,
                 correoElectronico: correoElectronico,
-                direccion: "Calle 123 #45-67, Bogotá, Colombia",
+                direccion: "",
                 idTipoDeDocumento: idTipoDeDocumento,
                 idRol: idRol,
                 idEstadoUsuario: idEstadoUsuario
