@@ -117,7 +117,8 @@ public class AuthController {
             Map<String, Object> userData = Map.of(
                     "id", usuario.getIdUsuario(),
                     "nombre", usuario.getNombreUsuario(),
-                    "email", usuario.getCorreoElectronico()
+                    "email", usuario.getCorreoElectronico(),
+                    "rol", usuario.getRol().getIdRol()
             );
 
             response.put("success", true);
