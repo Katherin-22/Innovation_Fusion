@@ -1,0 +1,23 @@
+/* === Reset básico === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --body-color: #e4e9f7;
+  --slidebar-color: #fff;
+  --primary-color: #E0B253;
+  --toggle-color: #ddd;
+  --text-color: #000000;
+
+  --tran-03: all 0.3s ease;
+  --tran-04: all 0.4s ease;
+  --tran-05: all 0.5s ease;
+}
+
+.footer-container{
+    width: 100% ;
+    display: flex;
+}

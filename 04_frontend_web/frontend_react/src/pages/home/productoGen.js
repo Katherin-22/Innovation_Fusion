@@ -1,7 +1,7 @@
 import React , { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useGetStock } from "../../hooks/stock/useGetStock";
-import MenuHome from "../../layouts/menuHome/menuHome";
+import MenuHome from "../../layouts/home/menuHome";
 
 const ProductoGen = () => {
   const { stock } = useGetStock();

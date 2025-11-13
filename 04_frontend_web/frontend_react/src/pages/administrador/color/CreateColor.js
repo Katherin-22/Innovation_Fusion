@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createColor } from "../../../services/administrador/ColorService";
 
-import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
+import MenuAdmin from "../../../layouts/administrador/menuAdmin";
 import "../../../styles/administrador/inventario.css";
 import "../../../styles/administrador/gestion_producto.css";
 

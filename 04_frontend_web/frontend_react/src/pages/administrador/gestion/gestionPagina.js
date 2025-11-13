@@ -1,10 +1,10 @@
-import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin.js";
+import MenuAdmin from "../../../layouts/administrador/menuAdmin";
 import "../../../styles/administrador/gestion_producto.css";
 import "../../../styles/administrador/inventario.css";
 
 import { useEffect, useState } from "react";
-import BannerForm from "../../../layouts/menuHome/carrousel/BannerForm.js";
-import BannerCarousel from "../../../layouts/menuHome/carrousel/carrousel.js";
+import BannerForm from "../../../components/form/BannerForm.js";
+import BannerCarousel from "../../../hooks/carrrousel/carrousel.js";
 
 
 const GestionPagina = () => {
