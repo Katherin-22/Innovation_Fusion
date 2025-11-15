@@ -36,5 +36,12 @@ export const getVariationsByProductId = async (idProducto) => {
     return await api_url.get(`/publico/stock/variaciones/${idProducto}`);
 };
 
+//busca los colores disponibles para un producto
+export const getStockColorsUser = async (idProducto) => {
+    return await api_url.get(`/publico/stock/producto/${idProducto}/color`);
+};
 
-
+//busca las tallas disponibles para un producto segun el color
+export const getStockTallasUser = async (idProducto, idColor) => {
+    return await api_url.get(`/publico/stock/producto/${idProducto}/color/${idColor}/tallas`);
+};

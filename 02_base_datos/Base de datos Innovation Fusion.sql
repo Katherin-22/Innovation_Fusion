@@ -684,3 +684,4 @@ GROUP BY p.idProducto
 ORDER BY p.nombreProducto ASC;
 
 
+

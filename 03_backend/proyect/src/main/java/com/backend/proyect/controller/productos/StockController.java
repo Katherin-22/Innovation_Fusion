@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +14,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.backend.proyect.dto.productos.ColorProjection;
 import com.backend.proyect.dto.productos.StockDTO;
 import com.backend.proyect.dto.productos.StockGeneralProjection;
+import com.backend.proyect.dto.productos.VariacionProjection;
 import com.backend.proyect.exception.productos.ResourceNotFoundException;
 import com.backend.proyect.model.productos.Color;
 import com.backend.proyect.model.productos.Producto;
@@ -109,6 +110,20 @@ public class StockController {
             return dto;
         }).toList();
         return ResponseEntity.ok(IdStockProducto);
+    }
+
+    //busca los colores disponibles para un producto
+    @GetMapping("/publico/stock/producto/{idProducto}/color")
+    public ResponseEntity<List<ColorProjection>> getColorsUser (@PathVariable Integer idProducto) {
+        List<ColorProjection> colores = stockRepository.findColoresByProducto(idProducto);
+        return ResponseEntity.ok(colores);
+    }
+
+    //busca las tallas disponibles para un producto segun el color
+    @GetMapping("/publico/stock/producto/{idProducto}/color/{idColor}/tallas")
+    public ResponseEntity<List<VariacionProjection>> getTallasUser(@PathVariable Integer idProducto, @PathVariable Integer idColor) {
+        List<VariacionProjection> tallas = stockRepository.findTallasByProductoAndColor(idProducto, idColor);
+        return ResponseEntity.ok(tallas);
     }
 
     @GetMapping("/publico/stock/{idStock}")
