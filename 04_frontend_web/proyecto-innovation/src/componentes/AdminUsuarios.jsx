@@ -100,6 +100,9 @@ const UserFormModal = ({ isOpen, onClose, onSave, userToEdit }) => {
     });
   };
 
+  // ----------------------------------------------------------------------
+  // Crear o editar usuario (con token)
+  // ----------------------------------------------------------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsError("");
@@ -110,67 +113,140 @@ const UserFormModal = ({ isOpen, onClose, onSave, userToEdit }) => {
       return;
     }
 
+    // 💡 PASO 1: TRADUCCIONES DE IDs (como acordamos) 💡
+    // 🔑 CORRECCIÓN ID: idTipoDeDocumento siempre es 1 (Cédula de Ciudadanía)
+    const idTipoDeDocumento = 1; 
+    
+    // 🔑 CORRECCIÓN ID: idEstadoUsuario es 1 (Activo) si el checkbox es true, 2 (Inactivo) si es false
+    const idEstadoUsuario = formData.activo ? 1 : 2; 
+
     try {
+      const token = localStorage.getItem("authToken")?.replace(/"/g, ""); // ✅ Token correcto
+      console.log("Token actual:", token);
+
+      if (!token) {
+        setIsError("No se encontró el token de autenticación. Inicia sesión nuevamente.");
+        return;
+      }
+
+      let response;
+
       if (userToEdit) {
-        // 🔹 Actualizar usuario
-        await axios.put(`http://localhost:8080/api/usuarios/${userToEdit.id}`, {
-          nombreUsuario: formData.nombreUsuario,
-          primerApellido: formData.primerApellido,
-          segundoApellido: formData.segundoApellido,
-          numeroDocumento: parseInt(formData.numeroDocumento, 10),
-          telefono: formData.telefono,
-          correoElectronico: formData.correoElectronico,
-          idRol: formData.idRol,
-          idEstadoUsuario: formData.idEstadoUsuario,
-          activo: formData.activo,
-        });
-        setMessage("Usuario actualizado correctamente.");
-      } else {
-        // 🔹 Crear nuevo usuario
-        const response = await axios.post(
-          "http://localhost:8080/api/auth/register",
+        // 🔹 Actualizar usuario existente
+        
+        console.log("ID que envío:", userToEdit?.id); 
+        const userId = userToEdit.id;
+
+        if (!userId || isNaN(Number(userId))) {
+          setIsError("❌ Error: No se encontró el ID del usuario a editar o es inválido. Intenta recargar la página.");
+          // Log para debug
+          console.error("ID de usuario no válido para edición:", userId, userToEdit);
+          return;
+        }
+
+        response = await axios.put(
+          // ➡️ Usa userId verificado
+          `http://localhost:8080/api/usuarios/${userId}`,
           {
+            // Asegúrate de enviar el número de documento como número
+            numeroDocumento: parseInt(formData.numeroDocumento, 10),
             nombreUsuario: formData.nombreUsuario,
             primerApellido: formData.primerApellido,
             segundoApellido: formData.segundoApellido,
-            numeroDocumento: parseInt(formData.numeroDocumento, 10),
             telefono: formData.telefono,
             password: formData.password,
             correoElectronico: formData.correoElectronico,
             direccion: "Calle 123 #45-67, Bogotá, Colombia",
-            idTipoDeDocumento: formData.idTipoDeDocumento,
             idRol: formData.idRol,
-            idEstadoUsuario: formData.idEstadoUsuario,
+            idTipoDeDocumento: idTipoDeDocumento, // 🔑 USANDO VARIABLE CORREGIDA
+            idEstadoUsuario: idEstadoUsuario,     // 🔑 USANDO VARIABLE CORREGIDA
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}` ,
+              "Content-Type": "application/json", 
+            },
+          }
+        );
+
+        if (response.status === 200) {
+          setMessage("✅ Usuario actualizado correctamente.");
+        } else {
+          setIsError("No se pudo actualizar el usuario.");
+          return;
+        }
+
+      } else {
+        // 🔹 Crear nuevo usuario
+        response = await axios.post(
+          "http://localhost:8080/api/auth/register",
+          {
+            numeroDocumento: parseInt(formData.numeroDocumento, 10),
+            nombreUsuario: formData.nombreUsuario,
+            primerApellido: formData.primerApellido,
+            segundoApellido: formData.segundoApellido,
+            telefono: formData.telefono,
+            password: formData.password,
+            correoElectronico: formData.correoElectronico,
+            direccion: "Calle 123 #45-67, Bogotá, Colombia",
+            idRol: formData.idRol,
+            idTipoDeDocumento: idTipoDeDocumento, // 🔑 USANDO VARIABLE CORREGIDA
+            idEstadoUsuario: idEstadoUsuario,     // 🔑 USANDO VARIABLE CORREGIDA
           }
         );
 
         if (response.status === 200 && response.data.success === true) {
-          setMessage("¡Usuario creado exitosamente!");
+          setMessage("✅ ¡Usuario creado exitosamente!");
         } else {
           setIsError(response.data.message || "Error al registrar usuario.");
           return;
         }
       }
 
+      // 🔹 Actualiza la tabla visual del frontend
+
+      const backendId = userToEdit
+      ? userToEdit.id
+      : Number(response.data.data.id); 
+
       onSave({
-        id: userToEdit ? userToEdit.id : Date.now(),
+        id: backendId ,
         nombreUsuario: formData.nombreUsuario,
         primerApellido: formData.primerApellido,
         segundoApellido: formData.segundoApellido,
         numeroDocumento: formData.numeroDocumento,
         telefono: formData.telefono,
         correoElectronico: formData.correoElectronico,
-        rol: ROLES.find((r) => r.id === formData.idRol)?.nombre || "cliente",
+        // ✅ CORRECCIÓN FINAL: Convertimos formData.idRol a Number
+        rol: ROLES.find((r) => r.id === Number(formData.idRol))?.nombre || "cliente",
         activo: formData.activo,
       });
 
       setTimeout(() => onClose(), 1200);
+
     } catch (err) {
       console.error("Error detallado:", err);
-      setIsError("No se pudo conectar con el servidor.");
+
+      if (err.response) {
+        if (err.response.status === 403) {
+          // Si el ID es 'undefined' el backend lo ve como 403 Forbidden o 400 Bad Request
+          setIsError("🚫 Acceso Denegado (403): Revisa el ID o permisos del token.");
+        } else if (err.response.status === 404) {
+          setIsError("❌ Usuario no encontrado (404).");
+        } else if (err.response.status === 500) {
+          setIsError("⚙️ Error interno del servidor (500). Intenta más tarde.");
+        } else {
+          setIsError(err.response.data?.message || `Error al conectar con el servidor (Estado: ${err.response.status}).`);
+        }
+      } else {
+        setIsError("❌ No se pudo conectar con el servidor. Verifica tu conexión o el backend.");
+      }
     }
   };
 
+  // ----------------------------------------------------------------------
+  // Render del formulario modal
+  // ----------------------------------------------------------------------
   return (
     <div className="modal-overlay">
       <div className="modal-container">
@@ -282,11 +358,7 @@ const UserFormModal = ({ isOpen, onClose, onSave, userToEdit }) => {
           <div className="form-group">
             <div className="field">
               <label>Rol</label>
-              <select
-                name="idRol"
-                value={formData.idRol}
-                onChange={handleChange}
-              >
+              <select name="idRol" value={formData.idRol} onChange={handleChange}>
                 {ROLES.map((r) => (
                   <option key={r.id} value={r.id}>
                     {r.nombre.charAt(0).toUpperCase() + r.nombre.slice(1)}
@@ -325,7 +397,7 @@ const UserFormModal = ({ isOpen, onClose, onSave, userToEdit }) => {
 };
 
 // ----------------------------------------------------------------------
-// Confirmar eliminación
+// Confirmar eliminación (Este componente no cambia, solo su uso en el padre)
 // ----------------------------------------------------------------------
 const DeleteConfirmModal = ({ isOpen, onClose, userName, onConfirm }) => {
   if (!isOpen) return null;
@@ -365,9 +437,9 @@ const AdminUserManagement = () => {
     const lower = searchTerm.toLowerCase();
     return users.filter(
       (u) =>
-        u.nombreUsuario.toLowerCase().includes(lower) ||
-        u.correoElectronico.toLowerCase().includes(lower) ||
-        u.rol.toLowerCase().includes(lower)
+        (u.nombreUsuario || '').toLowerCase().includes(lower) ||
+        (u.correoElectronico || '').toLowerCase().includes(lower) ||
+        (u.rol || '').toLowerCase().includes(lower)
     );
   }, [users, searchTerm]);
 
@@ -378,6 +450,41 @@ const AdminUserManagement = () => {
       setUsers([...users, newUser]);
     }
   };
+
+  // 🗑️ FUNCIÓN DE ELIMINACIÓN REAL (NUEVA) 
+  const handleDeleteUser = async () => {
+    if (!userToDelete) return; 
+    const userId = userToDelete.id;
+    const userName = userToDelete.nombreUsuario;
+
+    try {
+        const token = localStorage.getItem("authToken")?.replace(/"/g, "");
+
+        if (!token) {
+            alert("No se encontró el token de autenticación. Inicia sesión nuevamente.");
+            return;
+        }
+
+        // Llamada DELETE al endpoint con el token de administrador
+        await axios.delete(`http://localhost:8080/api/usuarios/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        // Éxito: Actualizamos el estado de la tabla 
+        setUsers(users.filter((u) => u.id !== userId));
+        console.log(`Usuario ${userName} (ID ${userId}) eliminado correctamente en la DB.`);
+
+    } catch (err) {
+        console.error("❌ Error al eliminar usuario:", err.response || err);
+        alert(`Error al eliminar a ${userName}: ${err.response?.data?.message || 'No se pudo conectar con el servidor.'}`);
+        
+    } finally {
+        setUserToDelete(null); // Cerramos el modal
+    }
+  };
+  // --------------------------------------------------------------------
 
   return (
     <div className="admin-container">
@@ -441,6 +548,7 @@ const AdminUserManagement = () => {
                     <button
                       className="btn-editar"
                       onClick={() => {
+                        console.log("Usuario a editar:", user); 
                         setUserToEdit(user);
                         setIsModalOpen(true);
                       }}
@@ -481,10 +589,8 @@ const AdminUserManagement = () => {
         isOpen={!!userToDelete}
         onClose={() => setUserToDelete(null)}
         userName={userToDelete?.nombreUsuario || ""}
-        onConfirm={() => {
-          setUsers(users.filter((u) => u.id !== userToDelete.id));
-          setUserToDelete(null);
-        }}
+        // 🔑 CORRECCIÓN: Usamos la función real de eliminación
+        onConfirm={handleDeleteUser} 
       />
     </div>
   );
