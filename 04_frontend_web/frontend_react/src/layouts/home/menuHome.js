@@ -118,14 +118,14 @@ const MenuHome = () => {
 
             {/* Favoritos */}
             <li className="nav-item">
-              <Link className="nav-link" to={"/Administrador/stock"}>
+              <Link className="nav-link" to="/favoritos">
                 <i className="bi bi-heart-fill"></i>
               </Link>
             </li>
 
             {/* Carrito */}
             <li className="nav-item">
-              <Link className="nav-link btn btn-link" type="button">
+              <Link className="nav-link" to="/carrito">
                 <i className="bi bi-cart-fill"></i>
               </Link>
             </li>

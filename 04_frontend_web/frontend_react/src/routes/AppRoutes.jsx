@@ -70,10 +70,16 @@ import CreateMaterial from "../pages/administrador/material/CreateMaterial";
 import UpdateMaterial from "../pages/administrador/material/UpdateMaterial";
 
 /* -----------------------------
-   Componentes de autenticación
------------------------------ */
+    Componentes de autenticación
+ ----------------------------- */
 import Login from "../pages/user/Login"
 import RegistrarUsuarios from "../pages/user/RegistrarUsuarios"
+
+/* -----------------------------
+    Carrito y Favoritos
+ ----------------------------- */
+import Carrito from "../pages/Carrito";
+import Favoritos from "../pages/Favoritos";
 
 
 export default function AppRoutes() {
@@ -133,6 +139,10 @@ export default function AppRoutes() {
       {/* Autenticación */}
       <Route path="/login" element={<Login />} />
       <Route path="/registrarusuarios" element={<RegistrarUsuarios />} />
+
+      {/* Carrito y Favoritos */}
+      <Route path="/carrito" element={<Carrito />} />
+      <Route path="/favoritos" element={<Favoritos />} />
 
     </Routes>
   );

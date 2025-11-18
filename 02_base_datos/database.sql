@@ -348,6 +348,28 @@ CREATE TABLE devoluciones_Cambios (
   FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
 ) ;
 
+-- Agregar las nuevas columnas a DetalleCarrito
+ALTER TABLE DetalleCarrito ADD COLUMN idColor INT NULL;
+ALTER TABLE DetalleCarrito ADD COLUMN idVariacion INT NULL;
+
+-- Agregar claves foráneas
+ALTER TABLE DetalleCarrito ADD FOREIGN KEY (idColor) REFERENCES Color(idColor);
+ALTER TABLE DetalleCarrito ADD FOREIGN KEY (idVariacion) REFERENCES Variacion(idVariacion);
+
+-- Crear tabla Favoritos
+CREATE TABLE Favoritos (
+  idFavorito INT AUTO_INCREMENT PRIMARY KEY,
+  idUsuario INT NOT NULL,
+  idProducto INT NOT NULL,
+  fechaAgregado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario),
+  FOREIGN KEY (idProducto) REFERENCES Producto(idProducto)
+);
+
+
+
+
+
 								-- DML: Insert - Insertar registros de las tablas:
 -- -----------------------------------------------------
 -- MÓDULO DE GESTIÓN DE USUARIOS
@@ -663,25 +685,6 @@ END$$
 DELIMITER ;
 
 -- consulta para agrupar el stok segun el idProducto
-
-SELECT 
-    p.idProducto,
-    ANY_VALUE(p.codigoReferencia) AS codigoReferencia,
-    ANY_VALUE(p.nombreProducto) AS nombreProducto,
-    ANY_VALUE(tp.nombreTipoProducto) AS nombreTipoProducto, 
-    ANY_VALUE(p.precio) AS precio,
-    GROUP_CONCAT(DISTINCT v.nombre SEPARATOR ', ') AS nombre,
-    GROUP_CONCAT(DISTINCT c.nombreColor SEPARATOR ', ') AS nombreColor,
-    SUM(s.stockActual) AS stockActual,
-    ANY_VALUE(p.estadoProducto) AS estadoProducto
-FROM Stock s
-JOIN Producto p ON s.idProducto = p.idProducto
-JOIN Categoria cat ON p.idCategoria = cat.idCategoria
-JOIN TipoProducto tp ON cat.idTipoProducto = tp.idTipoProducto
-LEFT JOIN Variacion v ON v.idVariacion = s.idVariacion
-LEFT JOIN Color c ON c.idColor = s.idColor
-GROUP BY p.idProducto
-ORDER BY p.nombreProducto ASC;
 
 
 

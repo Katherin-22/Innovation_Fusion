@@ -1,5 +1,5 @@
 import React , { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useGetStock } from "../../hooks/stock/useGetStock";
 import MenuHome from "../../layouts/home/menuHome";
 import axios from "axios";
@@ -7,6 +7,7 @@ import axios from "axios";
 const ProductoGen = () => {
   const { stock } = useGetStock();
   const { codigoReferencia } = useParams();
+  const navigate = useNavigate();
 
   // Buscar producto por códigoReferencia
   const producto = stock.find(p => p.codigoReferencia === codigoReferencia);
@@ -17,6 +18,7 @@ const ProductoGen = () => {
   const [colores, setColores] = useState([]);
   const [tallas, setTallas] = useState([]);
   const [colorSeleccionado, setColorSeleccionado] = useState("");
+  const [tallaSeleccionada, setTallaSeleccionada] = useState("");
 
   // ============================
   // 1️⃣ Cargar COLORES del producto
@@ -44,6 +46,56 @@ const ProductoGen = () => {
       .catch(err => console.error("Error al cargar tallas:", err));
   }, [producto, colorSeleccionado]);
 
+  // Funciones para carrito y favoritos
+  const handleComprar = async () => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+    if (!colorSeleccionado || !tallaSeleccionada) {
+      alert('Seleccione color y talla');
+      return;
+    }
+    try {
+      await axios.post('http://localhost:8080/api/carrito', {
+        idProducto: producto.idProducto,
+        idColor: colorSeleccionado,
+        idVariacion: tallaSeleccionada,
+        cantidad: 1
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      alert('Producto agregado al carrito');
+    } catch (error) {
+      console.error('Error agregando al carrito:', error);
+      alert('Error al agregar al carrito');
+    }
+  };
+
+  const handleFavorito = async () => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+    try {
+      if (favorito) {
+        // Asumir que hay un endpoint para verificar o eliminar, pero por simplicidad, toggle local
+        setFavorito(false);
+      } else {
+        await axios.post('http://localhost:8080/api/favoritos', {
+          idProducto: producto.idProducto
+        }, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setFavorito(true);
+      }
+    } catch (error) {
+      console.error('Error con favoritos:', error);
+      alert('Error al gestionar favoritos');
+    }
+  };
 
   if (!producto) {
     return <h2 className="text-center mt-5">Producto no encontrado</h2>;
@@ -102,11 +154,16 @@ const ProductoGen = () => {
 
                     <div className="col">
                       <label className="form-label"><b>Talla:</b></label>
-                      <select className="form-select" disabled={!colorSeleccionado}>
+                      <select
+                        className="form-select"
+                        disabled={!colorSeleccionado}
+                        value={tallaSeleccionada}
+                        onChange={(e) => setTallaSeleccionada(e.target.value)}
+                      >
                         <option value="">Seleccione una talla</option>
 
                         {tallas.map((t, index) => (
-                          <option key={index}>
+                          <option key={t.idVariacion || index} value={t.idVariacion}>
                             {t.nombre}
                           </option>
                         ))}
@@ -122,7 +179,7 @@ const ProductoGen = () => {
                     <div className="col">
                       <button
                         className={`btn ${favorito ? "btn-danger" : "btn-outline-danger"}`}
-                        onClick={() => setFavorito(!favorito)}
+                        onClick={handleFavorito}
                       >
                         <i className={`bi ${favorito ? "bi-heart-fill" : "bi-heart"}`}></i>
                         {favorito ? " Quitar" : " Favorito"}
@@ -130,7 +187,7 @@ const ProductoGen = () => {
                     </div>
 
                     <div className="col">
-                      <button className="btn btn-custom btn-success mb-3">
+                      <button className="btn btn-custom btn-success mb-3" onClick={handleComprar}>
                         Comprar
                       </button>
                     </div>
