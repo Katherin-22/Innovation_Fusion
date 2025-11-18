@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface  DevolucionesCambiosRepository extends JpaRepository<DevolucionesCambios, Long> {
+public interface  DevolucionesCambiosRepository extends JpaRepository<DevolucionesCambios, Integer> {
 }

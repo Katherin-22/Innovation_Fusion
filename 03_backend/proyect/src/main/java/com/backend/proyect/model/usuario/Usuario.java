@@ -53,6 +53,7 @@ public class Usuario {
     @ManyToOne
     @JoinColumn(name = "idestado_usuario", referencedColumnName = "idestado_usuario")
     private EstadoUsuario  estado_usuario;
+
 }
 
 

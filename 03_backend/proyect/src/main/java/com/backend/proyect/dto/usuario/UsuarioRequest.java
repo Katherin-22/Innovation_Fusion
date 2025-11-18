@@ -11,9 +11,9 @@ public class UsuarioRequest {
     private String correoElectronico;
     private String direccion;
 
-    private Long idRol;
-    private Long idTipoDeDocumento;
-    private Long idEstadoUsuario;
+    private Integer idRol;
+    private Integer idTipoDeDocumento;
+    private Integer idEstadoUsuario;
 
     // Getters y Setters
     public Integer getNumeroDocumento() {
@@ -80,27 +80,27 @@ public class UsuarioRequest {
         this.direccion = direccion;
     }
 
-    public Long getIdRol() {
+    public Integer getIdRol() {
         return idRol;
     }
 
-    public void setIdRol(Long idRol) {
+    public void setIdRol(Integer idRol) {
         this.idRol = idRol;
     }
 
-    public Long getIdTipoDeDocumento() {
+    public Integer getIdTipoDeDocumento() {
         return idTipoDeDocumento;
     }
 
-    public void setIdTipoDeDocumento(Long idTipoDeDocumento) {
+    public void setIdTipoDeDocumento(Integer idTipoDeDocumento) {
         this.idTipoDeDocumento = idTipoDeDocumento;
     }
 
-    public Long getIdEstadoUsuario() {
+    public Integer getIdEstadoUsuario() {
         return idEstadoUsuario;
     }
 
-    public void setIdEstadoUsuario(Long idEstadoUsuario) {
+    public void setIdEstadoUsuario(Integer idEstadoUsuario) {
         this.idEstadoUsuario = idEstadoUsuario;
     }
 }

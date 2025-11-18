@@ -112,7 +112,7 @@ public class AuthController {
         Map<String, Object> response = new HashMap<>();
 
         if (userService.checkPassword(password, usuario.getPassword())) {
-            String token = jwtUtil.generateToken(usuario.getCorreoElectronico());
+            String token = jwtUtil.generateToken(usuario);
 
             Map<String, Object> userData = Map.of(
                     "id", usuario.getIdUsuario(),

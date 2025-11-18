@@ -1,7 +1,9 @@
 package com.backend.proyect.model.usuario;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "tipo_de_documento")
 

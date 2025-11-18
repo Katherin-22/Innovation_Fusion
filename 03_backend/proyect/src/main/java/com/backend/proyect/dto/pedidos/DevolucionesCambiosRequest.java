@@ -9,7 +9,7 @@ public class DevolucionesCambiosRequest {
     private String fechaRespuesta;
 
 
-    private Long idUsuario;
+    private Integer idUsuario;
 
     // Getters y Setters
     public String getMotivo() {
@@ -52,9 +52,9 @@ public class DevolucionesCambiosRequest {
         this.fechaRespuesta = fechaRespuesta;
     }
 
-    public Long getIdUsuario() { return idUsuario; }
+    public Integer getIdUsuario() { return idUsuario; }
 
-    public void setIdUsuario(Long idUsuario) {
+    public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
     }
 

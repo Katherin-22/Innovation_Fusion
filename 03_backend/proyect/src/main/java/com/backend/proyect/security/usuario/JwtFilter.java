@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -16,8 +15,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
 
 @Component
@@ -49,10 +47,9 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         String token = authHeader.substring(7);
-        String correo;
+        String correo = jwtUtil.extractUsername(token);;
 
         try {
-            correo = jwtUtil.extractUsername(token);
             // Si el correo es nulo o el contexto ya tiene autenticación, pasamos al siguiente filtro.
             if (correo == null || SecurityContextHolder.getContext().getAuthentication() != null) {
                 filterChain.doFilter(request, response);
@@ -64,16 +61,14 @@ public class JwtFilter extends OncePerRequestFilter {
 
             if (usuarioOpt.isPresent() && jwtUtil.isTokenValid(token, correo)) {
                 // Si el token es válido, autenticar
-                Usuario usuario = usuarioOpt.get();
+                Usuario usuarioEntity = usuarioOpt.get();
 
-                // Obtener el rol del usuario y crear una autoridad
-                String roleName = usuario.getRol().getNombreRol().toString();
-                List<GrantedAuthority> authorities = Collections.singletonList(
-                        new SimpleGrantedAuthority(roleName)
-                );
+                UsuarioPrincipal usuarioPrincipal = new UsuarioPrincipal(usuarioEntity);
+
+                Collection<? extends GrantedAuthority> authorities = usuarioPrincipal.getAuthorities();
 
                 UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(usuario, null, authorities);
+                        new UsernamePasswordAuthenticationToken(usuarioPrincipal, null, authorities);
 
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
@@ -82,9 +77,7 @@ public class JwtFilter extends OncePerRequestFilter {
             // En caso de cualquier error (token inválido, expirado, etc.),
             // el filtro no continúa la cadena y la solicitud es rechazada con un 401 Unauthorized.
 
-            System.err.println("Error de autenticación JWT: " + e.getMessage());
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
+            System.err.println("Error de autenticación JWT (Token inválido o expirado): " + e.getMessage());
         }
 
         filterChain.doFilter(request, response);

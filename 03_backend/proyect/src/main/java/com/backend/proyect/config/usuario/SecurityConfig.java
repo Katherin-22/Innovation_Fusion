@@ -3,19 +3,17 @@ package com.backend.proyect.config.usuario;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.backend.proyect.security.usuario.JwtFilter;
 
-import java.util.stream.Collectors;
 
 @Configuration
 @EnableMethodSecurity
@@ -31,8 +29,16 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable()) // desactiva CSRF
+
+                .cors(Customizer.withDefaults())
+
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll() // login y registro públicos
+
+                        .requestMatchers("/api/usuarios/perfil").authenticated()
+
+                        .requestMatchers("/api/usuarios", "/api/usuarios/{id}").hasAuthority("ROLE_ADMINISTRADOR") //Rutas de Administración (Requieren el rol explícito)
+
                         .anyRequest().authenticated() // lo demás requiere autenticación
                 )
                 .sessionManagement(session -> session
@@ -50,13 +56,6 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
-    }
-
-    @Bean
-    public GrantedAuthoritiesMapper grantedAuthoritiesMapper() {
-        return (authorities) -> authorities.stream()
-                .map(authority -> new SimpleGrantedAuthority(authority.getAuthority()))
-                .collect(Collectors.toSet());
     }
 
 }

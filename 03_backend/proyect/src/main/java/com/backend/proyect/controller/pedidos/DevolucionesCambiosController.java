@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
@@ -30,7 +31,7 @@ public class DevolucionesCambiosController {
 
     // Ver todas las devoluciones
     // El administrador puede ver  todas las devoluciones
-    @PreAuthorize("hasAuthority('administrador')")
+    @PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @GetMapping
     public List<DevolucionesCambios> listarDevoluciones() {
         return devolucionesCambiosRepository.findAll();
@@ -39,16 +40,19 @@ public class DevolucionesCambiosController {
     // Ver  una devolucion de un usuario por ID
     // El administrador puede ver cualquier devolucion por ID.
     // Un cliente solo puede ver su propia devolucion
-    @PreAuthorize("hasAuthority('administrador') or hasAuthority('cliente')")
+    @PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR') or hasAuthority('ROLE_CLIENTE')")
     @GetMapping("/{id}")
-    public ResponseEntity<DevolucionesCambios> listarDevolucionPorId(@PathVariable Long id) {
+    public ResponseEntity<DevolucionesCambios> listarDevolucionPorId(@PathVariable Integer id) {
         DevolucionesCambios devolucionescambios = devolucionesCambiosRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("La devolucion con ese ID no existe: " + id));
 
-        String authenticatedUserId = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Usuario usuarioPrincipal = (Usuario) authentication.getPrincipal();
 
-        if (devolucionescambios.getUsuario().getIdUsuario().toString().equals(authenticatedUserId) ||
-                SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("administrador"))) {
+        boolean isOwner = devolucionescambios.getUsuario().getIdUsuario().equals(usuarioPrincipal.getIdUsuario());
+        boolean isAdmin = authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMINISTRADOR"));
+
+        if (isOwner || isAdmin) {
 
             return ResponseEntity.ok(devolucionescambios);
 
@@ -58,7 +62,7 @@ public class DevolucionesCambiosController {
     }
 
     // Crear una devolucion
-    @PreAuthorize("hasAuthority('cliente') or hasAuthority('administrador')")
+    @PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR') or hasAuthority('ROLE_CLIENTE')")
     @PostMapping
     public ResponseEntity<DevolucionesCambios> guardarDevolucion(@RequestBody DevolucionesCambiosRequest devolucionesCambiosRequest) {
         DevolucionesCambios devolucionescambios =  new DevolucionesCambios();
@@ -83,14 +87,17 @@ public class DevolucionesCambiosController {
     // El administrador puede actualizar cualquier devolucion.
     @PreAuthorize("hasAuthority('administrador') or hasAuthority('cliente')")
     @PutMapping("/{id}")
-    public ResponseEntity<DevolucionesCambios> actualizarDevolucion(@PathVariable Long id, @RequestBody DevolucionesCambiosRequest devolucionesCambiosRequest) {
+    public ResponseEntity<DevolucionesCambios> actualizarDevolucion(@PathVariable Integer id, @RequestBody DevolucionesCambiosRequest devolucionesCambiosRequest) {
         DevolucionesCambios devolucionescambios = devolucionesCambiosRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("La devolucion con ese ID no existe: " + id));
 
-        String authenticatedUserId = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Usuario usuarioPrincipal = (Usuario) authentication.getPrincipal();
 
-        if (devolucionescambios.getUsuario().getIdUsuario().toString().equals(authenticatedUserId) ||
-                SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("administrador"))) {
+        boolean isOwner = devolucionescambios.getUsuario().getIdUsuario().equals(usuarioPrincipal.getIdUsuario());
+        boolean isAdmin = authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMINISTRADOR"));
+
+        if (isOwner || isAdmin) {
 
           devolucionescambios.setMotivo(devolucionesCambiosRequest.getMotivo());
           devolucionescambios.setTipoSolicitud(devolucionesCambiosRequest.getTipoSolicitud());
@@ -116,9 +123,9 @@ public class DevolucionesCambiosController {
 
     // Eliminar devolucion
     // Solo el administrador puede eliminar devoluciones
-    @PreAuthorize("hasAuthority('administrador')")
+    @PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String,Boolean>> eliminarDevolucion(@PathVariable Long id) {
+    public ResponseEntity<Map<String,Boolean>> eliminarDevolucion(@PathVariable Integer id) {
         DevolucionesCambios devolucionescambios = devolucionesCambiosRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("La devolucion con ese ID no existe: " + id));
 
