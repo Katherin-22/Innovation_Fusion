@@ -16,12 +16,9 @@ const GestionPedido = () => {
             <h2 className="text-center mb-4">Gestión Pedidos</h2>
         </div>
 
-        <div className="row row-cols-md-2 g-4 mb-4">
+        <div className="row row-cols-md g-4 mb-4">
             <div className="col">
                 <Link to="/Adfministrador/Gestion_Devoluciones" className="btn btn-outline-secondary w-100">Gestión Devoluciones</Link>
-            </div>
-            <div className="col">
-                <Link to="/Adfministrador/Gestion_Cambios" className="btn btn-outline-secondary w-100">Gestión Cambios</Link>
             </div>
         </div>
 
