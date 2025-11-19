@@ -1,0 +1,194 @@
+/* ==================== Contenedor Principal del Chat ==================== */
+.contenedor-chat {
+  display: flex;
+  height: 95vh;
+  margin: 1.2% 1.2% 0 18%; /* Ajustado margin-left */
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+/* ==================== Lista de Usuarios ==================== */
+.lista-usuarios {
+  width: 280px;
+  background-color: #f4f4f9;
+  border-right: 1px solid #ddd;
+  padding: 20px;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+  overflow-y: auto;
+}
+
+.lista-usuarios a {
+  display: block;
+  padding: 14px 18px;
+  margin: 8px 0;
+  background-color: #2d2d2d;
+  color: white;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.3s, transform 0.2s;
+  border: 1px solid transparent; /* Borde invisible inicialmente */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.lista-usuarios a:hover {
+  background-color: #3e3e3e;
+  transform: scale(1.05);
+  border: 1px solid #e0b253; /* Borde de color dorado al hacer hover */
+}
+
+.lista-usuarios a.chatElegido {
+  background-color: #e0b253;
+  color: #000;
+  font-weight: bold;
+  border: 1px solid #c7973d; /* Borde dorado para el chat seleccionado */
+}
+
+/* ==================== Panel de Conversación ==================== */
+.conversacion {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background-color: #fcfcfc;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+  box-sizing: border-box;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
+}
+
+/* ==================== Contenedor de Mensajes ==================== */
+.mensajes {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 24px;
+  padding: 16px 24px;
+  background-color: #ffffff;
+  border-radius: 14px;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e1e1e1;
+  overflow-y: auto;
+}
+
+/* ==================== Estilo Base de Mensaje ==================== */
+.mensaje {
+  max-width: 75%;
+  padding: 14px 18px;
+  border-radius: 16px;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease, transform 0.2s;
+  border: 1px solid #ddd;
+}
+
+.mensaje:hover {
+  transform: scale(1.05);
+  border: 1px solid #e0b253; /* Borde dorado cuando se pasa el ratón */
+}
+
+/* Mensaje enviado (usuario actual) */
+.sent {
+  align-self: flex-start;
+  border-width: 5px;
+  border-color: #e0b253;
+  border-style: solid;
+  border-radius: 15px;
+  background-color: #e0b253;
+  color: #000;
+  border-bottom-right-radius: 0;
+}
+
+/* Mensaje recibido (otro usuario) */
+.received {
+  align-self: flex-end;
+  background-color: #333;
+  color: #fff;
+  border-bottom-left-radius: 0;
+  border: 1px solid #444;
+  box-shadow: 0 0 8px rgba(51, 51, 51, 0.3); /* Sombra suave para el mensaje recibido */
+}
+
+/* ==================== Contenedores de Texto ==================== */
+/* Contenedor para el nombre del usuario */
+.nombre-usuario-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px;
+  border: 1px solid #e1e1e1; /* Borde alrededor del nombre */
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.nombre-usuario {
+  font-weight: bold;
+  font-size: 14px;
+  color: #bbb;
+  padding-right: 8px;
+  flex-grow: 1;
+}
+
+/* Contenedor para la hora del mensaje */
+.hora-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 4px;
+  border: 1px solid #e1e1e1; /* Borde alrededor de la hora */
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.hora {
+  font-size: 12px;
+  color: #ccc;
+}
+
+/* ==================== Nueva Entrada de Mensaje ==================== */
+.nuevo-mensaje {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nuevo-mensaje input {
+  flex: 1;
+  padding: 14px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  outline: none;
+  background-color: #fcfcfc;
+  transition: border-color 0.3s ease;
+}
+
+.nuevo-mensaje input:focus {
+  border-color: #c7973d; /* Borde dorado al enfocarse */
+}
+
+.nuevo-mensaje button {
+  padding: 14px 22px;
+  font-size: 16px;
+  background-color: #e0b253;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s;
+  border: 1px solid #d8a742; /* Borde para el botón */
+}
+
+.nuevo-mensaje button:hover {
+  background-color: #c7973d;
+  transform: scale(1.05);
+}

@@ -1,0 +1,177 @@
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(to right bottom, #0F0F0F 50%, #E0B253 50%);
+
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.info-adicional {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #777;
+}
+
+.icono {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.boton-imprimir {
+    background-color: #E0B253;
+    border: 1px solid #E0B253;
+    color: #0F0F0F;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.boton-imprimir:hover {
+    background-color: #E0B253;
+}
+
+.detalles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+    padding: 15px 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.detalles h3 {
+    font-size: 1.1em;
+    margin-top: 0;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.detalles p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.orden {
+    margin-bottom: 20px;
+}
+
+.orden h2 {
+    font-size: 1.2em;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.imagen-producto {
+    max-width: 80px;
+    height: auto;
+    margin-right: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.descripcion {
+    flex-grow: 1;
+}
+
+.descripcion p {
+    margin: 3px 0;
+}
+
+.descripcion .codigo {
+    font-size: 0.85em;
+    color: #777;
+}
+
+.precio {
+    font-weight: bold;
+    color: #333;
+    font-size: 1em;
+    margin-left: auto;
+}
+
+.resumen {
+    text-align: right;
+}
+
+.resumen h2 {
+    font-size: 1.2em;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.subtotal, .envio, .impuestos, .total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+
+.total {
+    font-size: 1.1em;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+    margin-top: 15px;
+}
+
+.total span {
+    font-weight: bold;
+}

@@ -1,0 +1,138 @@
+/* Footer */
+.footer {
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    padding: 3rem 5% 1rem;
+    margin-top: 3rem;
+    margin-bottom: 0;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.footer-section p {
+    margin-bottom: 0.5rem;
+    color: #ccc;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-icons a {
+    color: var(--light-color);
+    font-size: 1.5rem;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #444;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+footer {
+    background-color:#0f0f0f;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+footer img {
+    margin-bottom: 10px;
+}
+
+footer p {
+    margin: 0;
+    padding: 0;
+}
+
+footer nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+footer nav ul li {
+    display: inline;
+    margin: 50px;
+}
+
+footer nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.redes-sociales{
+    display: flex; /* Hace que estén en línea */
+    /*
+        justify-content: center; /* Centra horizontalmente */
+        /*
+        align-items: center;
+        gap: 20px; /* Espacio entre íconos */
+        /*
+        margin-top: 10px;
+    } 
+    
+footer .redes-sociales a {
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+    
+}
+
+footer form {
+    margin-top: 20px;
+}
+
+footer form input {
+    padding: 5px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+footer form button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff9800;
+    color: white;
+    cursor: pointer;
+}

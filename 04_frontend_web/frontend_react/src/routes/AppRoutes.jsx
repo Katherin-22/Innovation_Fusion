@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-
+import { FiltroProvider } from "../utils/FiltroContextx";
 /* -----------------------------
    Páginas públicas
 ----------------------------- */
@@ -78,62 +78,64 @@ import RegistrarUsuarios from "../pages/user/RegistrarUsuarios"
 
 export default function AppRoutes() {
   return (
-    <Routes>
-      {/* Páginas públicas */}
-      <Route path="/" element={<Home />} />
-      <Route path="/Catalogo" element={<Catalogo />} />
-      <Route path="/home/:codigoReferencia" element={<ProductoGen />} />
+   <FiltroProvider>
+      <Routes>
+         {/* Páginas públicas */}
+         <Route path="/" element={<Home />} />
+         <Route path="/Catalogo" element={<Catalogo />} />
+         <Route path="/home/:codigoReferencia" element={<ProductoGen />} />
 
-      {/* Administración general */}
-      <Route path="/Administrador/Inbox" element={<Inbox />} />
-      <Route path="/Administrador/Gestion_Pagina" element={<GestionPagina />} />
-      <Route path="/Administrador/Gestion_Pedido" element={<GestionPedido />} />
-      <Route path="/Administrador/Usuarios" element={<GestionUsuarios />} />
-      <Route path="/Administrador/Gestion_Devoluciones" element={<GestionDevoluciones />} />
-      <Route path="/Administrador/Gestion_Cambios" element={<GestionCambios />} />
-      <Route path="/Administrador/stock" element={<Stock />} />
+         {/* Administración general */}
+         <Route path="/Administrador/Inbox" element={<Inbox />} />
+         <Route path="/Administrador/Gestion_Pagina" element={<GestionPagina />} />
+         <Route path="/Administrador/Gestion_Pedido" element={<GestionPedido />} />
+         <Route path="/Administrador/Usuarios" element={<GestionUsuarios />} />
+         <Route path="/Administrador/Gestion_Devoluciones" element={<GestionDevoluciones />} />
+         <Route path="/Administrador/Gestion_Cambios" element={<GestionCambios />} />
+         <Route path="/Administrador/stock" element={<Stock />} />
 
-      {/* Producto */}
-      <Route path="/ver_producto" element={<GetProducto />} />
-      <Route path="/crear_producto" element={<CreateProducto />} />
-      <Route path="/producto/:idProducto" element={<UpdateProducto />} />
-      <Route path="/producto/:idProducto/imagenes" element={<CreateImagen />} />
-      <Route path="/producto/:idProducto/imagen/:idImagen" element={<UpdateImagen />} />
+         {/* Producto */}
+         <Route path="/ver_producto" element={<GetProducto />} />
+         <Route path="/crear_producto" element={<CreateProducto />} />
+         <Route path="/producto/:idProducto" element={<UpdateProducto />} />
+         <Route path="/producto/:idProducto/imagenes" element={<CreateImagen />} />
+         <Route path="/producto/:idProducto/imagen/:idImagen" element={<UpdateImagen />} />
 
-      {/* Categoría */}
-      <Route path="/ver_categoria" element={<GetCategoria />} />
-      <Route path="/categoria" element={<CreateCategoria />} />
-      <Route path="/categoria/:idCategoria" element={<UpdateCategoria />} />
+         {/* Categoría */}
+         <Route path="/ver_categoria" element={<GetCategoria />} />
+         <Route path="/categoria" element={<CreateCategoria />} />
+         <Route path="/categoria/:idCategoria" element={<UpdateCategoria />} />
 
-      {/* Stock */}
-      <Route path="/stock/:idProducto" element={<CreateStock />} />
-      <Route path="/stock/producto/:idProducto" element={<GetIDStock />} />
-      <Route path="/producto/:idProducto/stock/:idStock" element={<UpdateStock />} />
+         {/* Stock */}
+         <Route path="/stock/:idProducto" element={<CreateStock />} />
+         <Route path="/stock/producto/:idProducto" element={<GetIDStock />} />
+         <Route path="/producto/:idProducto/stock/:idStock" element={<UpdateStock />} />
 
-      {/* Promoción */}
-      <Route path="/ver_promocion" element={<GetPromocion />} />
-      <Route path="/crear_promocion" element={<CreatePromocion />} />
-      <Route path="/promocion/:idPromocion" element={<UpdatePromocion />} />
+         {/* Promoción */}
+         <Route path="/ver_promocion" element={<GetPromocion />} />
+         <Route path="/crear_promocion" element={<CreatePromocion />} />
+         <Route path="/promocion/:idPromocion" element={<UpdatePromocion />} />
 
-      {/* Color */}
-      <Route path="/ver_color" element={<GetColor />} />
-      <Route path="/crear_color" element={<CreateColor />} />
-      <Route path="/color/:idColor" element={<UpdateColor />} />
+         {/* Color */}
+         <Route path="/ver_color" element={<GetColor />} />
+         <Route path="/crear_color" element={<CreateColor />} />
+         <Route path="/color/:idColor" element={<UpdateColor />} />
 
-      {/* Marca */}
-      <Route path="/ver_marca" element={<GetMarca />} />
-      <Route path="/crear_marca" element={<CreateMarca />} />
-      <Route path="/marca/:idMarca" element={<UpdateMarca />} />
+         {/* Marca */}
+         <Route path="/ver_marca" element={<GetMarca />} />
+         <Route path="/crear_marca" element={<CreateMarca />} />
+         <Route path="/marca/:idMarca" element={<UpdateMarca />} />
 
-      {/* Material */}
-      <Route path="/ver_material" element={<GetMaterial />} />
-      <Route path="/crear_material" element={<CreateMaterial />} />
-      <Route path="/material/:idMaterial" element={<UpdateMaterial />} />
+         {/* Material */}
+         <Route path="/ver_material" element={<GetMaterial />} />
+         <Route path="/crear_material" element={<CreateMaterial />} />
+         <Route path="/material/:idMaterial" element={<UpdateMaterial />} />
 
-      {/* Autenticación */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/registrarusuarios" element={<RegistrarUsuarios />} />
+         {/* Autenticación */}
+         <Route path="/login" element={<Login />} />
+         <Route path="/registrarusuarios" element={<RegistrarUsuarios />} />
 
-    </Routes>
+      </Routes>
+</FiltroProvider>
   );
 }

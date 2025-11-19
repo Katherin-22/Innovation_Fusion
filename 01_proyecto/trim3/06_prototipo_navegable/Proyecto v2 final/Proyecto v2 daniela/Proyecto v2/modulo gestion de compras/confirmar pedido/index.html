@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recibo de Compra</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="./img/logo_shopdisney.png" alt="shopDisney" class="logo">
+            <h1>¡Gracias!</h1>
+            <p>Tu orden #1560788996 ha sido realizada.</p>
+            <p>Hemos enviado un correo electrónico a sofia.vargas28@email.co con la confirmación de tu orden y el recibo. Si el correo electrónico no ha llegado en dos minutos, por favor revisa tu carpeta de spam para ver si fue enviado allí.</p>
+            <div class="info-adicional">
+                <span><img src="./img/icono_reloj.jpg" alt="Hora" class="icono"> Tiempo Realizado: 16/04/2019 13:35 CEST</span>
+                <button class="boton-imprimir"><img src="./img/icono_imprimir.jpg" alt="Imprimir" class="icono"> Imprimir</button>
+            </div>
+        </header>
+
+        <section class="detalles">
+            <div class="seccion-envio">
+                <h3><img src="./img/icono_ubicacion.png" alt="Envío" class="icono"> Envío</h3>
+                <p>Sofía Vargas</p>
+                <p>Calle de las Flores #12-45</p>
+                <p>Medellín, Antioquia 050010</p>
+                <p>CO</p>
+                <p>+57 300 123 4567</p>
+            </div>
+
+            <div class="seccion-facturacion">
+                <h3><img src="./img/icono_tarjeta.jpg" alt="Facturación" class="icono"> Detalles de Facturación</h3>
+                <p>Sofía Vargas</p>
+                <p>Carrera del Sol #78-B90, Apto. 201</p>
+                <p>Bogotá, Cundinamarca 110221</p>
+                <p>CO</p>
+                <p>+57 315 987 6543</p>
+            </div>
+
+            <div class="seccion-metodo-envio">
+                <h3><img src="./img/icono_camion.jpg" alt="Método de Envío" class="icono"> Método de Envío</h3>
+                <p>Método Preferido:</p>
+                <p>Envío Estándar Colombia</p>
+                <p>(Normalmente 3-5 días hábiles, a menos que se indique lo contrario)</p>
+            </div>
+        </section>
+
+        <section class="orden">
+            <h2>Lista de Orden</h2>
+            <div class="item">
+                <img src="./img/zapatos.jpg" alt="zapatos" class="imagen-producto">
+                <div class="descripcion">
+                    <p><strong>zapatos</strong></p>
+                    <p class="codigo">#4123158252305 | Cant.: 1</p>
+                </div>
+                <span class="precio">$1.99</span>
+            </div>
+        </section>
+
+        <section class="resumen">
+            <h2>Resumen de Orden</h2>
+            <div class="subtotal">
+                <span>Subtotal:</span>
+                <span>$1.99</span>
+            </div>
+            <div class="envio">
+                <span>Envío &amp; Manejo:</span>
+                <span>$5.95</span>
+            </div>
+            <div class="impuestos">
+                <span>Est. Sales Tax:</span>
+                <span>$0.69</span>
+            </div>
+            <div class="total">
+                <span><strong>Total</strong></span>
+                <span><strong>$8.63</strong></span>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

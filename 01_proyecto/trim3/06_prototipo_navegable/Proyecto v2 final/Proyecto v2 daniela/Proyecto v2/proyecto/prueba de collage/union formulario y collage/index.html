@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collage con Formulario Superpuesto</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../prueba de collage/css/style2.css">
+    <link rel="stylesheet" href="../formulario solo/css/estiloInciarsesion.css">
+    <link rel="stylesheet" href="./css/style2.css">
+</head>
+<body>
+    <div class="contenedor-principal">
+        <div class="demo">
+            <div class="demo__gallery">
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/city'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/nature'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/landscape'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/architecture'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/travel'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/urban'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/night'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/skyline'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/buildings'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/mountains'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/forest'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/beach'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/bridge'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/park'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/river'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/sunset'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/sunrise'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/clouds'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/waterfall'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/desert'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/island'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/ocean'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/mountaintop'); background-size: cover;"></div>
+                <div class="demo__placeholder" style="background-image: url('https://loremflickr.com/160/100/cityscape'); background-size: cover;"></div>
+            </div>
+        </div>
+
+        <div class="login-container">
+            <form>
+                <h2>BIENVENIDOS A INNOVATION FUSION</h2>
+
+                <label for="CorreoElectronico">Correo Electrónico:</label>
+                <input type="email" id="CorreoElectronico" placeholder="Correo Electrónico" required />
+
+                <label for="Contraseña">Contraseña:</label>
+                <input type="password" id="Contraseña" placeholder="Contraseña" required />
+
+                <div class="opciones">
+                    <p><a href="../modulo gestion de usuarios/recuperar contraseña/index.html">¿Olvidó su Contraseña?</a></p>
+                </div>
+
+                <div class="boton-inicio">
+                    <input onclick="window.location.href='../administrador/administrador.html'"" type="submit" class="btn-1" value="Iniciar sesión" />
+                </div>
+
+                <div class="registro">
+                    <p class="no-tienes-cuenta">¿No tienes cuenta?</p>
+                    <a href="../modulo gestion de usuarios/registrar de usuarios/index.html" class="btn-registrarse">Regístrate</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../../prueba de collage/js/java.js"></script>
+
+    <script src="./js/main.js"></script>
+
+    <script>
+        document.querySelector('.login-container form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('CorreoElectronico').value;
+            const password = document.getElementById('Contraseña').value;
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                window.location.href = '../administrador/administrador.html';
+            } else {
+                alert('Correo o contraseña incorrectos');
+            }
+        });
+    </script>
+
+</body>
+</html>

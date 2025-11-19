@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar contraseña</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+        .contenedor {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url(); /* Puedes poner una imagen de fondo aquí si deseas */
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .formulario-con-imagenes {
+            display: flex;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            background-color: #FAF9F6;
+            overflow: hidden; /* Para que las imágenes respeten el border-radius */
+        }
+
+        .imagen-izquierda-contenedor,
+        .imagen-derecha-contenedor {
+            width: 200px; /* Ajusta el ancho según necesites */
+        }
+
+        .imagen-izquierda-contenedor img,
+        .imagen-derecha-contenedor img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .imagen-izquierda-contenedor img {
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+        }
+
+        .imagen-derecha-contenedor img {
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        form {
+            padding: 30px; /* Reduje el padding del formulario */
+            display: flex;
+            flex-direction: column;
+            width: 300px; /* Ajusta el ancho del formulario */
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 24px; /* Reduje el tamaño del título */
+            text-transform: uppercase;
+            color: #0F0F0F;
+            margin-bottom: 20px; /* Reduje el margen inferior del título */
+        }
+
+        label, p {
+            font-size: 16px; /* Reduje el tamaño de la fuente de las etiquetas */
+            color: #0F0F0F;
+            margin-bottom: 8px; /* Reduje el margen inferior de las etiquetas */
+        }
+
+        input {
+            padding: 8px 12px; /* Reduje el padding de los inputs */
+            border: 1px solid #E0B253;
+            border-radius: 25px;
+            margin-bottom: 12px; /* Reduje el margen inferior de los inputs */
+            background-color: #FAF9F6;
+            outline: none;
+            color: #0F0F0F;
+            font-size: 16px; /* Reduje el tamaño de la fuente de los inputs */
+        }
+
+        .btn-1 {
+            background-color: #E0B253;
+            font-size: 14px; /* Reduje el tamaño de la fuente del botón */
+            color: #0F0F0F;
+            text-transform: uppercase;
+            cursor: pointer;
+            width: 100%;
+            padding: 8px; /* Reduje el padding del botón */
+            border-radius: 25px;
+        }
+
+        .boton-iniciar {
+            margin-top: 15px; /* Reduje el margen superior del botón */
+        }
+
+        @media(max-width: 768px) {
+            .contenedor {
+                padding: 20px;
+            }
+            .formulario-con-imagenes {
+                flex-direction: column;
+                width: 90%;
+            }
+            .imagen-izquierda-contenedor,
+            .imagen-derecha-contenedor {
+                width: 100%;
+                height: 150px; /* Ajusta la altura para que se vea bien en vertical */
+            }
+            .imagen-izquierda-contenedor img {
+                border-radius: 0;
+                border-top-left-radius: 15px;
+                border-top-right-radius: 15px;
+                border-bottom-left-radius: 0;
+            }
+            .imagen-derecha-contenedor img {
+                border-radius: 0;
+                border-bottom-left-radius: 15px;
+                border-bottom-right-radius: 15px;
+                border-top-right-radius: 0;
+            }
+            form {
+                width: 100%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <div class="formulario-con-imagenes">
+            <div class="imagen-izquierda-contenedor">
+                <img src="./img/img1.png" alt="Imagen Izquierda">
+            </div>
+            <form>
+                <h2>RESTABLECER CONTRASEÑA</h2>
+
+                <label for="Telefono / movil ">Telefono / movil * </label>
+                <input type="text" id="Telefono / movil" placeholder="Telefono / movil" required>
+
+                <label for="CorreoElectronico">Correo Electrónico *</label>
+                <input type="email" id="CorreoElectronico" placeholder="Correo Electrónico" required>
+
+                <label for="Codigo de verificacion">Codigo de verificacion *</label>
+                <input type="password" id="Contraseña" placeholder="Contraseña" required>
+
+                <label for="Contraseña">Contraseña *</label>
+                <input type="password" id="Contraseña" placeholder="Contraseña" required>
+
+                <label for="confirmacion_de_contraseña"> Confirmación de Contraseña * </label>
+                <input type="password" id="confirmacion_de_contraseña" placeholder="Confirmación de Contraseña" required>
+
+                <div class="boton-iniciar">
+                    <input type="submit" class="btn-1" value="cambiar contraseña">
+                </div>
+
+            </form>
+            <div class="imagen-derecha-contenedor">
+                <img src="./img/img2.png" alt="Imagen Derecha">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

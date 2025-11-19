@@ -1,0 +1,54 @@
+/* Estilos del menú lateral */
+.menu {
+    width: 18%;
+    background-color: #0F0F0F;
+    color: white;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Título del menú */
+  .menu h2 {
+    text-align: center;
+    color: #e0b253;
+    margin-bottom: 20px;
+  }
+  
+  /* Enlaces del menú */
+  .menu a {
+    display: block;
+    padding: 10px;
+    margin: 5px 0;
+    color: white;
+    text-decoration: none;
+    border-style: solid;
+    border-color: rgb(71, 71, 71);
+    border-width: .5px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  /* Enlace seleccionado */
+  .menu a.elegido {
+    background-color: #e0b253;
+    color: #0F0F0F;
+    font-weight: bold;
+    border-style: none;
+  }
+  
+  /* Efecto hover */
+  .menu a:hover {
+    background-color: #423e3e;
+  }
+  
+  /* Contenedor principal del contenido */
+  .contenido {
+    margin-left: 17%; /* Deja espacio para el menú */
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  

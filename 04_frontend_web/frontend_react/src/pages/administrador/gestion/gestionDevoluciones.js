@@ -10,9 +10,7 @@ const GestionDevoluciones= () => {
         <div className="container">
         <div className="row border-bottom pb-2 mb-4">
             <h2 className="text-center mb-4">Gestión Devoluciones</h2>
-
-
-
+            
         </div>
         </div>
       </div>

@@ -1,0 +1,137 @@
+/*contenedor de categorias*/
+input[type="radio"]{
+    display: none;
+}
+.container-category{
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+.container-category label{
+    padding: 6px 40px; /*espacio de las categorias*/
+    margin: 10px;
+    font-size: 20px;
+    background: #e2e2e2;
+    border-radius: 5px;
+    cursor:pointer;
+}
+.container-category label:hover{
+    opacity: 0.8;
+}
+
+/*post-publicaciones (catalogo)*/
+
+.container-post{
+    max-width: 1200px;
+    margin: auto;
+}
+
+.posts{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) ;
+    grid-gap: 20px;
+
+    margin-top: 20px;
+    padding: 20px;
+}
+.posts .post{
+    background-color: white;
+    box-shadow: 0 0 20px -20px black ;
+    border-radius: 6px;
+    overflow: hidden;
+    padding-bottom: 20px;
+}
+.post .ctn-img{   /*container imagen*/
+    width: 100%;
+
+}
+
+.post .ctn-img img{   /*imagen*/
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+}
+.post h2{
+    font-size: 18px;
+    margin-top: 20px;
+    padding: 0px 20px;
+}
+.post span{
+    display: block;
+    margin-top: 10px;
+    padding: 0px 20px;
+}
+.ctn-tag{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 16px;
+    margin-top:10px ;
+}
+.ctn-tag li{
+    list-style: none;
+    font-size: 14px;
+    margin: 4px;
+    padding: 6px 10px;
+    background:#e8e8e8;
+    cursor: default;
+}
+.post button{
+    margin-top: 20px;
+    margin-left: 20px;
+    padding: 10px 50px;
+    font-size: 16px;
+    background: #46a2fd;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius:4px ;
+}
+/*SISTEMA DE FILTRADO*/
+[value="TODOS"]:checked ~.posts .post[data-category]{
+    display: block;
+}
+
+[value="CORTE-ALTO"]:checked ~.posts .post:not([data-category~="CORTE-ALTO"]),/*si se le da click a un input(categorias) a los post que no tengan esa categoria, los ocultara*/
+[value="CORTE-BAJO"]:checked ~.posts .post:not([data-category~="CORTE-BAJO"]),
+[value="PLATAFORMA"]:checked ~.posts .post:not([data-category~="PLATAFORMA"]),
+[value="BOTAS"]:checked ~.posts .post:not([data-category~="BOTAS"]),
+[value="RUNNING"]:checked ~.posts .post:not([data-category~="RUNNING"]),
+[value="SKATEBOARD"]:checked ~.posts .post:not([data-category~="SKATEBOARD"]){
+    display: none;
+}
+
+[value="TODOS"]:checked ~ .container-category [for="TODOS"],
+[value="CORTE-ALTO"]:checked ~ .container-category [for="CORTE-ALTO"],/*/*si se le da click a un label que tenga la clase for, la categoria carga el for que corresponda (categorias) y aplica el color*/
+[value="CORTE-BAJO"]:checked ~ .container-category [for="CORTE-BAJO"],
+[value="PLATAFORMA"]:checked ~ .container-category [for="PLATAFORMA"],
+[value="BOTAS"]:checked ~ .container-category [for="BOTAS"],
+[value="RUNNING"]:checked ~ .container-category [for="RUNNING"],
+[value="SKATEBOARD"]:checked ~ .container-category [for="SKATEBOARD"]{
+    background: #46a2fd;
+    color: white;
+}
+
+@media screen and (max-width:1200px){
+    .posts{
+        grid-template-columns: repeat(3,1fr);
+    }
+    
+}
+@media screen and (max-width:900px){
+    .posts{
+        grid-template-columns: repeat(2,1fr);
+    }
+    
+}
+@media screen and (max-width:500px){
+    .posts{
+        grid-template-columns: repeat(1,1fr);
+    }
+    
+}
+
