@@ -3,16 +3,16 @@ import { useGetStock } from "../../../hooks/stock/useGetStock";
 import { Link } from "react-router-dom";
 import MenuHome from "../../../layouts/home/menuHome";
 import { useFiltro } from "../../../utils/FiltroContextx";
+import { getImagenById } from "../../../services/administrador/ImagenService";
 import "../../../styles/home/canalogoHome.css";
 
 const Catalogo = () => {
   const { stock } = useGetStock();
   const { filtro } = useFiltro();
   const [productosFiltrados, setProductosFiltrados] = useState([]);
-
-  // DEBUG - Ver qué está pasando
-  console.log("🎯 Filtro actual:", filtro);
-  console.log("📦 Total productos:", stock.length);
+  const [imagenesProductos, setImagenesProductos] = useState({}); // Estado para almacenar imágenes por producto
+  const [imagenModal, setImagenModal] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     console.log("🔄 Aplicando filtro:", filtro);
@@ -25,8 +25,6 @@ const Catalogo = () => {
         const tipoLower = producto.nombreTipoProducto?.toLowerCase() || '';
         const nombreLower = producto.nombreProducto?.toLowerCase() || '';
         
-        console.log("📝 Producto:", producto.nombreProducto, "| Público:", publicoLower);
-
         switch(filtro) {
           case 'mujer':
             return publicoLower.includes('mujer') || nombreLower.includes('mujer');
@@ -42,10 +40,56 @@ const Catalogo = () => {
             return true;
         }
       });
-      console.log("✅ Productos después de filtrar:", filtrados.length);
       setProductosFiltrados(filtrados);
     }
   }, [stock, filtro]);
+
+  // Cargar imágenes para cada producto
+  useEffect(() => {
+    const cargarImagenes = async () => {
+      setLoading(true);
+      try {
+        const imagenesMap = {};
+        
+        for (const producto of productosFiltrados) {
+          try {
+            const response = await getImagenById(producto.idProducto);
+            if (response.data && response.data.length > 0) {
+              // Tomar la primera imagen del producto
+              imagenesMap[producto.idProducto] = `http://localhost:8080${response.data[0].urlImagen}`;
+            }
+          } catch (error) {
+            console.error(`Error al cargar imagen para producto ${producto.idProducto}:`, error);
+            imagenesMap[producto.idProducto] = "/imagenes_prueba/default.jpg";
+          }
+        }
+        
+        setImagenesProductos(imagenesMap);
+      } catch (error) {
+        console.error("Error general al cargar imágenes:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (productosFiltrados.length > 0) {
+      cargarImagenes();
+    }
+  }, [productosFiltrados]);
+
+  // Función para abrir el modal con la imagen
+  const abrirModalImagen = (producto) => {
+    const imagen = imagenesProductos[producto.idProducto] || producto.imagen || "/imagenes_prueba/default.jpg";
+    setImagenModal({
+      imagen: imagen,
+      nombre: producto.nombreProducto
+    });
+  };
+
+  // Función para cerrar el modal
+  const cerrarModalImagen = () => {
+    setImagenModal(null);
+  };
 
   return (
     <div className="catalogo-container">
@@ -68,6 +112,8 @@ const Catalogo = () => {
             </p>
           </div>
 
+          {loading && <p>Cargando imágenes...</p>}
+
           {/* GRILLA DE PRODUCTOS */}
           <div className="products-grid">
             {productosFiltrados.map(producto => (
@@ -75,10 +121,15 @@ const Catalogo = () => {
                 <div className="product-card">
                   <div className="product-image-container">
                     <img
-                      src={producto.imagen || "/imagenes_prueba/default.jpg"}
+                      src={imagenesProductos[producto.idProducto] || producto.imagen || "/imagenes_prueba/default.jpg"}
                       className="product-image"
                       alt={producto.nombreProducto}
+                      onClick={() => abrirModalImagen(producto)}
+                      style={{ cursor: 'pointer' }}
                     />
+                    <div className="image-overlay" onClick={() => abrirModalImagen(producto)}>
+                      <span>Ver imagen</span>
+                    </div>
                   </div>
                   <div className="product-info">
                     <h3 className="product-name">{producto.nombreProducto}</h3>
@@ -100,6 +151,25 @@ const Catalogo = () => {
           {productosFiltrados.length === 0 && (
             <div className="no-productos">
               <p>No se encontraron productos para esta categoría.</p>
+            </div>
+          )}
+
+          {/* MODAL PARA VER IMAGEN */}
+          {imagenModal && (
+            <div className="modal-overlay" onClick={cerrarModalImagen}>
+              <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                <div className="modal-header">
+                  <h3>{imagenModal.nombre}</h3>
+                  <button className="close-button" onClick={cerrarModalImagen}>×</button>
+                </div>
+                <div className="modal-body">
+                  <img 
+                    src={imagenModal.imagen} 
+                    alt={imagenModal.nombre}
+                    className="modal-image"
+                  />
+                </div>
+              </div>
             </div>
           )}
 
