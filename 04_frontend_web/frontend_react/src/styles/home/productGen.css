@@ -364,3 +364,10 @@
     padding: 1rem;
   }
 }
+
+
+.producto-titulo-detalle, .producto-codigo-detalle
+, .producto-precio-detalle, .producto-descripcion-detalle
+, .producto-categoria-detalle, .producto-tipo-detalle, .producto-genero-detalle {
+  color: var(--light-text) !important;
+}

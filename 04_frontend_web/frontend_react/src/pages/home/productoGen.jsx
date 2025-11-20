@@ -151,12 +151,6 @@ const ProductoGen = () => {
                           onClick={() => abrirModalImagen()}
                           style={{ cursor: 'pointer' }}
                         />
-                        <div 
-                          className="producto-imagen-overlay"
-                          onClick={() => abrirModalImagen()}
-                        >
-                          <span>Ver imagen</span>
-                        </div>
                       </div>
 
                       {/* MINIATURAS DE IMÁGENES (si hay más de una) */}
@@ -253,6 +247,7 @@ const ProductoGen = () => {
                   {/* ============================
                       INFO STOCK DISPONIBLE
                   ============================ */}
+
 
                   {/* ============================
                       BOTONES DE ACCIÓN
