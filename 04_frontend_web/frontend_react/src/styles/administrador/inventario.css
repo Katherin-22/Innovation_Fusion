@@ -19,8 +19,7 @@
 }
 
 body {
-    height: 100vh;
-    background-color: var(--body-color);
+    background-color: var(--body-color) !important;
 }
 
 /* ==================== SLIDEBAR ==================== */
@@ -337,3 +336,4 @@ tr:hover {
     white-space: nowrap;
   }
 }
+

@@ -1,7 +1,7 @@
-import MenuAdmin from "../../layouts/Administrador/Menu/menuAdmin";
-import "../../styles/Administrador/gestion_producto.css";
-import "../../styles/Administrador/inventario.css";
-import "../../styles/Administrador/chat.css";
+import MenuAdmin from "../../layouts/administrador/menuAdmin.js";
+import "../../styles/administrador/gestion_producto.css";
+import "../../styles/administrador/inventario.css";
+import "../../styles/administrador/chat.css";
 
 import { useEffect, useState } from "react";
 import { getMensajes, responderMensaje } from "../../services/administrador/inboxService";

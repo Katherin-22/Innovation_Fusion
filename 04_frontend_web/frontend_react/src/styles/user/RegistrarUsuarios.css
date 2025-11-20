@@ -1,0 +1,55 @@
+/* === Reset básico === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --body-color: #e4e9f7;
+  --slidebar-color: #fff;
+  --primary-color: #E0B253;
+  --toggle-color: #ddd;
+  --text-color: #000000;
+
+  --tran-03: all 0.3s ease;
+  --tran-04: all 0.4s ease;
+  --tran-05: all 0.5s ease;
+}
+
+/* === CONTENEDOR GENERAL === */
+.all-login {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--toggle-color);
+  min-height: 100vh; /* ocupa toda la altura visible */
+  padding: 20px;
+}
+
+.col-form{
+    background-color: color-mix(in srgb, var(--toggle-color) 80%, transparent);
+    padding: 2.5rem !important;
+    border-radius: 12px 0 0 12px;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+.col-image{
+    margin-left: -20px;
+}
+
+.col-image img{
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+.fiel{
+    width: 50px;
+    margin: 5px;
+}
+
+.form-control-register{
+    margin-bottom: 15px;
+    margin-top: 5px;
+}

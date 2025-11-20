@@ -1,1 +1,0 @@
-Funciones auxiliares y helpers (formatDate, validators, debounce, etc.).

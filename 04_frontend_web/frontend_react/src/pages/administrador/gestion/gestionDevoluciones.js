@@ -1,6 +1,6 @@
-import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
-import "../../../styles/Administrador/gestion_producto.css";
-import "../../../styles/Administrador/inventario.css";
+import MenuAdmin from "../../../layouts/administrador/menuAdmin";
+import "../../../styles/administrador/gestion_producto.css";
+import "../../../styles/administrador/inventario.css";
 
 const GestionDevoluciones= () => {
     return (
@@ -10,9 +10,7 @@ const GestionDevoluciones= () => {
         <div className="container">
         <div className="row border-bottom pb-2 mb-4">
             <h2 className="text-center mb-4">Gestión Devoluciones</h2>
-
-
-
+            
         </div>
         </div>
       </div>

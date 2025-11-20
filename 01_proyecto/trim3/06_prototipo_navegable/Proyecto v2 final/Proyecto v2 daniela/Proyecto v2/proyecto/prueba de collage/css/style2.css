@@ -1,0 +1,233 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la ventana */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(60deg, #5b5893, #4b4873);
+}
+
+.demo {
+  display: flex;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.demo__gallery {
+  width: 80vw;
+  /* La clave está aquí: definimos la altura en relación a la altura de la ventana */
+  height: 95vh; /* Ajusta este valor según necesites espacio arriba o abajo */
+  padding: 2px;
+  flex-shrink: 0;
+  background: #eee;
+  perspective: 700px;
+  border-radius: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.demo__placeholder {
+  /* Calculamos el ancho descontando el espacio total de los márgenes */
+  width: calc((100% - (6 * 4px)) / 6); /* 6 columnas, 4px de margen entre cada una */
+  /* Calculamos el alto descontando el espacio total de los márgenes */
+  height: calc((100% - (4 * 4px)) / 4); /* 4 filas, 4px de margen entre cada una */
+  margin: 2px; /* Establecemos un margen fijo de 2 píxeles */
+  background-color: lightslategrey;
+  border-radius: 5px;
+}
+
+.demo__part {
+  position: relative;
+  /* Calculamos el ancho descontando el espacio total de los márgenes */
+  width: calc((100% - (6 * 4px)) / 6); /* 6 columnas, 4px de margen entre cada una */
+  /* Calculamos el alto descontando el espacio total de los márgenes */
+  height: calc((100% - (4 * 4px)) / 4); /* 4 filas, 4px de margen entre cada una */
+  margin: 2px; /* Establecemos un margen fijo de 2 píxeles */
+  transform: rotateY(180deg);
+  transform-style: preserve-3d;
+  transition: all 0.3s ease-in-out;
+}
+
+.demo__part:hover .demo__part-front {
+  box-shadow: 0 0 10px black;
+  transform: scale(0.96);
+  outline: 2px solid white;
+  outline-offset: 0px;
+}
+
+.demo__part:hover .demo__part-front:after {
+  opacity: 0;
+}
+
+.demo__part-front,
+.demo__part-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  backface-visibility: hidden;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.demo__part-front {
+  background-color: lightslategrey;
+  background-size: cover;
+  background-position: center;
+  transform: rotateX(0deg);
+  transition: all 0.2s ease;
+  border: 1px solid white;
+}
+
+.demo__part-front:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  content: "";
+  opacity: 0.5;
+  transition: all 0.2s ease;
+}
+
+.demo__part-back {
+  transform: rotateY(180deg) rotateX(0deg);
+}
+
+.demo__part-back-inner {
+  width: 80vw;
+  height: calc(80vw * (4 / 6));
+  background-image: url(http://kirillkiyutin.com/img/nyc/nyc1.jpg);
+  background-size: cover;
+  background-position: center;
+  backface-visibility: hidden;
+}
+
+.demo__help {
+  margin-bottom: 7px;
+  font-size: 30px;
+  font-family: "Yanone Kaffeesatz", sans-serif;
+  color: white;
+}
+
+.demo__help a {
+  color: white;
+}
+
+.demo__help a:hover {
+  color: #e39999;
+}
+
+/* Ajustamos los transform usando porcentajes */
+.demo__part-1-1 .demo__part-back-inner {
+  transform: translate(calc(0 * (100% / 6)), calc(0 * (100% / 4)));
+}
+
+.demo__part-1-2 .demo__part-back-inner {
+  transform: translate(calc(-1 * (100% / 6)), calc(0 * (100% / 4)));
+}
+
+.demo__part-1-3 .demo__part-back-inner {
+  transform: translate(calc(-2 * (100% / 6)), calc(0 * (100% / 4)));
+}
+
+.demo__part-1-4 .demo__part-back-inner {
+  transform: translate(calc(-3 * (100% / 6)), calc(0 * (100% / 4)));
+}
+
+.demo__part-1-5 .demo__part-back-inner {
+  transform: translate(calc(-4 * (100% / 6)), calc(0 * (100% / 4)));
+}
+
+.demo__part-1-6 .demo__part-back-inner {
+  transform: translate(calc(-5 * (100% / 6)), calc(0 * (100% / 4)));
+}
+
+.demo__part-2-1 .demo__part-back-inner {
+  transform: translate(calc(0 * (100% / 6)), calc(-1 * (100% / 4)));
+}
+
+.demo__part-2-2 .demo__part-back-inner {
+  transform: translate(calc(-1 * (100% / 6)), calc(-1 * (100% / 4)));
+}
+
+.demo__part-2-3 .demo__part-back-inner {
+  transform: translate(calc(-2 * (100% / 6)), calc(-1 * (100% / 4)));
+}
+
+.demo__part-2-4 .demo__part-back-inner {
+  transform: translate(calc(-3 * (100% / 6)), calc(-1 * (100% / 4)));
+}
+
+.demo__part-2-5 .demo__part-back-inner {
+  transform: translate(calc(-4 * (100% / 6)), calc(-1 * (100% / 4)));
+}
+
+.demo__part-2-6 .demo__part-back-inner {
+  transform: translate(calc(-5 * (100% / 6)), calc(-1 * (100% / 4)));
+}
+
+.demo__part-3-1 .demo__part-back-inner {
+  transform: translate(calc(0 * (100% / 6)), calc(-2 * (100% / 4)));
+}
+
+.demo__part-3-2 .demo__part-back-inner {
+  transform: translate(calc(-1 * (100% / 6)), calc(-2 * (100% / 4)));
+}
+
+.demo__part-3-3 .demo__part-back-inner {
+  transform: translate(calc(-2 * (100% / 6)), calc(-2 * (100% / 4)));
+}
+
+.demo__part-3-4 .demo__part-back-inner {
+  transform: translate(calc(-3 * (100% / 6)), calc(-2 * (100% / 4)));
+}
+
+.demo__part-3-5 .demo__part-back-inner {
+  transform: translate(calc(-4 * (100% / 6)), calc(-2 * (100% / 4)));
+}
+
+.demo__part-3-6 .demo__part-back-inner {
+  transform: translate(calc(-5 * (100% / 6)), calc(-2 * (100% / 4)));
+}
+
+.demo__part-4-1 .demo__part-back-inner {
+  transform: translate(calc(0 * (100% / 6)), calc(-3 * (100% / 4)));
+}
+
+.demo__part-4-2 .demo__part-back-inner {
+  transform: translate(calc(-1 * (100% / 6)), calc(-3 * (100% / 4)));
+}
+
+.demo__part-4-3 .demo__part-back-inner {
+  transform: translate(calc(-2 * (100% / 6)), calc(-3 * (100% / 4)));
+}
+
+.demo__part-4-4 .demo__part-back-inner {
+  transform: translate(calc(-3 * (100% / 6)), calc(-3 * (100% / 4)));
+}
+
+.demo__part-4-5 .demo__part-back-inner {
+  transform: translate(calc(-4 * (100% / 6)), calc(-3 * (100% / 4)));
+}
+
+.demo__part-4-6 .demo__part-back-inner {
+  transform: translate(calc(-5 * (100% / 6)), calc(-3 * (100% / 4)));
+}
+
+.show-front {
+  transform: none;
+}

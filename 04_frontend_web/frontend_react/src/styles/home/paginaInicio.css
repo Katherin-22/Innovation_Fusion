@@ -15,6 +15,43 @@
   flex-direction: column;
 }
 
+.navbar{
+    width: 100%;
+    padding:5px 15px 0 15px;
+}
+
+.search{
+    border: 1px solid var(--primary-color);
+    border-radius: 15px;
+}
+.search:hover,
+.search:focus {
+    outline: none;
+    box-shadow: 0 0 8px var(--primary-color);
+}
+
+/* Botón */
+.button-search {
+    width: 90px;
+    height: 38px;
+    border-radius: 15px;
+    border: 1px solid var(--primary-color);
+    background-color: transparent;
+    color: var(--primary-color);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* 🔥 Hover bonito */
+.button-search:hover {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(224, 178, 83, 0.6);
+    transform: scale(1.05);
+}
+
 .custom-btn {
     background: var(--primary-color);
     color: white;
@@ -47,7 +84,6 @@
 }
 .contenedorMas img{
     max-width: 200px !important;
-    max-width: 200px;
 }
 .coleccion{
     height: 200px;
@@ -67,10 +103,12 @@
     object-fit: cover;
 }
 .finPag{
-    margin: 20px 0;
-    margin-bottom: -10px;
+    margin: 20px 0 -10px;
 }
 
+.reserve{
+    color: var(--body-color);
+}
 .custom-row{
     margin-top: 5%;
 }

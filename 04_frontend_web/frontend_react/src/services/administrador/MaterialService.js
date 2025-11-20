@@ -7,12 +7,12 @@ export const createMaterial = async (materialData) => {
 
 // Obtener todos los Material
 export const getMateriales = async () => {
-    return await api_url.get("/materiales");
+    return await api_url.get("/publico/materiales");
 };
 
 // Obtener un Material por ID
 export const getMaterialById  = async (idMaterial) => {
-    return await api_url.get(`/material/${idMaterial}`);
+    return await api_url.get(`/publico/material/${idMaterial}`);
 };
 
 // Actualizar un Material

@@ -1,57 +1,122 @@
 :root {
-    --body-color: #e4e9f7;
-    --slidebar-color: #fff;
-    --primary-color: #E0B253;
-    --toggle-color: #ddd;
-    --text-color: #000000;
+  --body-color: #e4e9f7;
+  --slidebar-color: #fff;
+  --primary-color: #E0B253;
+  --toggle-color: #ddd;
+  --text-color: #000000;
 }
 
-.card-custom {
-    width: 100%;
-    max-width: 90%; /* limita el ancho de la tarjeta */
-    margin: 0 auto !important;   /* centra horizontalmente */
-    margin-top: 5% !important;
-    
+/* ===== CARD UNIVERSAL ===== */
+.card {
+  position: relative;
+  background: #000;
+  border: 1px solid rgba(224, 178, 83, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(224, 178, 83, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  /* 🔹 Hace que la card sea cuadrada */
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  padding: 0 !important; /* elimina padding interno */
+  margin: 4% 4% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.btn-custom{
-    background-color: var(--primary-color);
-    width: 100%;
-    border-color: var(--primary-color) !important;
+/* ===== Imagen ocupa TODO el cuadrado ===== */
+.card-img-top {
+  position: absolute;
+  inset: 0;             /* top:0; right:0; bottom:0; left:0 */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;    /* llena sin deformarse */
+  object-position: center;
+  border-radius: 0;     /* asegura que no se achique */
+  display: block;
+  transition: all 0.4s ease;
+  z-index: 1;
 }
 
-.btn-custom:hover{
-    background-color: var(--body-color);
-    color: var(--primary-color);
-     box-shadow: inset 2px 2px 6px rgba(0,0,0,0.3);
+/* ===== Overlay (texto oculto) ===== */
+.card-body {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  color: #f5f5f5;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 15px;
+  z-index: 2;
 }
 
-.custom-btn-leave{
-    width: 100%;
-    background-color: var(--toggle-color);
-    color: black;
-    border: var(--primary-color) !important;
+/* ===== Hover: mostrar texto ===== */
+.card:hover .card-body {
+  opacity: 0.8;
+  visibility: visible;
+  box-shadow: 0 0 10px rgba(224, 178, 83, 0.5);
 }
 
-.custom-btn-leave:hover{
-    background-color: var(--toggle-color);
-        box-shadow: inset 2px 2px 6px rgba(0,0,0,0.3);
-        color: var(--text-color);
+
+/* ===== Hover: zoom suave de imagen ===== */
+.card:hover .card-img-top {
+  transform: scale(1.2);
+  filter: brightness(0.4);
 }
 
-.btn-comment{
-    background-color: var(--primary-color);
-    color: var(--body-color);
-    width: 40%;
-    height: 85%;
-    border-radius: 35px;
-    padding: 1%;
-    border-color: var(--primary-color) !important;
+/* ===== Texto ===== */
+.card-title {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  font-weight: bold;
 }
 
-.btn-comment:hover{
-        background-color: var(--body-color);
-    color: var(--primary-color);
-     box-shadow: inset 2px 2px 6px rgba(0,0,0,0.3);
+.card-text {
+  color: #ccc;
+  font-size: 0.95rem;
+  margin-bottom: 15px;
 }
 
+/* ===== Botones ===== */
+.card .btn {
+  background: var(--primary-color);
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin: 5px;
+  transition: all 0.3s ease;
+}
+
+.card .btn:hover {
+  background: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 0 10px rgba(224, 178, 83, 0.4);
+}
+
+/* ===== Ajuste de filas Bootstrap ===== */
+.row > [class*="col-"] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 !important;
+}
+
+/* 🔹 Garantiza que ninguna imagen quede pequeña */
+.card > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}

@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {getStock, deleteStock  } from "../../../services/administrador/StockService";
-import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
+import MenuAdmin from "../../../layouts/administrador/menuAdmin";
 
-import "../../../styles/Administrador/inventario.css";
-import "../../../styles/Administrador/gestion_producto.css";
+import "../../../styles/administrador/inventario.css";
+import "../../../styles/administrador/gestion_producto.css";
 import { Link, useParams } from 'react-router-dom';
 
 export default function Stock() {
   const [stock, setStock] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const { idStock } = useParams();
+  const [loading, setLoading] = useState(true);  
 
   // Traer los stocks al cargar la página
   useEffect(() => {
@@ -55,12 +53,12 @@ export default function Stock() {
     <div className="header">    
         <div className="row custom-header">
             <div className="col-3 d-flex align-items-center justify-content-between">
-                <h1 className="mb-0">STOCK</h1>
+                <h1 className="mb-0">STOCK GENERAL</h1>
             </div>
             <div className="col-9 d-flex align-items-end px-1 gap-2 w-50">
-                <a href="./REGISTRO_PRODUCTO.HTML" className="btn custom-btn btn-light">Categoria</a>
+                <Link to="/ver_categoria" className="btn custom-btn btn-light">Categoria</Link>
                 <Link to="/ver_producto" className="btn custom-btn btn-light">Producto</Link>
-                <a href="./REGISTRO_DESCUENTO.HTML" className="btn custom-btn btn-light">Descuento</a>
+                <Link to="/ver_promocion" className="btn custom-btn btn-light">Promoción</Link>
             </div>
         </div>
     </div>      
@@ -72,15 +70,10 @@ export default function Stock() {
                         <th>Código</th>
                         <th>Nombre</th>
                         <th>Tipo Producto</th>
-                        <th>Categoría</th>
-                        <th>Descripción</th>
-                        <th>Stock Actual</th>
                         <th>Precio de Venta</th>
-                        <th>Marca</th>
                         <th>Talla Disponible</th>
                         <th>Color Disponible</th>
-                        <th>Material</th>
-                        <th>Género</th>
+                        <th>Stock Actual</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                         </tr>
@@ -91,24 +84,13 @@ export default function Stock() {
                             <td>{s.codigoReferencia}</td>
                             <td>{s.nombreProducto}</td>
                             <td>{s.nombreTipoProducto}</td>
-                            <td>{s.nombreCategoria}</td>
-                            <td>{s.descripcion}</td>
-                            <td>{s.stockActual}</td>
                             <td>{s.precio}</td>
-                            <td>{s.nombreMarca}</td>
                             <td>{s.nombre}</td>
                             <td>{s.nombreColor}</td>
-                            <td>{s.nombreMaterial}</td>
-                            <td>{s.nombrePublico}</td>
+                            <td>{s.stockActual}</td>
                             <td>{s.estadoProducto}</td>
-                            <td><Link to="/Administrador/stock" id="boton_agregar" className="btn btn-light">Editar</Link>
-                            <button
-                            className="btn btn-light"
-                            onClick={() => handleDeleteStock(s.idStock)}
-                            >
-                            Eliminar
-                            </button>
-                                <Link to="/Administrador/stock" id="boton_eliminar" className="btn btn-light">Agregar Tallas/colores</Link>
+                            <td>
+                            <Link to={`/stock/producto/${s.idProducto}`} id="boton_eliminar" className="btn btn-light">Agregar Stock</Link>
                             </td>
 
                             </tr>

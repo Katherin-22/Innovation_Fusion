@@ -7,12 +7,12 @@ export const createMarca = async (marcaData) => {
 
 // Obtener todos los Marca
 export const getMarca = async () => {
-    return await api_url.get("/marcas");
+    return await api_url.get("/publico/marcas");
 };
 
 // Obtener un Marca por ID
 export const getMarcaById  = async (idMarca) => {
-    return await api_url.get(`/marca/${idMarca}`);
+    return await api_url.get(`/publico/marca/${idMarca}`);
 };
 
 // Actualizar un Marca

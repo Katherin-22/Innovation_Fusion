@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { deleteProducto, getProductos } from "../../../services/administrador/ProductoService";
-import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
+import MenuAdmin from "../../../layouts/administrador/menuAdmin";
 
-import "../../../styles/Administrador/inventario.css";
-import "../../../styles/Administrador/gestion_producto.css";
+import "../../../styles/administrador/inventario.css";
+import "../../../styles/administrador/gestion_producto.css";
 import { Link } from "react-router-dom";
 
 
@@ -57,6 +57,8 @@ export default function GetProducto() {
             </div>
             <div className="col-9 d-flex align-items-end px-1 gap-2 w-50">
                 <Link to="/crear_producto" className="btn custom-btn btn-light">Registrar Producto</Link>
+                <Link to="/ver_marca" className="btn custom-btn btn-light">Marca</Link>
+                <Link to="/ver_material" className="btn custom-btn btn-light">Material</Link>
             </div>
         </div>
     </div>      

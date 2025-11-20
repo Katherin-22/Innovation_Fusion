@@ -7,12 +7,12 @@ export const createPromocion = async (promocionData) => {
 
 // Obtener todos los Promociones
 export const getPromociones = async () => {
-    return await api_url.get("/promociones");
+    return await api_url.get("/publico/promociones");
 };
 
 // Obtener un Promocion por ID
 export const getPromocionById  = async (idPromocion) => {
-    return await api_url.get(`/promocion/${idPromocion}`);
+    return await api_url.get(`/publico/promocion/${idPromocion}`);
 };
 
 // Actualizar un Promocion

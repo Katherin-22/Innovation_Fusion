@@ -1,21 +1,24 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {useCreateProducto} from "../../../hooks/producto/useCreateProducto";
+import {createProducto} from "../../../services/administrador/ProductoService";
 
 import {useGetCategorias} from "../../../hooks/categoria/useGetCategoria";
 import {useGetMarca} from "../../../hooks/marca/useGetMarca";
 import {useGetMaterial} from "../../../hooks/material/useGetMaterial";
 import {useGetTipoPublicos} from "../../../hooks/tipoPublico/useGetTipoPublico";
 import {useGetPromociones} from "../../../hooks/promocion/useGetPromocion";
-import MenuAdmin from "../../../layouts/Administrador/Menu/menuAdmin";
-import "../../../styles/Administrador/inventario.css";
-import "../../../styles/Administrador/gestion_producto.css";
+import MenuAdmin from "../../../layouts/administrador/menuAdmin";
+import "../../../styles/administrador/inventario.css";
+import "../../../styles/administrador/gestion_producto.css";
 
 export default function CreateProducto() {
 {/*navigate=useNavigate():Sirve para moverte entre páginas desde el código */}
 {/*navigate("/"); // me lleva a la página principal */}
     
     let navigate=useNavigate();
+
+    const [loading, setLoad] = useState(false);
+    const [success, setSuccess] = useState(false);
 
         const [producto,setproducto]=useState({ 
         nombreProducto:"",
@@ -33,45 +36,41 @@ export default function CreateProducto() {
     const estadoProductos = ['Activo', 'Inactivo', 'Descontinuado'];
     const { nombreProducto, codigoReferencia, descripcion, precio, estadoProducto } = producto;
 
-    // Hooks personalizados para cargar selects
-
-    //aca se pone los return de los hooks, por ejemplo: 
-    // return { tipoPublicos, loading };
     const { categorias } = useGetCategorias();
     const { marcas } = useGetMarca();
     const { materiales } = useGetMaterial();
     const { tipoPublicos } = useGetTipoPublicos();
     const { promociones } = useGetPromociones();
 
-    // Hook personalizado para crear producto
-    const { handleCreateProducto, loading, success } = useCreateProducto();
-    
-  
-{/*...user: copia lo que ya tenga el objeto user (username: "ana23" // agrega un campo nuevo)*/}   
-{/*e.target.name: se vincula con name=email */}    
-{/*e.target.value → el valor que escribió el usuario. */}
-{/*onInputChange(e)= Lo guarda en el estado user.
-Cuando escribes algo, React captura ese valor (e.target.value)
-Y lo guarda en user con setUsers.*/}
+    const handleCreateProducto = async (data) => {
+        setLoad(true); // paso 1: activar "cargando"
+        try {
+        await createProducto(data); // paso 2: enviar datos al backend
+        setSuccess(true);        // paso 3: si todo ok → marcar éxito
+        navigate("/ver_producto")
+        } catch (error) {
+        console.error("Error al crear la categoria:", error);
+
+        // Verifica si el backend envió un mensaje
+        if (error.response && error.response.data && error.response.data.errorMessage) {
+        alert("⚠️ " + error.response.data.errorMessage);
+        } else {
+        alert("⚠️ Error desconocido al crear la categoria");
+        }
+        setSuccess(false);      // si falla → marcar como no exitoso
+        } finally {
+        setLoad(false);         // paso 4: quitar "cargando"
+        }
+    };
+
     const onInputChange=(e)=>{
         setproducto({...producto, [e.target.name]: e.target.value});
     };
 
     const onSubmit=async (e)=>{
-{/*evita que se recargue la página */}
         e.preventDefault();
-{/*manda los datos (user) al backend.*/}
         await handleCreateProducto(producto); // manda datos al backend
-{/*después de guardar, te lleva a la página principal */}
-        navigate("/ver_producto")
     }
-console.log({ categorias, marcas, materiales, tipoPublicos, promociones });
-console.log("categorias:", categorias);
-console.log("marcas:", marcas);
-console.log("materiales:", materiales);
-console.log("tipoPublicos:", tipoPublicos);
-console.log("promociones:", promociones);
-
 
   return (
 
@@ -221,7 +220,7 @@ console.log("promociones:", promociones);
 
 
             {/* esto es para cancelar el formulario*/} 
-            <Link className="btn btn-outline-danger mx-2" to="/ver_producto">
+            <Link  to="/ver_producto" className="btn btn-outline-danger mx-2">
                 Cancel
             </Link>
         </div>
