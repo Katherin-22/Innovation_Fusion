@@ -6,6 +6,7 @@ import com.backend.proyect.model.pedidos.DevolucionesCambios;
 import com.backend.proyect.model.usuario.Usuario;
 import com.backend.proyect.repository.pedidos.DevolucionesCambiosRepository;
 import com.backend.proyect.repository.usuario.UsuarioRepository;
+import com.backend.proyect.security.usuario.UsuarioPrincipal;
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +48,9 @@ public class DevolucionesCambiosController {
                 .orElseThrow(() -> new ResourceNotFoundException("La devolucion con ese ID no existe: " + id));
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Usuario usuarioPrincipal = (Usuario) authentication.getPrincipal();
+
+        UsuarioPrincipal usuarioPrincipalWrapper = (UsuarioPrincipal) authentication.getPrincipal();
+        Usuario usuarioPrincipal = usuarioPrincipalWrapper.getUsuario();
 
         boolean isOwner = devolucionescambios.getUsuario().getIdUsuario().equals(usuarioPrincipal.getIdUsuario());
         boolean isAdmin = authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMINISTRADOR"));
@@ -59,6 +62,24 @@ public class DevolucionesCambiosController {
         } else {
             throw new AccessDeniedException("No tiene permiso para acceder a esta devolucion.");
         }
+    }
+
+    // Endpoint para que el Cliente vea todas sus propias devoluciones.
+    // GET /api/devoluciones/mis-devoluciones
+
+    @PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR') or hasAuthority('ROLE_CLIENTE')")
+    @GetMapping("/mis-devoluciones")
+    public ResponseEntity<List<DevolucionesCambios>> listarMisDevoluciones() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+
+        UsuarioPrincipal usuarioPrincipalWrapper = (UsuarioPrincipal) authentication.getPrincipal();
+        Usuario usuarioLogeado = usuarioPrincipalWrapper.getUsuario();
+
+        // Usar el nuevo método del repository (findByUsuario)
+        List<DevolucionesCambios> misDevoluciones = devolucionesCambiosRepository.findByUsuario(usuarioLogeado);
+
+        return ResponseEntity.ok(misDevoluciones);
     }
 
     // Crear una devolucion
@@ -85,16 +106,20 @@ public class DevolucionesCambiosController {
     // Actualizar devolucion
     // Un cliente solo puede actualizar su propia devolucion.
     // El administrador puede actualizar cualquier devolucion.
-    @PreAuthorize("hasAuthority('administrador') or hasAuthority('cliente')")
+    @PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR') or hasAuthority('ROLE_CLIENTE')")
     @PutMapping("/{id}")
     public ResponseEntity<DevolucionesCambios> actualizarDevolucion(@PathVariable Integer id, @RequestBody DevolucionesCambiosRequest devolucionesCambiosRequest) {
         DevolucionesCambios devolucionescambios = devolucionesCambiosRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("La devolucion con ese ID no existe: " + id));
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Usuario usuarioPrincipal = (Usuario) authentication.getPrincipal();
+
+        UsuarioPrincipal usuarioPrincipalWrapper = (UsuarioPrincipal) authentication.getPrincipal();
+        Usuario usuarioPrincipal = usuarioPrincipalWrapper.getUsuario();
 
         boolean isOwner = devolucionescambios.getUsuario().getIdUsuario().equals(usuarioPrincipal.getIdUsuario());
+
+
         boolean isAdmin = authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMINISTRADOR"));
 
         if (isOwner || isAdmin) {

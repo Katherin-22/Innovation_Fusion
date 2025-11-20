@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+import "../styles/perfilusuario.css";
+
 
 
 function PerfilUsuario() {
@@ -18,8 +20,21 @@ function PerfilUsuario() {
     useEffect(() => {
         const fetchUserProfile = async () => {
             try {
+                // 1. Obtener el token de autenticación (Eliminamos comillas si existen)
+                const token = localStorage.getItem("authToken")?.replace(/"/g, "");
+
+                if (!token) {
+                    setError("No se encontró el token de autenticación. Inicie sesión.");
+                    setLoading(false);
+                    return;
+                }
+                
                 // Endpoint: GET /api/usuarios/perfil
-                const response = await axios.get('/api/usuarios/perfil');
+                const response = await axios.get('http://localhost:8080/api/usuarios/perfil', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                });
 
                 // Usamos esta data para pre-llenar los campos.
                 setFormData(response.data);
@@ -60,6 +75,14 @@ function PerfilUsuario() {
         setSuccessMessage('');
         setError(null);
 
+        const token = localStorage.getItem("authToken")?.replace(/"/g, "");
+        
+        if (!token) {
+            setError("No se encontró el token de autenticación para actualizar. Inicie sesión.");
+            setLoading(false);
+            return;
+        }
+
         try {
             // 1. Crear el DTO a enviar al backend
             const requestData = {
@@ -74,7 +97,12 @@ function PerfilUsuario() {
             };
 
             // Endpoint: PUT /api/usuarios/perfil
-            await axios.put('/api/usuarios/perfil', requestData);
+            await axios.put('http://localhost:8080/api/usuarios/perfil', requestData, { 
+                headers: {
+                    Authorization: `Bearer ${token}`, 
+                    "Content-Type": "application/json",
+                }
+            });
 
             // Éxito
             setSuccessMessage("¡Perfil actualizado con éxito!");

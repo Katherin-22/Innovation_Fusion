@@ -1,40 +1,13 @@
 import React, { useState, useMemo, useEffect } from "react";
 import axios from "axios";
-import {
-  PencilIcon,
-  TrashIcon,
-  UserPlusIcon,
-  X,
-  AlertTriangle,
-  Search,
-} from "lucide-react";
+import { PencilIcon, TrashIcon, UserPlusIcon, X, AlertTriangle, Search, } from "lucide-react";
 import "../styles/adminUsuarios.css";
 
-const initialUsers = [
-  {
-    id: 1,
-    nombreUsuario: "Ana García",
-    primerApellido: "García",
-    segundoApellido: "Lopez",
-    numeroDocumento: "1023456",
-    telefono: "310456789",
-    correoElectronico: "ana.g@example.com",
-    rol: "cliente",
-    activo: true,
-  },
-  {
-    id: 2,
-    nombreUsuario: "Juan Pérez",
-    primerApellido: "Pérez",
-    segundoApellido: "Diaz",
-    numeroDocumento: "7890123",
-    telefono: "312987654",
-    correoElectronico: "juan.p@example.com",
-    rol: "administrador",
-    activo: true,
-  },
-];
+// ----------------------------------------------------------------------
+// Definiciones Comunes
+// ----------------------------------------------------------------------
 
+// Roles estáticos (idealmente se obtendrían de otra API endpoint si fuesen dinámicos)
 const ROLES = [
   { id: 1, nombre: "cliente" },
   { id: 2, nombre: "administrador" },
@@ -43,6 +16,7 @@ const ROLES = [
 // ----------------------------------------------------------------------
 // Modal para crear o editar usuario
 // ----------------------------------------------------------------------
+
 const UserFormModal = ({ isOpen, onClose, onSave, userToEdit }) => {
   const [formData, setFormData] = useState({
     nombreUsuario: "",
@@ -64,13 +38,19 @@ const UserFormModal = ({ isOpen, onClose, onSave, userToEdit }) => {
 
   useEffect(() => {
     if (userToEdit) {
+      // Mapea los datos del usuario a editar al formulario
       setFormData({
         ...userToEdit,
-        idRol: ROLES.find((r) => r.nombre === userToEdit.rol)?.id || 1,
+        // Usar idRol directamente del userToEdit (mapeado en fetchUsers)
+        idRol: userToEdit.idRol || 1, 
+        // Usar idEstadoUsuario para inicializar el checkbox
+        idEstadoUsuario: userToEdit.idEstadoUsuario || (userToEdit.activo ? 1 : 2),
+        // Las contraseñas se dejan vacías en edición
         password: "",
         confirmPassword: "",
       });
     } else {
+      // Estado inicial para un nuevo usuario
       setFormData({
         nombreUsuario: "",
         primerApellido: "",
@@ -97,6 +77,8 @@ const UserFormModal = ({ isOpen, onClose, onSave, userToEdit }) => {
     setFormData({
       ...formData,
       [name]: type === "checkbox" ? checked : value,
+      // Actualizar idEstadoUsuario si cambia 'activo'
+      ...(name === 'activo' && { idEstadoUsuario: checked ? 1 : 2 }),
     });
   };
 
@@ -108,20 +90,31 @@ const UserFormModal = ({ isOpen, onClose, onSave, userToEdit }) => {
     setIsError("");
     setMessage("");
 
+    // Validación básica de campos
     if (formData.password !== formData.confirmPassword) {
       setIsError("Las contraseñas no coinciden.");
       return;
     }
-
-    // 💡 PASO 1: TRADUCCIONES DE IDs (como acordamos) 💡
-    // 🔑 CORRECCIÓN ID: idTipoDeDocumento siempre es 1 (Cédula de Ciudadanía)
-    const idTipoDeDocumento = 1; 
     
-    // 🔑 CORRECCIÓN ID: idEstadoUsuario es 1 (Activo) si el checkbox es true, 2 (Inactivo) si es false
-    const idEstadoUsuario = formData.activo ? 1 : 2; 
+    // Si estamos editando y no se cambia la contraseña, no enviamos la propiedad.
+    const passwordPayload = (userToEdit && formData.password === "") ? {} : { password: formData.password };
+
+    const payload = {
+        numeroDocumento: parseInt(formData.numeroDocumento, 10),
+        nombreUsuario: formData.nombreUsuario,
+        primerApellido: formData.primerApellido,
+        segundoApellido: formData.segundoApellido,
+        telefono: formData.telefono,
+        correoElectronico: formData.correoElectronico,
+        direccion: "Calle 123 #45-67, Bogotá, Colombia", // Valor estático por ahora
+        idRol: Number(formData.idRol),
+        idTipoDeDocumento: 1, // Valor estático por ahora
+        idEstadoUsuario: formData.activo ? 1 : 2,
+        ...passwordPayload, // Incluir contraseña solo si se cambia o es nuevo
+    };
 
     try {
-      const token = localStorage.getItem("authToken")?.replace(/"/g, ""); // ✅ Token correcto
+      const token = localStorage.getItem("authToken")?.replace(/"/g, "");
       console.log("Token actual:", token);
 
       if (!token) {
@@ -130,113 +123,96 @@ const UserFormModal = ({ isOpen, onClose, onSave, userToEdit }) => {
       }
 
       let response;
+      let url;
+      let method;
 
       if (userToEdit) {
         // 🔹 Actualizar usuario existente
-        
-        console.log("ID que envío:", userToEdit?.id); 
         const userId = userToEdit.id;
 
         if (!userId || isNaN(Number(userId))) {
           setIsError("❌ Error: No se encontró el ID del usuario a editar o es inválido. Intenta recargar la página.");
-          // Log para debug
           console.error("ID de usuario no válido para edición:", userId, userToEdit);
           return;
         }
 
-        response = await axios.put(
-          // ➡️ Usa userId verificado
-          `http://localhost:8080/api/usuarios/${userId}`,
-          {
-            // Asegúrate de enviar el número de documento como número
-            numeroDocumento: parseInt(formData.numeroDocumento, 10),
-            nombreUsuario: formData.nombreUsuario,
-            primerApellido: formData.primerApellido,
-            segundoApellido: formData.segundoApellido,
-            telefono: formData.telefono,
-            password: formData.password,
-            correoElectronico: formData.correoElectronico,
-            direccion: "Calle 123 #45-67, Bogotá, Colombia",
-            idRol: formData.idRol,
-            idTipoDeDocumento: idTipoDeDocumento, // 🔑 USANDO VARIABLE CORREGIDA
-            idEstadoUsuario: idEstadoUsuario,     // 🔑 USANDO VARIABLE CORREGIDA
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}` ,
-              "Content-Type": "application/json", 
-            },
-          }
-        );
-
-        if (response.status === 200) {
-          setMessage("✅ Usuario actualizado correctamente.");
-        } else {
-          setIsError("No se pudo actualizar el usuario.");
-          return;
-        }
-
+        url = `http://localhost:8080/api/usuarios/${userId}`;
+        method = 'put';
       } else {
-        // 🔹 Crear nuevo usuario
-        response = await axios.post(
-          "http://localhost:8080/api/auth/register",
-          {
-            numeroDocumento: parseInt(formData.numeroDocumento, 10),
-            nombreUsuario: formData.nombreUsuario,
-            primerApellido: formData.primerApellido,
-            segundoApellido: formData.segundoApellido,
-            telefono: formData.telefono,
-            password: formData.password,
-            correoElectronico: formData.correoElectronico,
-            direccion: "Calle 123 #45-67, Bogotá, Colombia",
-            idRol: formData.idRol,
-            idTipoDeDocumento: idTipoDeDocumento, // 🔑 USANDO VARIABLE CORREGIDA
-            idEstadoUsuario: idEstadoUsuario,     // 🔑 USANDO VARIABLE CORREGIDA
-          }
-        );
-
-        if (response.status === 200 && response.data.success === true) {
-          setMessage("✅ ¡Usuario creado exitosamente!");
-        } else {
-          setIsError(response.data.message || "Error al registrar usuario.");
-          return;
+        // 🔹 Crear nuevo usuario (usando el endpoint de registro)
+        url = "http://localhost:8080/api/auth/register";
+        method = 'post';
+        // Asegurarse que haya contraseña para el registro
+        if (!payload.password) {
+             setIsError("La contraseña es obligatoria para un nuevo usuario.");
+             return;
         }
+      }
+      
+      response = await axios({
+        method: method,
+        url: url,
+        data: payload,
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+      });
+
+      // ----------------------------------------------------
+      // Manejo de respuesta
+      // ----------------------------------------------------
+      let backendId;
+      if (userToEdit) {
+          setMessage("✅ Usuario actualizado correctamente.");
+          backendId = userToEdit.id;
+      } else {
+          // Asumimos que el endpoint de registro devuelve el ID del nuevo usuario
+          if (response.data.success === true && response.data.data.id) {
+              setMessage("✅ ¡Usuario creado exitosamente!");
+              backendId = Number(response.data.data.id);
+          } else {
+              setIsError(response.data.message || "Error al registrar usuario.");
+              return;
+          }
       }
 
       // 🔹 Actualiza la tabla visual del frontend
-
-      const backendId = userToEdit
-      ? userToEdit.id
-      : Number(response.data.data.id); 
-
       onSave({
-        id: backendId ,
+        id: backendId,
         nombreUsuario: formData.nombreUsuario,
         primerApellido: formData.primerApellido,
         segundoApellido: formData.segundoApellido,
         numeroDocumento: formData.numeroDocumento,
         telefono: formData.telefono,
         correoElectronico: formData.correoElectronico,
-        // ✅ CORRECCIÓN FINAL: Convertimos formData.idRol a Number
+        // Enviamos los IDs del backend que necesitamos para futuras ediciones
+        idRol: Number(formData.idRol),
+        idEstadoUsuario: payload.idEstadoUsuario,
+        // Propiedades de visualización
         rol: ROLES.find((r) => r.id === Number(formData.idRol))?.nombre || "cliente",
         activo: formData.activo,
       });
 
+      // Cerramos el modal después de un breve tiempo para mostrar el mensaje de éxito
       setTimeout(() => onClose(), 1200);
 
     } catch (err) {
-      console.error("Error detallado:", err);
-
+      console.error("Error detallado:", err.response || err);
       if (err.response) {
-        if (err.response.status === 403) {
-          // Si el ID es 'undefined' el backend lo ve como 403 Forbidden o 400 Bad Request
-          setIsError("🚫 Acceso Denegado (403): Revisa el ID o permisos del token.");
-        } else if (err.response.status === 404) {
+        const status = err.response.status;
+        const msg = err.response.data?.message || err.response.data?.error || `Error del servidor (Estado: ${status}).`;
+
+        if (status === 403) {
+          setIsError("🚫 Acceso Denegado (403): Revisa los permisos del token.");
+        } else if (status === 404) {
           setIsError("❌ Usuario no encontrado (404).");
-        } else if (err.response.status === 500) {
-          setIsError("⚙️ Error interno del servidor (500). Intenta más tarde.");
-        } else {
-          setIsError(err.response.data?.message || `Error al conectar con el servidor (Estado: ${err.response.status}).`);
+        } else if (status === 400 && msg.includes("documento")) {
+          // Error específico por número de documento duplicado
+          setIsError("⚠️ Error: El número de documento ya está registrado.");
+        }
+        else {
+          setIsError(msg);
         }
       } else {
         setIsError("❌ No se pudo conectar con el servidor. Verifica tu conexión o el backend.");
@@ -244,9 +220,7 @@ const UserFormModal = ({ isOpen, onClose, onSave, userToEdit }) => {
     }
   };
 
-  // ----------------------------------------------------------------------
-  // Render del formulario modal
-  // ----------------------------------------------------------------------
+  // ... Resto del render del modal ...
   return (
     <div className="modal-overlay">
       <div className="modal-container">
@@ -333,17 +307,18 @@ const UserFormModal = ({ isOpen, onClose, onSave, userToEdit }) => {
           {/* Contraseña y Confirmación */}
           <div className="form-group">
             <div className="field">
-              <label>Contraseña *</label>
+              <label>Contraseña {userToEdit ? "" : "*"}</label>
               <input
                 type="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                required={!userToEdit}
+                // Si estamos editando, la contraseña es opcional. Si es nuevo, es requerida.
+                required={!userToEdit} 
               />
             </div>
             <div className="field">
-              <label>Confirmar Contraseña *</label>
+              <label>Confirmar Contraseña {userToEdit ? "" : "*"}</label>
               <input
                 type="password"
                 name="confirmPassword"
@@ -379,7 +354,7 @@ const UserFormModal = ({ isOpen, onClose, onSave, userToEdit }) => {
             </div>
           </div>
 
-          {isError && <p className="error-text">{isError}</p>}
+          {isError && <p className="error-text">⚠️ {isError}</p>}
           {message && <p className="success-text">{message}</p>}
 
           <div className="modal-footer">
@@ -396,9 +371,11 @@ const UserFormModal = ({ isOpen, onClose, onSave, userToEdit }) => {
   );
 };
 
+
 // ----------------------------------------------------------------------
-// Confirmar eliminación (Este componente no cambia, solo su uso en el padre)
+// Confirmar eliminación (DeleteConfirmModal)
 // ----------------------------------------------------------------------
+
 const DeleteConfirmModal = ({ isOpen, onClose, userName, onConfirm }) => {
   if (!isOpen) return null;
   return (
@@ -407,7 +384,7 @@ const DeleteConfirmModal = ({ isOpen, onClose, userName, onConfirm }) => {
         <AlertTriangle className="icon-warning" />
         <h3>Confirmar Eliminación</h3>
         <p>
-          ¿Deseas eliminar al usuario <strong>{userName}</strong>?
+          ¿Deseas eliminar al usuario <strong>{userName}</strong>? Esta acción no se puede deshacer.
         </p>
         <div className="modal-footer">
           <button onClick={onClose} className="btn-cancelar">
@@ -423,15 +400,76 @@ const DeleteConfirmModal = ({ isOpen, onClose, userName, onConfirm }) => {
 };
 
 // ----------------------------------------------------------------------
-// Panel principal
+// Panel principal (AdminUserManagement)
 // ----------------------------------------------------------------------
 const AdminUserManagement = () => {
-  const [users, setUsers] = useState(initialUsers);
+  const [users, setUsers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState(null);
   const [userToDelete, setUserToDelete] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(null);
 
+
+  // 🆕 FUNCIÓN PARA CARGAR USUARIOS DESDE LA API (CORREGIDA)
+  const fetchUsers = async () => {
+    setIsLoading(true);
+    setFetchError(null);
+    try {
+      // 🔑 Obtener token de autenticación y limpiar las comillas
+      const token = localStorage.getItem("authToken")?.replace(/"/g, "");
+
+      if (!token) {
+        setFetchError("No se encontró el token de autenticación. Inicia sesión para ver los usuarios.");
+        setIsLoading(false);
+        return;
+      }
+
+      // ➡️ Llamada GET al endpoint de usuarios
+      const response = await axios.get(
+        "http://localhost:8080/api/usuarios",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // ✅ CORRECCIÓN EN EL MAPEO: Mantenemos todos los IDs del backend
+      const usersFromApi = response.data.map(user => ({
+        id: user.id, // ID principal de la BD
+        nombreUsuario: user.nombreUsuario,
+        primerApellido: user.primerApellido,
+        segundoApellido: user.segundoApellido,
+        numeroDocumento: user.numeroDocumento,
+        telefono: user.telefono,
+        correoElectronico: user.correoElectronico,
+        // Conservamos los IDs del backend para usarlos en el modal/PUT
+        idRol: user.idRol,
+        idEstadoUsuario: user.idEstadoUsuario,
+        // Propiedades derivadas para la visualización en la tabla
+        rol: ROLES.find((r) => r.id === user.idRol)?.nombre || "cliente",
+        activo: user.idEstadoUsuario === 1,
+      }));
+
+      setUsers(usersFromApi);
+
+    } catch (err) {
+      console.error("❌ Error al cargar usuarios:", err.response || err);
+      // Mostrar un mensaje de error más claro al usuario
+      setFetchError(err.response?.data?.message || "No se pudo conectar con el servidor para cargar usuarios.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // ✅ Llama a fetchUsers una vez al montar el componente
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  // 🔎 Función para filtrar usuarios (optimizada con useMemo)
   const filteredUsers = useMemo(() => {
     if (!searchTerm) return users;
     const lower = searchTerm.toLowerCase();
@@ -439,49 +477,52 @@ const AdminUserManagement = () => {
       (u) =>
         (u.nombreUsuario || '').toLowerCase().includes(lower) ||
         (u.correoElectronico || '').toLowerCase().includes(lower) ||
-        (u.rol || '').toLowerCase().includes(lower)
+        (u.rol || '').toLowerCase().includes(lower) ||
+        (u.numeroDocumento || '').includes(lower) // Búsqueda por documento
     );
   }, [users, searchTerm]);
 
+  // 💾 Actualiza la lista localmente después de crear/editar
   const handleSaveUser = (newUser) => {
     if (userToEdit) {
+      // Edición: Reemplaza el usuario por el nuevo/actualizado
       setUsers(users.map((u) => (u.id === newUser.id ? newUser : u)));
     } else {
+      // Creación: Añade el nuevo usuario a la lista
       setUsers([...users, newUser]);
     }
   };
 
-  // 🗑️ FUNCIÓN DE ELIMINACIÓN REAL (NUEVA) 
+  // 🗑️ FUNCIÓN DE ELIMINACIÓN REAL
   const handleDeleteUser = async () => {
-    if (!userToDelete) return; 
+    if (!userToDelete) return;
     const userId = userToDelete.id;
     const userName = userToDelete.nombreUsuario;
 
     try {
-        const token = localStorage.getItem("authToken")?.replace(/"/g, "");
+      const token = localStorage.getItem("authToken")?.replace(/"/g, "");
 
-        if (!token) {
-            alert("No se encontró el token de autenticación. Inicia sesión nuevamente.");
-            return;
-        }
+      if (!token) {
+          alert("No se encontró el token de autenticación. Inicia sesión nuevamente.");
+          return;
+      }
 
-        // Llamada DELETE al endpoint con el token de administrador
-        await axios.delete(`http://localhost:8080/api/usuarios/${userId}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+      await axios.delete(`http://localhost:8080/api/usuarios/${userId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+      });
 
-        // Éxito: Actualizamos el estado de la tabla 
-        setUsers(users.filter((u) => u.id !== userId));
-        console.log(`Usuario ${userName} (ID ${userId}) eliminado correctamente en la DB.`);
+      // Éxito: Actualizamos el estado de la tabla localmente
+      setUsers(users.filter((u) => u.id !== userId));
+      console.log(`Usuario ${userName} (ID ${userId}) eliminado correctamente en la DB.`);
 
     } catch (err) {
-        console.error("❌ Error al eliminar usuario:", err.response || err);
-        alert(`Error al eliminar a ${userName}: ${err.response?.data?.message || 'No se pudo conectar con el servidor.'}`);
-        
+      console.error("❌ Error al eliminar usuario:", err.response || err);
+      alert(`Error al eliminar a ${userName}: ${err.response?.data?.message || 'No se pudo conectar con el servidor.'}`);
+
     } finally {
-        setUserToDelete(null); // Cerramos el modal
+      setUserToDelete(null); // Cerramos el modal
     }
   };
   // --------------------------------------------------------------------
@@ -528,11 +569,26 @@ const AdminUserManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredUsers.length > 0 ? (
+            {/* Manejo de estados: Carga, Error, Vacío */}
+            {isLoading ? (
+              <tr>
+                <td colSpan="6" className="no-users">
+                  Cargando usuarios... 🔄
+                </td>
+              </tr>
+            ) : fetchError ? (
+              <tr>
+                <td colSpan="6" className="no-users error-text">
+                  {fetchError} ⚠️
+                </td>
+              </tr>
+            ) : filteredUsers.length > 0 ? (
               filteredUsers.map((user) => (
                 <tr key={user.id}>
                   <td>{user.id}</td>
-                  <td>{user.nombreUsuario}</td>
+                  <td>
+                    {user.nombreUsuario} {user.primerApellido}
+                  </td>
                   <td>{user.correoElectronico}</td>
                   <td>{user.rol}</td>
                   <td>
@@ -548,7 +604,7 @@ const AdminUserManagement = () => {
                     <button
                       className="btn-editar"
                       onClick={() => {
-                        console.log("Usuario a editar:", user); 
+                        console.log("Usuario a editar:", user);
                         setUserToEdit(user);
                         setIsModalOpen(true);
                       }}
@@ -589,8 +645,7 @@ const AdminUserManagement = () => {
         isOpen={!!userToDelete}
         onClose={() => setUserToDelete(null)}
         userName={userToDelete?.nombreUsuario || ""}
-        // 🔑 CORRECCIÓN: Usamos la función real de eliminación
-        onConfirm={handleDeleteUser} 
+        onConfirm={handleDeleteUser}
       />
     </div>
   );

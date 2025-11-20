@@ -36,6 +36,6 @@ public class DevolucionesCambios {
 
     @ManyToOne
     @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
-    private Usuario Usuario;
+    private Usuario usuario;
 
 }

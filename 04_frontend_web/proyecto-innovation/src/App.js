@@ -8,6 +8,8 @@ import Principal from './componentes/Principal';
 import Dashboard from './componentes/Admin/Dashboard';
 import AdminUsuarios from './componentes/AdminUsuarios';
 import Collage from './componentes/Collage';
+import PerfilUsuario from './componentes/PerfilUsuario';
+import AdminDevoluciones from './componentes/AdminDevoluciones';
 import LoginPage from './pages/LoginPage'
 
 function App() {
@@ -40,6 +42,12 @@ function App() {
 
         {/* Ruta para solo el collage*/}
         <Route  path='/collage' element={<Collage/>}/>
+
+        {/* Ruta para el perfil del usuario*/}
+        <Route  path='/perfilusuario' element={<PerfilUsuario/>}/>
+
+        {/* Ruta para gestionar las  devoluciones administrador */}
+        <Route  path='/admindevoluciones' element={<AdminDevoluciones/>}/>
 
       </Routes>
 
