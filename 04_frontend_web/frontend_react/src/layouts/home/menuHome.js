@@ -87,7 +87,7 @@ const MenuHome = () => {
               </button>
               <ul className="dropdown-menu dropdown-menu-end">
                 <li><Link className="dropdown-item" to="/login">Iniciar sesión</Link></li>
-                <li><Link className="dropdown-item" to="/profile">Perfil</Link></li>
+                <li><Link className="dropdown-item" to="/Administrador/Stock">Perfil</Link></li>
                 <li><Link className="dropdown-item" to="/profile">Pedidos</Link></li>
                 <li><hr className="dropdown-divider" /></li>
                 <li><Link className="dropdown-item" to="/logout">Cerrar sesión</Link></li>
