@@ -4,6 +4,7 @@ import { useGetStock } from "../../hooks/stock/useGetStock";
 import MenuHome from "../../layouts/home/menuHome";
 import "../../styles/home/productGen.css"
 import api_url from "../../services/administrador/api";
+import { getImagenById } from "../../services/administrador/ImagenService.js";
 
 const ProductoGen = () => {
   const { stock } = useGetStock();
@@ -13,6 +14,9 @@ const ProductoGen = () => {
   const producto = stock.find(p => p.codigoReferencia === codigoReferencia);
 
   const [favorito, setFavorito] = useState(false);
+  const [imagenModal, setImagenModal] = useState(null); // Estado para el modal de imagen
+  const [imagenesProducto, setImagenesProducto] = useState([]); // Estado para las imágenes del producto
+  const [imagenPrincipal, setImagenPrincipal] = useState(""); // Imagen principal a mostrar
 
   // 🟡 ESTADOS PARA COLORES Y TALLAS
   const [colores, setColores] = useState([]);
@@ -34,7 +38,33 @@ const ProductoGen = () => {
   }, [producto]);
 
   // ============================
-  // 2️⃣ Cargar TALLAS cuando se selecciona un color
+  // 2️⃣ Cargar IMÁGENES del producto
+  // ============================
+  useEffect(() => {
+    if (!producto) return;
+
+    const cargarImagenes = async () => {
+      try {
+        const response = await getImagenById(producto.idProducto);
+        if (response.data && response.data.length > 0) {
+          setImagenesProducto(response.data);
+          // Establecer la primera imagen como principal
+          setImagenPrincipal(`http://localhost:8080${response.data[0].urlImagen}`);
+        } else {
+          // Si no hay imágenes, usar la imagen por defecto
+          setImagenPrincipal(producto.imagen || "/imagenes_prueba/default.jpg");
+        }
+      } catch (error) {
+        console.error("Error al cargar imágenes del producto:", error);
+        setImagenPrincipal(producto.imagen || "/imagenes_prueba/default.jpg");
+      }
+    };
+
+    cargarImagenes();
+  }, [producto]);
+
+  // ============================
+  // 3️⃣ Cargar TALLAS cuando se selecciona un color
   // ============================
   useEffect(() => {
     if (!producto || !colorSeleccionado) {
@@ -52,18 +82,43 @@ const ProductoGen = () => {
   }, [producto, colorSeleccionado]);
 
   // ============================
-  // 3️⃣ Obtener stock disponible para la combinación seleccionada
+  // 4️⃣ Obtener stock disponible para la combinación seleccionada
   // ============================
   const obtenerStockDisponible = () => {
     if (!colorSeleccionado || !tallaSeleccionada) return null;
     
-    const stockItem = stock.find(item => 
-      item.idProducto === producto.idProducto &&
-      item.idColor === parseInt(colorSeleccionado) &&
-      item.nombre === tallaSeleccionada
-    );
+    const stockItem = stock.find(item => {
+      // Convertir ambos a number para comparación segura
+      const itemColorId = parseInt(item.idColor);
+      const selectedColorId = parseInt(colorSeleccionado);
+      
+      return (
+        item.idProducto === producto.idProducto &&
+        itemColorId === selectedColorId &&
+        item.nombre === tallaSeleccionada
+      );
+    });
     
     return stockItem ? stockItem.stockActual : 0;
+  };
+
+  // ============================
+  // FUNCIONES PARA MANEJO DE IMÁGENES
+  // ============================
+  const abrirModalImagen = (imagenUrl = null) => {
+    const imagenAMostrar = imagenUrl || imagenPrincipal;
+    setImagenModal({
+      imagen: imagenAMostrar,
+      nombre: producto.nombreProducto
+    });
+  };
+
+  const cerrarModalImagen = () => {
+    setImagenModal(null);
+  };
+
+  const cambiarImagenPrincipal = (nuevaImagenUrl) => {
+    setImagenPrincipal(nuevaImagenUrl);
   };
 
   const stockDisponible = obtenerStockDisponible();
@@ -87,19 +142,43 @@ const ProductoGen = () => {
                   ============================ */}
                   <div className="row producto-info-principal">  
                     <div className="col-md-6 producto-col-imagen">
-                      <img
-                        src={producto.imagen || "/imagenes_prueba/default.jpg"}
-                        alt={producto.nombreProducto}
-                        className="producto-imagen-principal img-fluid rounded"
-                      />
+                      {/* IMAGEN PRINCIPAL CON FUNCIONALIDAD DE CLICK */}
+                      <div className="producto-imagen-container">
+                        <img
+                          src={imagenPrincipal}
+                          alt={producto.nombreProducto}
+                          className="producto-imagen-principal img-fluid rounded"
+                          onClick={() => abrirModalImagen()}
+                          style={{ cursor: 'pointer' }}
+                        />
+                      </div>
+
+                      {/* MINIATURAS DE IMÁGENES (si hay más de una) */}
+                      {imagenesProducto.length > 1 && (
+                        <div className="producto-miniaturas-container mt-3">
+                          <div className="row g-2 justify-content-center">
+                            {imagenesProducto.map((imagen, index) => (
+                              <div key={index} className="col-auto">
+                                <img
+                                  src={`http://localhost:8080${imagen.urlImagen}`}
+                                  alt={`${producto.nombreProducto} ${index + 1}`}
+                                  className={`producto-miniatura img-thumbnail ${imagenPrincipal === `http://localhost:8080${imagen.urlImagen}` ? 'miniatura-activa' : ''}`}
+                                  onClick={() => cambiarImagenPrincipal(`http://localhost:8080${imagen.urlImagen}`)}
+                                  style={{ cursor: 'pointer', width: '60px', height: '60px', objectFit: 'cover' }}
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     <div className="col-md-6 producto-col-detalles">
                       <div className="row">
                         <div className="col">
                           <h3 className="producto-titulo-detalle">{producto.nombreProducto}</h3>
-                          </div>
-                          <div className="col col-info">
+                        </div>
+                        <div className="col col-info">
                           <p className="producto-codigo-detalle text-muted">
                             Código: <b>{producto.codigoReferencia}</b>
                           </p>
@@ -111,7 +190,6 @@ const ProductoGen = () => {
                           </p>
                         
                           {/* Información adicional */}
-                        
                           <div className="producto-info-adicional mt-3">
                             <p className="producto-categoria-detalle text-muted mb-1">
                               Categoría: <b>{producto.nombreCategoria}</b>
@@ -123,8 +201,8 @@ const ProductoGen = () => {
                               Género: <b>{producto.nombrePublico}</b>
                             </p>
                           </div>
-                          </div>
                         </div>
+                      </div>
                     </div>
                   </div>
 
@@ -169,15 +247,7 @@ const ProductoGen = () => {
                   {/* ============================
                       INFO STOCK DISPONIBLE
                   ============================ */}
-                  {colorSeleccionado && tallaSeleccionada && (
-                    <div className={`alert ${stockDisponible > 0 ? 'alert-success' : 'alert-warning'} producto-alert-stock mt-3`}>
-                      <i className={`bi ${stockDisponible > 0 ? 'bi-check-circle' : 'bi-exclamation-triangle'} me-2`}></i>
-                      {stockDisponible > 0 
-                        ? `Stock disponible: ${stockDisponible} unidades`
-                        : 'Producto agotado en esta combinación'
-                      }
-                    </div>
-                  )}
+
 
                   {/* ============================
                       BOTONES DE ACCIÓN
@@ -196,15 +266,9 @@ const ProductoGen = () => {
                     <div className="col-auto">
                       <button 
                         className="btn producto-btn-comprar btn-success"
-                        disabled={!colorSeleccionado || !tallaSeleccionada || stockDisponible === 0}
                       >
-                        <i className="bi bi-cart-plus producto-icono-comprar me-2"></i>
-                        {!colorSeleccionado || !tallaSeleccionada 
-                          ? 'Selecciona color y talla' 
-                          : stockDisponible === 0 
-                            ? 'Agotado' 
-                            : 'Comprar ahora'
-                        }
+                        <i className="bi bi-cart-plus producto-icono-comprar me-2">Comprar Ahora</i>
+  
                       </button>
                     </div>
 
@@ -267,6 +331,27 @@ const ProductoGen = () => {
           </div>
         </div> 
       </div>
+
+      {/* ============================
+          MODAL PARA VER IMAGEN
+      ============================ */}
+      {imagenModal && (
+        <div className="modal-overlay" onClick={cerrarModalImagen}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>{imagenModal.nombre}</h3>
+              <button className="close-button" onClick={cerrarModalImagen}>×</button>
+            </div>
+            <div className="modal-body">
+              <img 
+                src={imagenModal.imagen} 
+                alt={imagenModal.nombre}
+                className="modal-image"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
