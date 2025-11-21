@@ -1,0 +1,24 @@
+Se ha implementado completamente el carrito de compras y la funcionalidad de favoritos paso a paso (pendiente revisión de funcionalidad)
+
+Implementación Completa
+- Backend (Spring Boot)
+	- Modelos JPA: Carrito, DetalleCarrito (con clave compuesta), Favoritos, DetalleCarritoId.
+	- Repositorios: Interfaces con consultas personalizadas.
+	- Servicios: Lógica de negocio para gestionar carrito y favoritos.
+	- Controladores: Endpoints REST protegidos con JWT:
+		- Carrito: GET /api/carrito, POST /api/carrito, PUT /api/carrito/{idProducto}/{idCarrito}, DELETE /api/carrito/{idProducto}/{idCarrito}
+		- Favoritos: GET /api/favoritos, POST /api/favoritos, DELETE /api/favoritos/{id}
+- Frontend (React)
+	- Vista de Producto (productoGen.js): Botones "Comprar" y "Favorito" funcionales, con validación de autenticación y selección de color/talla.
+	- Páginas: Carrito.jsx (lista items, actualizar cantidades, eliminar, total), Favoritos.jsx (lista productos, eliminar).
+	- Rutas: Agregadas /carrito y /favoritos en AppRoutes.jsx.
+	- Navegación: Menú actualizado con enlaces correctos a carrito y favoritos.
+- Base de Datos
+	- Script SQL: Actualización de DetalleCarrito con columnas idColor e idVariacion, y creación de tabla Favoritos.
+Próximos Pasos para Probar
+	- Ejecutar el script SQL en tu base de datos MySQL.
+	- Ejecutar el backend desde IntelliJIdea
+	- Probar: Regístrate/login, ve a un producto, selecciona variaciones, agrega al carrito/favoritos, verifica las páginas.
+Notas Finales
+- El carrito usa la tabla existente Carrito y DetalleCarrito, extendida para variaciones.
+- Autenticación requerida para todas las operaciones.
