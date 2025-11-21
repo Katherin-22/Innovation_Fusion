@@ -33,6 +33,9 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
 
                 .authorizeHttpRequests(auth -> auth
+
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()  // swagger
+
                         .requestMatchers("/api/auth/**").permitAll() // login y registro públicos
 
                         .requestMatchers("/api/usuarios/perfil").authenticated()
