@@ -1,6 +1,7 @@
 import {createContext, useEffect, useState} from "react";
 import {fetchCategories} from "../Service/CategoryService.js";
 import {fetchItems} from "../Service/ItemService.js";
+import toast from "react-hot-toast";
 
 export const AppContext = createContext(null);
 
@@ -54,6 +55,16 @@ export const AppContextProvider = (props) => {
         setCartItems([]);
     }
 
+    const refreshItems = async () => {
+        try {
+            const itemResponse = await fetchItems();
+            setItemsData(itemResponse.data);
+        } catch (error) {
+            console.error("Error refreshing items:", error);
+            toast.error("Error updating item stock");
+        }
+    }
+
     const contextValue = {
         categories,
         setCategories,
@@ -65,7 +76,8 @@ export const AppContextProvider = (props) => {
         cartItems,
         removeFromCart,
         updateQuantity,
-        clearCart
+        clearCart,
+        refreshItems
     }
 
     return <AppContext.Provider value={contextValue}>

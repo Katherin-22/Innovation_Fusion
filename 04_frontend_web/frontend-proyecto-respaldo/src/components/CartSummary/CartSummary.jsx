@@ -8,7 +8,7 @@ import {createRazorpayOrder, verifyPayment} from "../../Service/PaymentService.j
 import {AppConstants} from "../../util/constants.js";
 
 const CartSummary = ({customerName, mobileNumber, setMobileNumber, setCustomerName}) => {
-    const {cartItems, clearCart} = useContext(AppContext);
+    const {cartItems, clearCart, refreshItems} = useContext(AppContext);
 
     const [isProcessing, setIsProcessing] = useState(false);
     const [orderDetails, setOrderDetails] = useState(null);
@@ -79,6 +79,7 @@ const CartSummary = ({customerName, mobileNumber, setMobileNumber, setCustomerNa
             if (response.status === 201 && paymentMode === "cash") {
                 toast.success("Cash received");
                 setOrderDetails(savedData);
+                await refreshItems(); // Refresh items to show updated stock
             } else if (response.status === 201 && paymentMode === "upi") {
                 const razorpayLoaded = await loadRazorpayScript();
                 if (!razorpayLoaded) {
@@ -148,6 +149,7 @@ const CartSummary = ({customerName, mobileNumber, setMobileNumber, setCustomerNa
                         razorpaySignature: response.razorpay_signature
                     },
                 });
+                await refreshItems(); // Refresh items to show updated stock
             }else {
                 toast.error("Payment processing failed");
             }

@@ -43,8 +43,43 @@ public class ItemEntity {
     private Timestamp updatedAt;
 
     private String imgUrl;
+
+    @Column(nullable = false)
+    private Integer stockQuantity = 0;
+
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     @OnDelete(action = OnDeleteAction.RESTRICT)
     private CategoryEntity category;
+
+    // Métodos para gestión de stock
+    public Integer getStock() {
+        return stockQuantity;
+    }
+
+    public void setStock(Integer stock) {
+        this.stockQuantity = stock;
+    }
+
+    public boolean reduceStock(Integer quantity) {
+        if (stockQuantity >= quantity) {
+            stockQuantity -= quantity;
+            return true;
+        }
+        return false;
+    }
+
+    public void increaseStock(Integer quantity) {
+        stockQuantity += quantity;
+    }
+
+    public StockStatus getStockStatus() {
+        if (stockQuantity == 0) {
+            return StockStatus.OUT_OF_STOCK;
+        } else if (stockQuantity <= 10) { // Umbral configurable
+            return StockStatus.LOW_STOCK;
+        } else {
+            return StockStatus.IN_STOCK;
+        }
+    }
 }

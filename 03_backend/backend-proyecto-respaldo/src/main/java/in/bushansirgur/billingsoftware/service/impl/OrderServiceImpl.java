@@ -3,8 +3,10 @@ package in.bushansirgur.billingsoftware.service.impl;
 import in.bushansirgur.billingsoftware.entity.OrderEntity;
 import in.bushansirgur.billingsoftware.entity.OrderItemEntity;
 import in.bushansirgur.billingsoftware.io.*;
+import in.bushansirgur.billingsoftware.repository.ItemRepository;
 import in.bushansirgur.billingsoftware.repository.OrderEntityRepository;
 import in.bushansirgur.billingsoftware.service.OrderService;
+import in.bushansirgur.billingsoftware.service.StockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,24 +20,44 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
-    
-    private final OrderEntityRepository orderEntityRepository; 
+
+    private final OrderEntityRepository orderEntityRepository;
+    private final ItemRepository itemRepository;
+    private final StockService stockService;
 
     @Override
     public OrderResponse createOrder(OrderRequest request) {
+        // Check stock availability
+        for (OrderRequest.OrderItemRequest item : request.getCartItems()) {
+            var itemEntity = itemRepository.findByItemId(item.getItemId())
+                    .orElseThrow(() -> new RuntimeException("Item not found: " + item.getItemId()));
+            if (!stockService.hasEnoughStock(itemEntity.getId(), item.getQuantity())) {
+                throw new RuntimeException("Insufficient stock for item: " + item.getName());
+            }
+        }
+
         OrderEntity newOrder = convertToOrderEntity(request);
 
         PaymentDetails paymentDetails = new PaymentDetails();
         paymentDetails.setStatus(newOrder.getPaymentMethod() == PaymentMethod.CASH ?
                 PaymentDetails.PaymentStatus.COMPLETED : PaymentDetails.PaymentStatus.PENDING);
         newOrder.setPaymentDetails(paymentDetails);
-        
+
         List<OrderItemEntity> orderItems = request.getCartItems().stream()
                 .map(this::convertToOrderItemEntity)
                 .collect(Collectors.toList());
         newOrder.setItems(orderItems);
-        
+
         newOrder = orderEntityRepository.save(newOrder);
+
+        // Reduce stock after successful order creation
+        for (OrderRequest.OrderItemRequest item : request.getCartItems()) {
+            var itemEntity = itemRepository.findByItemId(item.getItemId())
+                    .orElseThrow(() -> new RuntimeException("Item not found: " + item.getItemId()));
+            stockService.reduceStock(itemEntity.getId(), item.getQuantity(),
+                    "ORDER", newOrder.getId(), "System");
+        }
+
         return convertToResponse(newOrder);
     }
 

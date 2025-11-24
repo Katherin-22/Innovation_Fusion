@@ -17,4 +17,5 @@ public class ItemRequest {
     private BigDecimal price;
     private String categoryId;
     private String description;
+    private Integer stockQuantity;
 }

@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import {addItem} from "../../Service/ItemService.js";
 
 const ItemForm = () => {
-    const {categories, setItemsData, itemsData, setCategories} = useContext(AppContext);
+    const {categories, setItemsData, itemsData, setCategories, refreshItems} = useContext(AppContext);
     const [image, setImage] = useState(false);
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState({
@@ -13,6 +13,7 @@ const ItemForm = () => {
         categoryId: "",
         price: "",
         description: "",
+        stockQuantity: 0,
     });
 
     const onChangeHandler = (e) => {
@@ -35,7 +36,7 @@ const ItemForm = () => {
 
             const response = await addItem(formData);
             if (response.status === 201) {
-                setItemsData([...itemsData, response.data]);
+                await refreshItems(); // Refresh items to show updated data
                 setCategories((prevCategories) =>
                 prevCategories.map((category) => category.categoryId === data.categoryId ? {...category, items: category.items + 1} : category));
                 toast.success("Item added");
@@ -44,6 +45,7 @@ const ItemForm = () => {
                     description: "",
                     price: "",
                     categoryId: "",
+                    stockQuantity: 0,
                 })
                 setImage(false);
             } else {
@@ -96,6 +98,10 @@ const ItemForm = () => {
                                 <div className="mb-3">
                                     <label htmlFor="price" className="form-label">Price</label>
                                     <input type="number" name="price" id="price" className="form-control" placeholder="$ 000.00" onChange={onChangeHandler} value={data.price} required/>
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="stockQuantity" className="form-label">Stock Quantity</label>
+                                    <input type="number" name="stockQuantity" id="stockQuantity" className="form-control" placeholder="0" onChange={onChangeHandler} value={data.stockQuantity} min="0" required/>
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="description" className="form-label">Descripción</label>

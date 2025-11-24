@@ -59,6 +59,7 @@ CREATE TABLE `tbl_items` (
   `item_id` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `price` decimal(38,2) DEFAULT NULL,
+  `stock_quantity` int NOT NULL DEFAULT '0',
   `updated_at` datetime(6) DEFAULT NULL,
   `category_id` bigint NOT NULL,
   PRIMARY KEY (`id`),
@@ -134,6 +135,32 @@ CREATE TABLE `tbl_users` (
   UNIQUE KEY `UKmjbs9x9gfunub398pfm26lmnd` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tbl_stock_movements`
+--
+
+DROP TABLE IF EXISTS `tbl_stock_movements`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tbl_stock_movements` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `created_at` datetime(6) DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `movement_type` varchar(255) NOT NULL,
+  `new_stock` int NOT NULL,
+  `previous_stock` int NOT NULL,
+  `quantity` int NOT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `reference_id` bigint DEFAULT NULL,
+  `reference_type` varchar(255) DEFAULT NULL,
+  `item_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_item_stock_movement` (`item_id`),
+  CONSTRAINT `FK_item_stock_movement` FOREIGN KEY (`item_id`) REFERENCES `tbl_items` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

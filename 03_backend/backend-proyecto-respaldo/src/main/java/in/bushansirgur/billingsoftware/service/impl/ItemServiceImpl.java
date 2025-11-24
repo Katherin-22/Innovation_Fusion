@@ -52,6 +52,7 @@ public class ItemServiceImpl implements ItemService {
 
     private ItemResponse convertToResponse(ItemEntity newItem) {
         return ItemResponse.builder()
+                .id(newItem.getId())
                 .itemId(newItem.getItemId())
                 .name(newItem.getName())
                 .description(newItem.getDescription())
@@ -61,6 +62,8 @@ public class ItemServiceImpl implements ItemService {
                 .categoryId(newItem.getCategory().getCategoryId())
                 .createdAt(newItem.getCreatedAt())
                 .updatedAt(newItem.getUpdatedAt())
+                .stockQuantity(newItem.getStock())
+                .stockStatus(newItem.getStockStatus())
                 .build();
     }
 
@@ -70,6 +73,7 @@ public class ItemServiceImpl implements ItemService {
                 .name(request.getName())
                 .description(request.getDescription())
                 .price(request.getPrice())
+                .stockQuantity(request.getStockQuantity() != null ? request.getStockQuantity() : 0)
                 .build();
     }
 
