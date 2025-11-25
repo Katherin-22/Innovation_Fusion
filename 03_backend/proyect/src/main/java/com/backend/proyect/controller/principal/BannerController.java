@@ -18,7 +18,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/banners")
-@CrossOrigin(origins = "http://localhost:3000") // Permitir React
 public class BannerController {
 
     @Value("${upload.path}")

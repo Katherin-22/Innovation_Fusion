@@ -3,7 +3,6 @@ package com.backend.proyect.controller.productos;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +17,6 @@ import com.backend.proyect.exception.productos.ResourceNotFoundException;
 import com.backend.proyect.model.productos.TipoProducto;
 import com.backend.proyect.repository.productos.TipoProductoRepository;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class TipoProductoController {
 
@@ -26,7 +24,7 @@ public class TipoProductoController {
     // tipoProductoRepository este se pone en los return
     private TipoProductoRepository tipoProductoRepository;
 
-    @PreAuthorize("hasAuthority('administrador')")
+    @PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @PostMapping("/tipo_producto")
     TipoProducto newTipoProducto(@RequestBody TipoProducto newTipoProducto) {
         return tipoProductoRepository.save(newTipoProducto);
@@ -43,7 +41,7 @@ public class TipoProductoController {
                 .orElseThrow(() -> new ResourceNotFoundException("TipoProducto", idTipoProducto));
     }
 
-    @PreAuthorize("hasAuthority('administrador')")
+    @PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @PutMapping("/tipo_producto/{idTipoProducto}")
     TipoProducto updateTipoProducto(@RequestBody TipoProducto updateTipoProducto, @PathVariable Integer idTipoProducto) {
         return tipoProductoRepository.findById(idTipoProducto)
@@ -54,7 +52,7 @@ public class TipoProductoController {
                 }).orElseThrow(() -> new ResourceNotFoundException("TipoProducto", idTipoProducto));
     }
 
-    @PreAuthorize("hasAuthority('administrador')")
+    @PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @DeleteMapping("/tipo_producto/{idTipoProducto}")
     String deleteTipoProducto(@PathVariable Integer idTipoProducto) {
         if (!tipoProductoRepository.existsById(idTipoProducto)) {

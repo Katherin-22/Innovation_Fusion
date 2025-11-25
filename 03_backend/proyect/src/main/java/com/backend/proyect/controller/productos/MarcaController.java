@@ -3,7 +3,6 @@ package com.backend.proyect.controller.productos;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,10 +15,8 @@ import com.backend.proyect.exception.productos.ResourceNotFoundException;
 import com.backend.proyect.model.productos.Marca;
 import com.backend.proyect.repository.productos.MarcaRepository;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class MarcaController {
 
@@ -27,7 +24,7 @@ public class MarcaController {
     // tipoProductoRepository este se pone en los return
     private MarcaRepository marcaRepository;
 
-    //@PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @PostMapping("/marca")
     Marca newMarca(@RequestBody Marca newMarca) {
         return marcaRepository.save(newMarca);
@@ -45,7 +42,7 @@ public class MarcaController {
                 .orElseThrow(() -> new ResourceNotFoundException("Marca", idMarca));
     }
 
-    //@PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @PutMapping("/marca/{idMarca}")
     Marca updateMarca(@RequestBody Marca updateMarca, @PathVariable Integer idMarca) {
         return marcaRepository.findById(idMarca)
@@ -56,7 +53,7 @@ public class MarcaController {
                 }).orElseThrow(() -> new ResourceNotFoundException("Marca", idMarca));
     }
 
-    //@PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @DeleteMapping("/marca/{idMarca}")
     String deleteMarca(@PathVariable Integer idMarca) {
         if (!marcaRepository.existsById(idMarca)) {

@@ -3,8 +3,6 @@ package com.backend.proyect.controller.productos;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,14 +15,13 @@ import com.backend.proyect.exception.productos.ResourceNotFoundException;
 import com.backend.proyect.model.productos.Material;
 import com.backend.proyect.repository.productos.MaterialRepository;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class MaterialController {
     @Autowired
     // tipoProductoRepository este se pone en los return
     private MaterialRepository materialRepository;  
 
-    //@PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @PostMapping("/material")
     Material newMaterial(@RequestBody Material newMaterial) {
         return materialRepository.save(newMaterial);
@@ -41,7 +38,7 @@ public class MaterialController {
                 .orElseThrow(() -> new ResourceNotFoundException("Material", idMaterial));
     }
 
-    //@PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @PutMapping("/material/{idMaterial}")
     Material updateMaterial (@RequestBody Material updateMaterial, @PathVariable Integer idMaterial){
         return materialRepository.findById(idMaterial)
@@ -52,7 +49,7 @@ public class MaterialController {
             }).orElseThrow(()->new ResourceNotFoundException("Material", idMaterial));
     }
 
-    //@PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @DeleteMapping("/material/{idMaterial}")
     String deleteMaterial (@PathVariable Integer idMaterial){
         if(!materialRepository.existsById(idMaterial)){

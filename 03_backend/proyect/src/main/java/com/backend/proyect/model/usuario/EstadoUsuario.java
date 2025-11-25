@@ -1,7 +1,9 @@
 package com.backend.proyect.model.usuario;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "estado_usuario")
 

@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +18,6 @@ import com.backend.proyect.exception.productos.ResourceNotFoundException;
 import com.backend.proyect.model.promociones.Promocion;
 import com.backend.proyect.repository.promociones.PromocionRepository;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class PromocionController {
 
@@ -28,7 +25,7 @@ public class PromocionController {
     // tipoProductoRepository este se pone en los return
     private PromocionRepository promocionRepository;
 
-    //@PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @PostMapping("/promocion")
     Promocion newPromocion(@RequestBody PromocionDTO promocionDTO) {
         Promocion promocion = new Promocion();
@@ -74,7 +71,7 @@ public class PromocionController {
                 .orElseThrow(() -> new ResourceNotFoundException("Promocion", idPromocion));
     }
 
-    //@PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @PutMapping("/promocion/{idPromocion}")
     Promocion updatePromocion(@RequestBody PromocionDTO promocionDTO, @PathVariable Integer idPromocion) {
         return promocionRepository.findById(idPromocion)
@@ -110,7 +107,7 @@ public class PromocionController {
                 }).orElseThrow(() -> new ResourceNotFoundException("Promocion", idPromocion));
     }
 
-    //@PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @DeleteMapping("/promocion/{idPromocion}")
     String deletePromocion(@PathVariable Integer idPromocion) {
         if (!promocionRepository.existsById(idPromocion)) {

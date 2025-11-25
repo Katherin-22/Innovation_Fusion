@@ -31,6 +31,11 @@ public class UserService {
         return usuarioRepository.save(usuario);
     }
 
+    // conexion con el metodo que encripta las contraseñas
+    public String encodePassword(String rawPassword) {
+        return passwordEncoder.encode(rawPassword);
+    }
+
     // Verificar contraseñas
     public boolean checkPassword(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
