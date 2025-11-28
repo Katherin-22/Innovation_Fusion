@@ -5,7 +5,11 @@ public interface StockGeneralProjection {
     Integer getIdProducto();
     String getCodigoReferencia();
     String getNombreProducto();
+    String getdescripcion();
     String getNombreTipoProducto();
+    String getNombrePublico();
+    String getNombreCategoria();
+    String getNombreMaterial ();
     Double getPrecio();
     String getNombre();
     String getNombreColor();

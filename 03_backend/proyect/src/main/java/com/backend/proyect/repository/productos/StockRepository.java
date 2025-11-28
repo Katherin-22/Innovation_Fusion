@@ -19,7 +19,11 @@ public interface StockRepository extends JpaRepository<Stock,Integer>{
         p.idProducto,
         ANY_VALUE(p.codigoReferencia) AS codigoReferencia,
         ANY_VALUE(p.nombreProducto) AS nombreProducto,
+        ANY_VALUE(p.descripcion) AS descripcion,
         ANY_VALUE(tp.nombreTipoProducto) AS nombreTipoProducto, 
+        ANY_VALUE(tpb.nombrePublico) AS nombrePublico, 
+        ANY_VALUE(cat.nombreCategoria) AS nombreCategoria, 
+        ANY_VALUE(mat.nombreMaterial) AS nombreMaterial, 
         ANY_VALUE(p.precio) AS precio,
         GROUP_CONCAT(DISTINCT v.nombre SEPARATOR ', ') AS nombre,
         GROUP_CONCAT(DISTINCT c.nombreColor SEPARATOR ', ') AS nombreColor,
@@ -29,6 +33,8 @@ public interface StockRepository extends JpaRepository<Stock,Integer>{
     JOIN Producto p ON s.idProducto = p.idProducto
     JOIN Categoria cat ON p.idCategoria = cat.idCategoria
     JOIN TipoProducto tp ON cat.idTipoProducto = tp.idTipoProducto
+    JOIN Material mat ON p.idMaterial = mat.idMaterial
+    JOIN TipoPublico tpb ON p.idPublico = tpb.idPublico
     LEFT JOIN Variacion v ON v.idVariacion = s.idVariacion
     LEFT JOIN Color c ON c.idColor = s.idColor
     GROUP BY p.idProducto
