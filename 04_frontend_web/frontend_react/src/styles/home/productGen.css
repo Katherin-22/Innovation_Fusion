@@ -1,5 +1,4 @@
 /* styles/home/productGen.css */
-
 :root {
   --body-color: #e4e9f7;
   --slidebar-color: #fff;
@@ -26,6 +25,7 @@
 .producto-body-background {
   background-color: var(--Menu-color);
   margin: 3% auto;
+  margin-top: 4% ;
   max-width: 1200px;
   border: 2px solid var(--primary-color);
   border-radius: 10px;
@@ -93,6 +93,7 @@
 .producto-precio-detalle,
 .producto-descripcion-detalle {
   font-size: 1rem;
+  color: var(--light-text) !important;
   margin-bottom: 0.5rem;
 }
 
@@ -114,6 +115,7 @@
 .producto-tipo-detalle,
 .producto-genero-detalle {
   font-size: 0.95rem;
+  color: var(--light-text) !important;
   margin-bottom: 0.3rem;
 }
 
@@ -363,11 +365,4 @@
   .producto-seccion-comentarios {
     padding: 1rem;
   }
-}
-
-
-.producto-titulo-detalle, .producto-codigo-detalle
-, .producto-precio-detalle, .producto-descripcion-detalle
-, .producto-categoria-detalle, .producto-tipo-detalle, .producto-genero-detalle {
-  color: var(--light-text) !important;
 }

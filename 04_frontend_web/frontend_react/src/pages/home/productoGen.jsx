@@ -124,47 +124,49 @@ const ProductoGen = () => {
   const stockDisponible = obtenerStockDisponible();
 
   if (!producto) {
-    return <h2 className="text-center mt-5">Producto no encontrado</h2>;
+    return <h2 className="text-center mt-5" id="producto-no-encontrado">Producto no encontrado</h2>;
   }
 
   return (
-    <div className="producto-detalle-container">
+    <div className="producto-detalle-container" id="producto-detalle-container">
       <MenuHome />
-      <div className="producto-body-background">
-        <div className="container-fluid">
-          <div className="row justify-content-center">
-            <div className="col-md-10 col-lg-8">
-              <div className="producto-card-detalle shadow-sm">
-                <div className="producto-card-body-detalle">
+      <div className="producto-body-background" id="producto-body-background">
+        <div className="container-fluid" id="producto-main-container">
+          <div className="row justify-content-center" id="producto-main-row">
+            <div className="col-md-10 col-lg-8" id="producto-content-col">
+              <div className="producto-card-detalle shadow-sm" id="producto-card-detalle">
+                <div className="producto-card-body-detalle" id="producto-card-body-detalle">
 
                   {/* ============================
                       INFO PRINCIPAL
                   ============================ */}
-                  <div className="row producto-info-principal">  
-                    <div className="col-md-6 producto-col-imagen">
+                  <div className="row producto-info-principal" id="producto-info-principal">  
+                    <div className="col-md-6 producto-col-imagen" id="producto-col-imagen">
                       {/* IMAGEN PRINCIPAL CON FUNCIONALIDAD DE CLICK */}
-                      <div className="producto-imagen-container">
+                      <div className="producto-imagen-container" id="producto-imagen-container">
                         <img
                           src={imagenPrincipal}
                           alt={producto.nombreProducto}
                           className="producto-imagen-principal img-fluid rounded"
                           onClick={() => abrirModalImagen()}
                           style={{ cursor: 'pointer' }}
+                          id="producto-imagen-principal"
                         />
                       </div>
 
                       {/* MINIATURAS DE IMÁGENES (si hay más de una) */}
                       {imagenesProducto.length > 1 && (
-                        <div className="producto-miniaturas-container mt-3">
-                          <div className="row g-2 justify-content-center">
+                        <div className="producto-miniaturas-container mt-3" id="producto-miniaturas-container">
+                          <div className="row g-2 justify-content-center" id="producto-miniaturas-row">
                             {imagenesProducto.map((imagen, index) => (
-                              <div key={index} className="col-auto">
+                              <div key={index} className="col-auto" id={`producto-miniatura-col-${index}`}>
                                 <img
                                   src={`http://localhost:8080${imagen.urlImagen}`}
                                   alt={`${producto.nombreProducto} ${index + 1}`}
                                   className={`producto-miniatura img-thumbnail ${imagenPrincipal === `http://localhost:8080${imagen.urlImagen}` ? 'miniatura-activa' : ''}`}
                                   onClick={() => cambiarImagenPrincipal(`http://localhost:8080${imagen.urlImagen}`)}
                                   style={{ cursor: 'pointer', width: '60px', height: '60px', objectFit: 'cover' }}
+                                  id={`producto-miniatura-${index}`}
                                 />
                               </div>
                             ))}
@@ -173,32 +175,32 @@ const ProductoGen = () => {
                       )}
                     </div>
 
-                    <div className="col-md-6 producto-col-detalles">
-                      <div className="row">
-                        <div className="col">
-                          <h3 className="producto-titulo-detalle">{producto.nombreProducto}</h3>
+                    <div className="col-md-6 producto-col-detalles" id="producto-col-detalles">
+                      <div className="row" id="producto-detalles-row">
+                        <div className="col" id="producto-titulo-col">
+                          <h3 className="producto-titulo-detalle" id="producto-titulo-detalle">{producto.nombreProducto}</h3>
                         </div>
-                        <div className="col col-info">
-                          <p className="producto-codigo-detalle text-muted">
-                            Código: <b>{producto.codigoReferencia}</b>
+                        <div className="col col-info" id="producto-info-col">
+                          <p className="producto-codigo-detalle text-muted" id="producto-codigo-detalle">
+                            Código: <b id="producto-codigo-valor">{producto.codigoReferencia}</b>
                           </p>
-                          <p className="producto-precio-detalle text-muted">
-                            Precio: <b className="producto-precio-valor">${producto.precio}</b>
+                          <p className="producto-precio-detalle text-muted" id="producto-precio-detalle">
+                            Precio: <b className="producto-precio-valor" id="producto-precio-valor">${producto.precio}</b>
                           </p>
-                          <p className="producto-descripcion-detalle text-muted">
-                            Descripción: <b>{producto.Descripción}</b>
+                          <p className="producto-descripcion-detalle text-muted" id="producto-descripcion-detalle">
+                            Descripción: <b id="producto-descripcion-valor">{producto.Descripción}</b>
                           </p>
                         
                           {/* Información adicional */}
-                          <div className="producto-info-adicional mt-3">
-                            <p className="producto-categoria-detalle text-muted mb-1">
-                              Categoría: <b>{producto.nombreCategoria}</b>
+                          <div className="producto-info-adicional mt-3" id="producto-info-adicional">
+                            <p className="producto-categoria-detalle text-muted mb-1" id="producto-categoria-detalle">
+                              Categoría: <b id="producto-categoria-valor">{producto.nombreCategoria}</b>
                             </p>
-                            <p className="producto-tipo-detalle text-muted mb-1">
-                              Tipo: <b>{producto.nombreTipoProducto}</b>
+                            <p className="producto-tipo-detalle text-muted mb-1" id="producto-tipo-detalle">
+                              Tipo: <b id="producto-tipo-valor">{producto.nombreTipoProducto}</b>
                             </p>
-                            <p className="producto-genero-detalle text-muted">
-                              Género: <b>{producto.nombrePublico}</b>
+                            <p className="producto-genero-detalle text-muted" id="producto-genero-detalle">
+                              Género: <b id="producto-genero-valor">{producto.nombrePublico}</b>
                             </p>
                           </div>
                         </div>
@@ -209,34 +211,36 @@ const ProductoGen = () => {
                   {/* ============================
                       SELECTORES COLORES Y TALLAS
                   ============================ */}
-                  <div className="row producto-selectores-fila mt-4">
-                    <div className="col-md-6">
-                      <label className="form-label producto-label-selector"><b>Color:</b></label>
+                  <div className="row producto-selectores-fila mt-4" id="producto-selectores-fila">
+                    <div className="col-md-6" id="producto-selector-color-col">
+                      <label className="form-label producto-label-selector" id="producto-label-color"><b>Color:</b></label>
                       <select
                         className="form-select producto-select-color"
                         value={colorSeleccionado}
                         onChange={(e) => setColorSeleccionado(e.target.value)}
+                        id="producto-select-color"
                       >
-                        <option value="">Seleccione un color</option>
+                        <option value="" id="producto-option-color-default">Seleccione un color</option>
                         {colores.map((color) => (
-                          <option key={color.idColor} value={color.idColor}>
+                          <option key={color.idColor} value={color.idColor} id={`producto-option-color-${color.idColor}`}>
                             {color.nombreColor}
                           </option>
                         ))}
                       </select>
                     </div>
 
-                    <div className="col-md-6">
-                      <label className="form-label producto-label-selector"><b>Talla:</b></label>
+                    <div className="col-md-6" id="producto-selector-talla-col">
+                      <label className="form-label producto-label-selector" id="producto-label-talla"><b>Talla:</b></label>
                       <select 
                         className="form-select producto-select-talla" 
                         value={tallaSeleccionada}
                         onChange={(e) => setTallaSeleccionada(e.target.value)}
                         disabled={!colorSeleccionado}
+                        id="producto-select-talla"
                       >
-                        <option value="">Seleccione una talla</option>
+                        <option value="" id="producto-option-talla-default">Seleccione una talla</option>
                         {tallas.map((talla, index) => (
-                          <option key={index} value={talla.nombre}>
+                          <option key={index} value={talla.nombre} id={`producto-option-talla-${index}`}>
                             {talla.nombre}
                           </option>
                         ))}
@@ -252,62 +256,66 @@ const ProductoGen = () => {
                   {/* ============================
                       BOTONES DE ACCIÓN
                   ============================ */}
-                  <div className="row producto-botones-fila justify-content-between mt-4">
-                    <div className="col-auto">
-                      <button
-                        className={`btn producto-btn-favorito ${favorito ? "btn-danger" : "btn-outline-danger"}`}
-                        onClick={() => setFavorito(!favorito)}
-                      >
-                        <i className={`bi ${favorito ? "bi-heart-fill" : "bi-heart"} producto-icono-favorito`}></i>
-                        {favorito ? " Quitar favorito" : " Agregar a favoritos"}
-                      </button>
-                    </div>
+<div className="row producto-botones-fila justify-content-center mt-4" id="producto-botones-fila">
+  <div className="col-auto" id="producto-boton-favorito-col">
+    <button
+      className={`btn producto-btn-favorito ${favorito ? "btn-danger" : "btn-outline-danger"}`}
+      onClick={() => setFavorito(!favorito)}
+      id="producto-btn-favorito"
+    >
+      <i className={`bi ${favorito ? "bi-heart-fill" : "bi-heart"} producto-icono-favorito`} id="producto-icono-favorito"></i>
+      {favorito ? " Quitar favorito" : " Agregar a favoritos"}
+    </button>
+  </div>
 
-                    <div className="col-auto">
-                      <button 
-                        className="btn producto-btn-comprar btn-success"
-                      >
-                        <i className="bi bi-cart-plus producto-icono-comprar me-2">Comprar Ahora</i>
-  
-                      </button>
-                    </div>
+  <div className="col-auto" id="producto-boton-comprar-col">
+    <button 
+      className="btn producto-btn-comprar btn-success"
+      id="producto-btn-comprar"
+    >
+      <i className="bi bi-cart-plus producto-icono-comprar me-2" id="producto-icono-comprar"></i>
+      Comprar Ahora
+    </button>
+  </div>
 
-                    <div className="col-auto">
-                      <Link to="/Catalogo" className="btn producto-btn-volver btn-outline-secondary">
-                        <i className="bi bi-arrow-left producto-icono-volver me-2"></i>
-                        Volver al catálogo
-                      </Link>
-                    </div>
-                  </div>
+  <div className="col-auto" id="producto-boton-volver-col">
+    <Link to="/Catalogo" className="btn producto-btn-volver btn-outline-secondary" id="producto-btn-volver">
+      <i className="bi bi-arrow-left producto-icono-volver me-2" id="producto-icono-volver"></i>
+      Volver al catálogo
+    </Link>
+  </div>
+</div>
 
                   {/* ============================
                       SECCIÓN COMENTARIOS
                   ============================ */}
-                  <div className="row producto-comentarios-fila mt-5">
-                    <div className="col-12">
-                      <div className="producto-seccion-comentarios">
-                        <h4 className="producto-titulo-comentarios text-center mb-4">
-                          <i className="bi bi-chat-dots me-2"></i>
+                  <div className="row producto-comentarios-fila mt-5" id="producto-comentarios-fila">
+                    <div className="col-12" id="producto-comentarios-col">
+                      <div className="producto-seccion-comentarios" id="producto-seccion-comentarios">
+                        <h4 className="producto-titulo-comentarios text-center mb-4" id="producto-titulo-comentarios">
+                          <i className="bi bi-chat-dots me-2" id="producto-icono-comentarios"></i>
                           Opiniones del producto
                         </h4>
                         
-                        <form className="producto-form-comentario container">
-                          <div className="row align-items-end">
-                            <div className="col-md-8">
-                              <label className="form-label producto-label-comentario">Deja tu opinión</label>
+                        <form className="producto-form-comentario container" id="producto-form-comentario">
+                          <div className="row align-items-end" id="producto-form-comentario-row">
+                            <div className="col-md-8" id="producto-input-comentario-col">
+                              <label className="form-label producto-label-comentario" id="producto-label-comentario">Deja tu opinión</label>
                               <input 
                                 type="text" 
                                 name="opinion"
                                 placeholder="Comparte tu experiencia con este producto..."
                                 className="form-control producto-input-comentario"
+                                id="producto-input-comentario"
                               />
                             </div>
-                            <div className="col-md-4">
+                            <div className="col-md-4" id="producto-boton-comentario-col">
                               <button 
                                 type="submit" 
                                 className="btn producto-btn-enviar-comentario btn-outline-primary w-100"
+                                id="producto-btn-enviar-comentario"
                               >
-                                <i className="bi bi-send producto-icono-comentar me-2"></i>
+                                <i className="bi bi-send producto-icono-comentar me-2" id="producto-icono-comentar"></i>
                                 Publicar comentario
                               </button>
                             </div>
@@ -315,9 +323,9 @@ const ProductoGen = () => {
                         </form>
 
                         {/* Espacio para lista de comentarios */}
-                        <div className="producto-lista-comentarios mt-4">
-                          <p className="text-muted text-center">
-                            <i className="bi bi-info-circle me-2"></i>
+                        <div className="producto-lista-comentarios mt-4" id="producto-lista-comentarios">
+                          <p className="text-muted text-center" id="producto-sin-comentarios-message">
+                            <i className="bi bi-info-circle me-2" id="producto-icono-sin-comentarios"></i>
                             Sé el primero en comentar este producto
                           </p>
                         </div>
@@ -336,17 +344,18 @@ const ProductoGen = () => {
           MODAL PARA VER IMAGEN
       ============================ */}
       {imagenModal && (
-        <div className="modal-overlay" onClick={cerrarModalImagen}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-              <h3>{imagenModal.nombre}</h3>
-              <button className="close-button" onClick={cerrarModalImagen}>×</button>
+        <div className="modal-overlay" onClick={cerrarModalImagen} id="producto-modal-overlay">
+          <div className="modal-content" onClick={(e) => e.stopPropagation()} id="producto-modal-content">
+            <div className="modal-header" id="producto-modal-header">
+              <h3 id="producto-modal-titulo">{imagenModal.nombre}</h3>
+              <button className="close-button" onClick={cerrarModalImagen} id="producto-modal-close">×</button>
             </div>
-            <div className="modal-body">
+            <div className="modal-body" id="producto-modal-body">
               <img 
                 src={imagenModal.imagen} 
                 alt={imagenModal.nombre}
                 className="modal-image"
+                id="producto-modal-image"
               />
             </div>
           </div>
