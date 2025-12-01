@@ -188,7 +188,7 @@ const ProductoGen = () => {
                             Precio: <b className="producto-precio-valor" id="producto-precio-valor">${producto.precio}</b>
                           </p>
                           <p className="producto-descripcion-detalle text-muted" id="producto-descripcion-detalle">
-                            Descripción: <b id="producto-descripcion-valor">{producto.Descripción}</b>
+                            Descripción: <b id="producto-descripcion-valor">{producto.descripcion}</b>
                           </p>
                         
                           {/* Información adicional */}
@@ -201,6 +201,9 @@ const ProductoGen = () => {
                             </p>
                             <p className="producto-genero-detalle text-muted" id="producto-genero-detalle">
                               Género: <b id="producto-genero-valor">{producto.nombrePublico}</b>
+                            </p>
+                            <p className="producto-material-detalle text-muted" id="producto-genero-detalle">
+                              Material: <b id="producto-material-valor">{producto.nombreMaterial}</b>
                             </p>
                           </div>
                         </div>
