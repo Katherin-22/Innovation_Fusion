@@ -1,5 +1,6 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useFiltro } from "../../utils/FiltroContextx";
+import CartWidget from "../../components/CartWidget";
 import "../../styles/home/menuHome.css";
 
 const MenuHome = () => {
@@ -104,7 +105,7 @@ const MenuHome = () => {
               <ul className="dropdown-menu dropdown-menu-end" id="navBarHome-profile-menu">
                 <li><Link className="dropdown-item" id="navBarHome-login" to="/login">Iniciar sesión</Link></li>
                 <li><Link className="dropdown-item" id="navBarHome-profile" to="/profile">Perfil</Link></li>
-                <li><Link className="dropdown-item" id="navBarHome-orders" to="/profile">Pedidos</Link></li>
+                <li><Link className="dropdown-item" id="navBarHome-orders" to="/pedidos">Pedidos</Link></li>
                 <li><hr className="dropdown-divider" id="navBarHome-profile-divider" /></li>
                 <li><Link className="dropdown-item" id="navBarHome-logout" to="/logout">Cerrar sesión</Link></li>
               </ul>
@@ -119,9 +120,7 @@ const MenuHome = () => {
 
             {/* CARRITO */}
             <li className="nav-item" id="navBarHome-cart-item">
-              <Link className="nav-link" id="navBarHome-cart-link" to="/carrito">
-                <i className="bi bi-cart-fill" id="navBarHome-cart-icon"></i>
-              </Link>
+              <CartWidget />
             </li>
 
           </ul>

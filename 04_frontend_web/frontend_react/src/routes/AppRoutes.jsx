@@ -83,6 +83,23 @@ import Login from '../components/iniciosesion/Login'
 ----------------------------- */
 import PerfilUsuario from '../pages/usuario/PerfilUsuario'
 
+/* -----------------------------
+   Carrito de compras
+----------------------------- */
+import CartPage from '../pages/CartPage'
+
+/* -----------------------------
+   Checkout y Pedidos
+----------------------------- */
+import CheckoutPage from '../pages/CheckoutPage'
+import OrderConfirmationPage from '../pages/OrderConfirmationPage'
+import OrdersHistoryPage from '../pages/OrdersHistoryPage'
+
+/* -----------------------------
+   Favoritos
+----------------------------- */
+import FavoritesPage from '../pages/FavoritesPage'
+
 
 function AppRoutes() {
    return (
@@ -149,6 +166,17 @@ function AppRoutes() {
 
             {/* Ruta para el perfil*/}
             <Route  path='/perfilUsuario' element={<PerfilUsuario/>}/>
+
+            {/* Carrito de compras */}
+            <Route path="/carrito" element={<CartPage />} />
+
+            {/* Checkout y Pedidos */}
+            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/pedido/:idPedido" element={<OrderConfirmationPage />} />
+            <Route path="/pedidos" element={<OrdersHistoryPage />} />
+
+            {/* Favoritos */}
+            <Route path="/favoritos" element={<FavoritesPage />} />
 
 
 
