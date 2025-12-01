@@ -42,41 +42,30 @@ public class SecurityConfig {
 
                         .requestMatchers("/uploads/**").permitAll()
 
-                        // Endpoints públicos para clientes
-                        .requestMatchers("/publico/**").permitAll()
-
-                        // Endpoints de administración - requieren autenticación de admin
                         .requestMatchers(
                                 "/categoria",
                                 "/categoria/*",
                                 "/promocion",
+                                "/stock/*",
+                                "/stock/variaciones/*",
+                                "/stock/*",
+                                "/producto/*/stock/*",
                                 "/promocion/*",
-                                "/productos", // lista completa para admin
-                                "/producto", // crear
-                                "/producto/*", // actualizar, eliminar
+                                "/productos",
+                                "/producto",
+                                "/producto/*",
+                                "/producto/*/imagenes",
+                                "/producto/*/imagen/*",
                                 "/color",
                                 "/color/*",
+                                "/imagen/*",
                                 "/marca",
                                 "/marca/*",
-                                "/material",
                                 "/material/*",
+                                "/material",
                                 "/api/banners/*"
-                        ).hasAuthority("ROLE_ADMINISTRADOR")
+                        ).permitAll() // ajustar
 
-                        // Endpoints de productos para clientes
-                        .requestMatchers(
-                                "/producto/*/imagenes",
-                                "/producto/*/imagen/*"
-                        ).permitAll()
-
-                        // Endpoints del carrito - requieren autenticación
-                        .requestMatchers("/api/carrito/**").authenticated()
-
-                        // Endpoints de pedidos - requieren autenticación
-                        .requestMatchers("/api/pedidos/**").authenticated()
-
-                        // Endpoints de favoritos - requieren autenticación
-                        .requestMatchers("/api/favoritos/**").authenticated()
 
                         .requestMatchers("/api/usuarios/perfil").authenticated()
 
