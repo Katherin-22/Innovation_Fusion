@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import MenuHome from "../../layouts/home/menuHome";
 import Footer from "../../layouts/home/footer";
 import { useGetStock } from "../../hooks/stock/useGetStock";
+import AddToCartButton from "../../components/AddToCartButton";
+import FavoritesButton from "../../components/FavoritesButton";
 import "../../styles/home/paginaInicio.css";
 
 export default function Home() {
@@ -131,8 +133,17 @@ export default function Home() {
                           ${zapato.precio?.toLocaleString() || 'N/A'}
                         </p>
                       </div>
-                      <div className="">
-
+                      <div className="mt-2 d-flex gap-2">
+                        <FavoritesButton
+                          productId={zapato.idProducto}
+                          size="sm"
+                        />
+                        <AddToCartButton
+                          productId={zapato.idProducto}
+                          productName={zapato.nombreProducto}
+                          size="sm"
+                          className="flex-fill"
+                        />
                       </div>
                     </div>
                   </div>
@@ -174,6 +185,18 @@ export default function Home() {
                         <p id={`home-bag-hover-price-${index + 1}`}>
                           ${bolso.precio?.toLocaleString() || 'N/A'}
                         </p>
+                      </div>
+                      <div className="mt-2 d-flex gap-2">
+                        <FavoritesButton
+                          productId={bolso.idProducto}
+                          size="sm"
+                        />
+                        <AddToCartButton
+                          productId={bolso.idProducto}
+                          productName={bolso.nombreProducto}
+                          size="sm"
+                          className="flex-fill"
+                        />
                       </div>
                     </div>
                   </div>

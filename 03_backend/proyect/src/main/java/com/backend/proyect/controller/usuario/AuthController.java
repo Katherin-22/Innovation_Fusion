@@ -21,9 +21,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     private final UserService userService;
     private final UsuarioRepository usuarioRepository;
@@ -99,12 +104,16 @@ public class AuthController {
         String email = body.get("email");
         String password = body.get("password");
 
+        logger.info("Intento de login para email: {}", email);
+
         if (email == null || password == null) {
+            logger.warn("Login fallido: email o password nulos para email: {}", email);
             throw new IllegalArgumentException ("Email y la contraseña son requeridos");
         }
 
         Optional<Usuario> usuarioOpt = usuarioRepository.findByCorreoElectronico(email);
         if (usuarioOpt.isEmpty()) {
+            logger.warn("Login fallido: email no encontrado: {}", email);
             throw new ResourceNotFoundException("El email no existe");
         }
 
@@ -112,6 +121,7 @@ public class AuthController {
         Map<String, Object> response = new HashMap<>();
 
         if (userService.checkPassword(password, usuario.getPassword())) {
+            logger.info("Login exitoso para usuario: {} con rol: {}", usuario.getNombreUsuario(), usuario.getRol().getNombreRol());
             String token = jwtUtil.generateToken(usuario);
 
             Map<String, Object> userData = Map.of(
@@ -128,6 +138,7 @@ public class AuthController {
 
             return ResponseEntity.ok(response);
         } else {
+            logger.warn("Login fallido: contraseña incorrecta para usuario: {}", usuario.getNombreUsuario());
             response.put("success", false);
             response.put("message", "Contraseña incorrecta");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
