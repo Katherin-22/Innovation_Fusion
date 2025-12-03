@@ -1,0 +1,131 @@
+/* ================= Reset ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+/* ================= Página principal ================= */
+.paginaRecuperar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(to right bottom, #0F0F0F 50%, #E0B253 50%);
+    padding: 20px 0;
+}
+
+/* ================= Contenedor general ================= */
+.contenedor-formulario-imagenes-restablecer {
+    display: flex;
+    background-color: #FAF9F6;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
+    align-items: stretch;
+
+    /* 🔥 Clave: se adapta al formulario */
+    height: auto;
+    min-height: 460px;
+}
+
+/* ================= Imágenes ================= */
+.contenedor-imagen-izquierda-restablecer,
+.contenedor-imagen-derecha-restablecer {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.contenedor-imagen-izquierda-restablecer img,
+.contenedor-imagen-derecha-restablecer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex-grow: 1;
+}
+
+/* ================= Formulario ================= */
+.form-restablecer-pass {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 300px;
+
+    /* 🔥 ajusta la altura automáticamente */
+    height: auto;
+
+    padding: 35px 25px;
+}
+
+/* ================= Título ================= */
+.titulo-restablecer {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 22px;
+    color: #0F0F0F;
+    text-transform: uppercase;
+}
+
+/* ================= Inputs ================= */
+.label-restablecer {
+    font-size: 14px;
+    color: #0F0F0F;
+    margin-bottom: 6px;
+}
+
+.input-correo-restablecer,
+.input-password-nueva,
+.input-password-confirmar,
+.input-codigo-restablecer {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 15px;
+    border: 1px solid #E0B253;
+    border-radius: 25px;
+    background-color: #FAF9F6;
+    color: #0F0F0F;
+    margin-bottom: 14px;
+    outline: none;
+}
+
+/* ================= Botón ================= */
+.btn-cambiar-pass {
+    background-color: #E0B253;
+    font-size: 14px;
+    color: #0F0F0F;
+    padding: 10px;
+    width: 100%;
+    border-radius: 25px;
+    border: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.btn-cambiar-pass:hover {
+    background-color: #C49A3D;
+}
+
+/* ================= Responsive ================= */
+@media (max-width: 991px) {
+    .contenedor-formulario-imagenes-restablecer {
+        flex-direction: column;
+        width: 90%;
+        min-height: auto;
+    }
+
+    .contenedor-imagen-izquierda-restablecer,
+    .contenedor-imagen-derecha-restablecer {
+        width: 100%;
+        height: 160px;
+    }
+
+    .form-restablecer-pass {
+        width: 100%;
+        padding: 22px;
+    }
+}

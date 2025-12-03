@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +28,6 @@ import com.backend.proyect.repository.productos.StockRepository;
 import com.backend.proyect.repository.productos.VariacionRepository;
 import com.backend.proyect.service.productos.GetStockService;
 
-@CrossOrigin(origins = "http://localhost:3000")
 
 @RestController
 
@@ -46,7 +44,7 @@ public class StockController {
     @Autowired
     private ProductoRepository productoRepository;
 
-    //@PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @PostMapping("/stock/{idProducto}")
     ResponseEntity<Stock> newStock(@RequestBody StockDTO stockDTO, @PathVariable Integer idProducto) {
         Producto producto = productoRepository.findById(idProducto)
@@ -133,7 +131,7 @@ public class StockController {
         return ResponseEntity.ok(stock); // 200 OK
     }
 
-    //@PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @PutMapping("/producto/{idProducto}/stock/{idStock}")
     ResponseEntity<Stock> updateStock(@RequestBody StockDTO updateStockDTO, @PathVariable Integer idProducto, @PathVariable Integer idStock) {
         return stockRepository.findById(idStock)
@@ -169,7 +167,7 @@ public class StockController {
             }).orElseThrow(() -> new ResourceNotFoundException("Stock", idStock));
     }
 
-    //@PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @DeleteMapping("/stock/{idStock}")
     ResponseEntity<Void> deleteStock(@PathVariable Integer idStock) {
         if (!stockRepository.existsById(idStock)) {

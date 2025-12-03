@@ -1,0 +1,83 @@
+/* perfilusuario.css */
+
+/* 1. Ajuste para el Contenedor Principal: .user-profile-container */
+/* Este selector toma los estilos de .perfil-container y .datos-card */
+.user-profile-container { 
+    /* Estilos de Contenedor */
+    max-width: 900px;
+    margin: 40px auto; /* Centra el contenedor y agrega margen superior */
+    font-family: Arial, sans-serif;
+
+    /* Estilos de la Tarjeta */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 25px; 
+    margin-bottom: 25px;
+}
+
+/* 2. Estilos para el título H1 */
+/* Esto asegura que el título "Editar Mi Perfil" se vea dentro del contenedor y formateado */
+.user-profile-container h1 {
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center; /* Centrar el título */
+}
+
+/* 3. Ajuste para los Grupos de Campos: .form-group */
+/* Este selector toma los estilos de .datos-field */
+.form-group {
+    margin-bottom: 20px; 
+}
+
+.form-group label {
+    display: block; /* La etiqueta ocupa su propia línea */
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+/* Estilos de los inputs dentro de los grupos */
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #E0B253;
+    border-radius: 4px;
+    box-sizing: border-box; /* Asegura que el padding no desborde el input */
+}
+
+/* Estilos para el botón de Submit */
+/* Este selector aplica los estilos del .btn-guardar al botón de envío */
+.user-profile-container button[type="submit"] {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: #E0B253; /* Verde (btn-guardar) */
+    color: white;
+    width: 100%; /* Para que ocupe todo el ancho de la tarjeta */
+    margin-top: 20px;
+}
+
+/* Estilos para la sección de lectura (Rol y Tipo de Documento) */
+.read-only-info {
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    margin-top: 30px;
+}
+
+.read-only-info p {
+    margin: 5px 0;
+}
+
+.read-only-info strong {
+    display: inline-block;
+    width: 150px;
+    color: #555;
+}
+

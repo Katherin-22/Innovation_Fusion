@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "../../../src/assets/logo.png"; 
+import logo from "../../../src/assets/logo.png";
 import { Link } from "react-router-dom";
 
 const MenuAdmin = () => {
@@ -57,6 +57,13 @@ const MenuAdmin = () => {
                 <Link to="/Administrador/Gestion_Pedido">
                   <i className="bi bi-box2-fill"></i>
                   <span className="text nav-text">Gestion Pedidos</span>
+                </Link>
+              </li>
+
+              <li className="nav link">
+                <Link to="/Administrador/Gestion_Devoluciones">
+                  <i className="bi bi-box-seam"></i> 
+                  <span className="text nav-text">Gestionar Devoluciones</span>
                 </Link>
               </li>
 

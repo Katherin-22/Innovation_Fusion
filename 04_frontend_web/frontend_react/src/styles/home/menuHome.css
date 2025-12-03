@@ -1,0 +1,111 @@
+:root {
+    /* Colores principales de la marca */
+    --primary-color: #E0B253;    /* Dorado - Botones, bordes, elementos destacados */
+    --secondary-color: #000000;   /* Negro - Fondos, texto principal */
+    
+    /* Colores de fondo */
+    --bg-body: #000000;
+    --bg-menu:#2B3035;          /* Negro - Fondo principal */
+    --bg-sidebar: #fff;          /* Blanco - Sidebar */
+    --bg-toggle: #ddd;           /* Gris claro - Toggle */
+    
+    /* Colores de texto */
+    --text-primary: #000000;     /* Negro - Texto principal */
+    --text-light: #e4e9f7;       /* Gris muy claro - Texto secundario */
+    
+    /* Estados y utilidades */
+    --hover-color: #c89c3f;      /* Dorado oscuro - Hover */
+    --active-color: #b08930;     /* Dorado más oscuro - Active */
+    
+    /* Transiciones */
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.4s ease;
+    --tran-05: all 0.5s ease;
+}
+
+#navBarHome{
+    background: var(--bg-menu) ;
+    margin: 0.8% 1% 0 1%;
+    border-radius: 20px;
+    box-shadow: 0 6px 10px rgba(224, 178, 83, 0.2);
+}
+
+#navBarHome-container{
+    padding: 2px !important;
+    margin: 0 10px !important;
+}
+
+#navBarHome-calzado-btn , #navBarHome-bolsos-btn ,
+#navBarHome-novedades-btn , #navBarHome-cart-icon ,
+#navBarHome-favorites-icon , #navBarHome-profile-icon ,
+#navBarHome-profile-btn
+{
+    color: var(--primary-color) !important;
+    margin-left: 5px;
+}
+
+
+
+#navBarHome-calzado-btn:hover, 
+#navBarHome-bolsos-btn:hover,
+#navBarHome-novedades-btn:hover {
+    background-color: rgba(224, 178, 83, 0.2) !important;
+    /* Convertir #E0B253 a rgba(224, 178, 83) */
+     transition: all 0.5s ease;
+}
+
+#navBarHome-cart-icon:hover,
+#navBarHome-favorites-icon:hover,
+#navBarHome-profile-icon:hover {
+    color: var(--hover-color) !important;
+    filter: drop-shadow(0 0 10px rgba(224, 178, 83, 0.8));
+    transform: scale(1.9);
+     transition: all 0.3s ease;
+}
+  
+#navBarHome-cart-icon{
+    margin-right: 25px;
+}
+
+#navBarHome-calzado-btn{
+    margin-left: 25px;
+}
+
+#navBarHome-brand{
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-left: 15px;
+}
+
+#navBarHome-brand:hover{
+    transform: scale(1.1);
+    margin-top: -5px;
+     transition: all 0.5s ease;
+}
+
+#navBarHome-search-input{
+    border: 1px solid var(--primary-color);
+    border-radius: 12px;
+}
+
+#navBarHome-search-input:focus{
+    box-shadow: 0 0 15px rgba(224, 178, 83, 0.6);
+    border: 1px solid var(--primary-color);
+}
+
+#navBarHome-search-btn{
+    background: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 12px;
+}
+
+#navBarHome-search-btn:hover{
+    background: var(--secondary-color);
+    border: 1px solid var(--hover-color);
+    box-shadow: 0 0 15px rgba(224, 178, 83, 0.6);
+    color: var(--primary-color);
+     transition: all 0.4s ease;
+}
+
+
+

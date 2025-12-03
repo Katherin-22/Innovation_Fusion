@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,10 +20,9 @@ import com.backend.proyect.model.productos.TipoProducto;
 import com.backend.proyect.repository.productos.CategoriaRepository;
 import com.backend.proyect.repository.productos.TipoProductoRepository;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 
 
-@CrossOrigin(origins = "http://localhost:3000")
+
 @RestController
 public class CategoriaController {
 
@@ -35,7 +33,7 @@ public class CategoriaController {
     @Autowired
     private TipoProductoRepository tipoProductoRepository;
 
-    //@PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @PostMapping("/categoria")
     Categoria newCategoria(@RequestBody CategoriaDTO categoriaDTO) {
         // Buscar el tipo de producto por ID
@@ -69,7 +67,7 @@ ResponseEntity<List<CategoriaDTO>> getAllCategoria() {
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria", idCategoria));
     }
 
-    // @PreAuthorize("hasAuthority('administrador')")
+    // @PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @PutMapping("/categoria/{idCategoria}")
     Categoria updateCategoria(@RequestBody CategoriaDTO categoriaDTO, @PathVariable Integer idCategoria) {
         return categoriaRepository.findById(idCategoria)
@@ -85,7 +83,7 @@ ResponseEntity<List<CategoriaDTO>> getAllCategoria() {
                 }).orElseThrow(() -> new ResourceNotFoundException("Categoria", idCategoria));
     }
 
-    //@PreAuthorize("hasAuthority('administrador')")
+    //@PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")
     @DeleteMapping("/categoria/{idCategoria}")
     public ResponseEntity<String> deleteCategoria(@PathVariable Integer idCategoria) {
         if (!categoriaRepository.existsById(idCategoria)) {

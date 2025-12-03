@@ -1,114 +1,126 @@
-@import url("./card.css");
-
 :root {
-    --body-color: #e4e9f7;
-    --slidebar-color: #fff;
     --primary-color: #E0B253;
-    --toggle-color: #ddd;
-    --text-color: #000000;
-}
-.body-color {
-  background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
-  color: #f5f5f5;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+    --secondary-color: #000000;
+    --bg-body: #000000;
+    --text-light: #e4e9f7;
+    --hover-color: #c89c3f;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.4s ease;
+    --tran-05: all 0.5s ease;
 }
 
-.navbar{
+#home-container{
+    background: var(--bg-body);
     width: 100%;
-    padding:5px 15px 0 15px;
+    padding-top: 18%;
+    margin-top: -15%;
+    height: auto;
 }
 
-.search{
-    border: 1px solid var(--primary-color);
-    border-radius: 15px;
-}
-.search:hover,
-.search:focus {
-    outline: none;
-    box-shadow: 0 0 8px var(--primary-color);
+/* CARDS */
+#home-shoe-card-1, #home-bag-card-1 {
+    width: 360px;
+    height: 350px;
+    margin: 15px;
 }
 
-/* Botón */
-.button-search {
-    width: 90px;
-    height: 38px;
-    border-radius: 15px;
-    border: 1px solid var(--primary-color);
-    background-color: transparent;
+/* ELIMINAR FONDO BLANCO DEL CARD-BODY */
+#home-shoe-card-body-1, 
+#home-bag-card-body-1 {
+    background: transparent !important;
+    border: none !important;
+    opacity: 1 !important;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    z-index: 2;
+}
+
+/* Imágenes */
+#home-bag-image-1, 
+#home-shoe-image-1 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--tran-04);
+}
+
+/* Títulos - encima de la imagen */
+#home-shoe-title-1, 
+#home-bag-title-1 {
+    position: absolute;
     color: var(--primary-color);
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-/* 🔥 Hover bonito */
-.button-search:hover {
-    background-color: var(--primary-color);
-    color: var(--text-color);
-    border-color: var(--primary-color);
-    box-shadow: 0 0 10px rgba(224, 178, 83, 0.6);
-    transform: scale(1.05);
-}
-
-.custom-btn {
-    background: var(--primary-color);
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.3rem;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px 15px;
+    z-index: 3;
+    border-radius: 0 12px 12px 0;
+    margin-left: -18px;
+    opacity: 1 !important;
     transition: var(--tran-03);
 }
 
-.custom-btn:hover {
-    border: 2px solid var(--primary-color);
-    background: var(--body-color);
-    color: var(--primary-color);
-}
-.carousel{
-    margin-top: 60px !important;
-}
-.carousel-item{
-    height: 400px;
-}
-#carouselExampleAutoplaying{
-    margin-top: 10px;
-}
-.contenedorMas{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.contenedorMas img{
-    max-width: 200px !important;
-}
-.coleccion{
-    height: 200px;
-    width: 200px;
-}
-.card{
-    margin: 5px;
-}
-.card-img-top{
-    height: 200px;
-    width: auto;
-    overflow: hidden;
-}
-.card-img-top img{
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-}
-.finPag{
-    margin: 20px 0 -10px;
+/* Descripciones - ocultas por defecto */
+#home-shoe-description-1, 
+#home-bag-description-1 {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin: 0 0 10px 0;
+    opacity: 0 !important;
+    transform: translateY(20px);
+    transition: var(--tran-03);
 }
 
-.reserve{
-    color: var(--body-color);
+/* Precios - ocultos por defecto */
+#home-shoe-hover-price-1, 
+#home-bag-hover-price-1 {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 0;
+    opacity: 0 !important;
+    transform: translateY(20px);
+    transition: var(--tran-03);
 }
-.custom-row{
-    margin-top: 5%;
+
+/* ===== EFECTOS HOVER ===== */
+
+/* Título desaparece al hover */
+#home-shoe-card-container-1:hover #home-shoe-title-1,
+#home-bag-card-container-1:hover #home-bag-title-1 {
+    opacity: 0 !important;
+    transform: translateY(-10px);
+}
+
+/* Descripción APARECE al hover */
+#home-shoe-card-container-1:hover #home-shoe-description-1,
+#home-bag-card-container-1:hover #home-bag-description-1 {
+    opacity: 1 !important;
+    transform: translateY(0);
+}
+
+/* Precio APARECE al hover */
+#home-shoe-card-container-1:hover #home-shoe-hover-price-1,
+#home-bag-card-container-1:hover #home-bag-hover-price-1 {
+    opacity: 1 !important;
+    transform: translateY(0);
+}
+
+/* Fondo para el texto al hover */
+#home-shoe-card-container-1:hover #home-shoe-card-body-1,
+#home-bag-card-container-1:hover #home-bag-card-body-1 {
+    background: rgba(0, 0, 0, 0.8) !important;
+    backdrop-filter: blur(5px);
+    margin: 12px;
+    transition: var(--tran-04);
+    border-radius: 2px;
+}
+
+#home-bags-title , #home-shoes-title{
+    color: var(--primary-color);
+    font-weight: bold;
+    margin: 20px 0 10px 15px;
 }

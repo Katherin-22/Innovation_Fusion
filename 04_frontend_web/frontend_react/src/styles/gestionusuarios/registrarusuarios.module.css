@@ -1,0 +1,220 @@
+/* CSS Reset y Global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* AHORA ES EL CONTENEDOR PRINCIPAL, NO EL BODY */
+.contenedor-principal {
+  font-family: sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(to right bottom, #0F0F0F 50%, #E0B253 50%);
+}
+
+/* 1. Contenedor Principal */
+.container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  height: 90vh;
+  margin: auto;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+/* 2. Contenedor del Formulario */
+.formContainer {
+  flex: 1;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100% !important;
+  padding-bottom: 25px;
+  background-color: #FAF9F6;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  margin-top: auto;
+}
+
+/* 3. Contenedor del Formulario */
+.formContent {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 30px;
+}
+
+/* 4. Formulario */
+.form {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+   padding-top: 25px;
+}
+
+/* 5. Contenedor de Imagen */
+.imageContainer {
+  flex: 1;
+  height: 100%;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  overflow: hidden;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Títulos y descripción */
+.title {
+  text-align: center;
+  font-size: 30px;
+  text-transform: uppercase;
+  color: #0F0F0F;
+  margin-bottom: 20px;
+}
+
+.description {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Labels e Inputs */
+.label {
+  font-size: 15px;
+  color: #0F0F0F;
+  margin-bottom: 5px;
+}
+
+.input {
+  padding: 10px 15px;
+  border: 1px solid #E0B253;
+  border-radius: 25px;
+  background-color: #FAF9F6;
+  outline: none;
+  color: #0F0F0F;
+  font-size: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+}
+
+/* Contenedor de botones */
+.registro {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+  gap: 30px;
+  width: 100%;
+}
+
+/* Botones */
+.btn1, .btn-cancel {
+  font-size: 15px;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 100%;
+  max-width: 180px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn1 {
+  background-color: #E0B253;
+  color: #0F0F0F;
+}
+.btn1:hover {
+  background-color: #C49A3D;
+}
+
+.btn-cancel {
+  background-color:#E0B253;
+  color: #0F0F0F;
+  border: 1px solid #0F0F0F;
+}
+.btn-cancel:hover {
+  background-color: #0F0F0F;
+  color: #FAF9F6;
+}
+
+/* Form group y campo */
+.formGroup {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 5px;
+}
+
+.field {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mensajes */
+.alertDanger, .alertMessage {
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  width: 100%;
+  font-size: 14px;
+  text-align: center;
+}
+
+.alertDanger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.alertMessage {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .container {
+    flex-direction: column;
+    height: auto;
+    border-radius: 0;
+  }
+  .formContainer {
+    padding: 20px;
+    border-radius: 0;
+  }
+  .form {
+    justify-content: flex-start;
+    gap: 15px;
+  }
+  .formGroup {
+    flex-direction: column;
+    gap: 0;
+  }
+  .registro {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  .btn1, .btn-cancel {
+    max-width: 100%;
+  }
+  .imageContainer {
+    height: 300px;
+    border-radius: 0;
+  }
+}
