@@ -1,126 +1,530 @@
+/* ===========================================
+   VARIABLES Y ESTILOS GLOBALES
+=========================================== */
 :root {
     --primary-color: #E0B253;
     --secondary-color: #000000;
-    --bg-body: #000000;
+    --bg-body-dark: #000000;
+    --bg-body-light: #ffffff;
     --text-light: #e4e9f7;
+    --text-dark: #000000;
     --hover-color: #c89c3f;
     --tran-03: all 0.3s ease;
     --tran-04: all 0.4s ease;
     --tran-05: all 0.5s ease;
 }
 
-#home-container{
-    background: var(--bg-body);
+/* ===========================================
+   CONTENEDORES PRINCIPALES
+=========================================== */
+#home-container {
+    background: var(--bg-body-light);
     width: 100%;
     padding-top: 18%;
     margin-top: -15%;
     height: auto;
 }
 
-/* CARDS */
-#home-shoe-card-1, #home-bag-card-1 {
-    width: 360px;
-    height: 350px;
-    margin: 15px;
+#home-body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--bg-body-light) 0%, #f8f9fa 100%);
+    padding-bottom: 50px;
 }
 
-/* ELIMINAR FONDO BLANCO DEL CARD-BODY */
-#home-shoe-card-body-1, 
-#home-bag-card-body-1 {
-    background: transparent !important;
-    border: none !important;
-    opacity: 1 !important;
+#home-products-container {
+    padding: 0 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ===========================================
+   TÍTULOS DE SECCIONES
+=========================================== */
+#home-bags-title,
+#home-shoes-title {
+    color: var(--text-dark) !important;
+    font-size: 24px;
+    font-weight: 500 !important;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--primary-color);
+    margin-top: 30px;
+    width: 100%;
+    position: relative;
+}
+
+#home-bags-title::after,
+#home-shoes-title::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: var(--primary-color);
+}
+
+/* ===========================================
+   SECCIONES DE PRODUCTOS
+=========================================== */
+#home-shoes-section,
+#home-bags-section {
+    margin-bottom: 50px;
+    padding: 20px 0;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* ===========================================
+   TARJETAS DE PRODUCTOS - CONTENEDORES
+=========================================== */
+[id^="home-shoe-card-"],
+[id^="home-bag-card-"] {
+    padding: 15px;
+    transition: var(--tran-03);
+}
+
+[id^="home-shoe-card-container-"],
+[id^="home-bag-card-container-"] {
+    background: var(--bg-body-light);
+    border: 1px solid rgba(224, 178, 83, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    height: 100%;
+    transition: var(--tran-04);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+[id^="home-shoe-card-container-"]:hover,
+[id^="home-bag-card-container-"]:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(224, 178, 83, 0.15);
+    border-color: var(--primary-color);
+}
+
+/* ===========================================
+   IMÁGENES DE PRODUCTOS
+=========================================== */
+[id^="home-shoe-image-container-"],
+[id^="home-bag-image-container-"] {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+    background: #f8f9fa;
+}
+
+[id^="home-shoe-image-"],
+[id^="home-bag-image-"] {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--tran-05);
+}
+
+[id^="home-shoe-card-container-"]:hover [id^="home-shoe-image-"],
+[id^="home-bag-card-container-"]:hover [id^="home-bag-image-"] {
+    transform: scale(1.05);
+}
+
+/* ===========================================
+   CUERPO DE LAS TARJETAS
+=========================================== */
+[id^="home-shoe-card-body-"],
+[id^="home-bag-card-body-"] {
+    padding: 20px 15px;
+    background: var(--bg-body-light);
+}
+
+/* ===========================================
+   TÍTULOS DE PRODUCTOS
+=========================================== */
+[id^="home-shoe-title-"],
+[id^="home-bag-title-"] {
+    color: var(--text-dark);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* ===========================================
+   DESCRIPCIONES DE PRODUCTOS
+=========================================== */
+[id^="home-shoe-description-"],
+[id^="home-bag-description-"] {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 15px;
+    line-height: 1.4;
+    height: 40px;
+    overflow: hidden;
+}
+
+/* ===========================================
+   TEXTO HOVER (PRECIO)
+=========================================== */
+[id^="home-shoe-hover-text-"],
+[id^="home-bag-hover-text-"] {
+    background: linear-gradient(90deg, var(--primary-color), var(--hover-color));
+    padding: 8px 15px;
+    border-radius: 25px;
+    margin: 15px 0;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: var(--tran-04);
+}
+
+[id^="home-shoe-card-container-"]:hover [id^="home-shoe-hover-text-"],
+[id^="home-bag-card-container-"]:hover [id^="home-bag-hover-text-"] {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[id^="home-shoe-hover-price-"],
+[id^="home-bag-hover-price-"] {
+    color: var(--bg-body-light);
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+}
+
+/* ===========================================
+   BOTÓN DE FAVORITOS (CORAZÓN)
+=========================================== */
+[id^="home-shoe-favorite-btn-"],
+[id^="home-bag-favorite-btn-"] {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: var(--tran-03);
+    border: none;
+    outline: none;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+[id^="home-shoe-favorite-btn-"]:hover,
+[id^="home-bag-favorite-btn-"]:hover {
+    background: var(--bg-body-light);
+    transform: scale(1.1);
+}
+
+[id^="home-shoe-favorite-btn-"] i,
+[id^="home-bag-favorite-btn-"] i {
+    font-size: 1.5rem;
+    transition: var(--tran-03);
+}
+
+[id^="home-shoe-favorite-btn-"]:hover i,
+[id^="home-bag-favorite-btn-"]:hover i {
+    color: var(--primary-color);
+}
+
+/* ===========================================
+   BOTÓN DE CARRITO
+=========================================== */
+[id^="home-shoe-cart-btn-"],
+[id^="home-bag-cart-btn-"] {
+    background: var(--primary-color);
+    color: var(--bg-body-light) !important;
+    border: 2px solid var(--primary-color);
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: var(--tran-03);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+[id^="home-shoe-cart-btn-"]:hover,
+[id^="home-bag-cart-btn-"]:hover {
+    background: var(--hover-color);
+    border-color: var(--hover-color);
+    transform: translateY(-2px);
+}
+
+[id^="home-shoe-cart-btn-"] i,
+[id^="home-bag-cart-btn-"] i {
+    font-size: 16px;
+}
+
+/* ===========================================
+   BOTÓN DE VER DETALLES
+=========================================== */
+[id^="home-shoe-details-btn-"],
+[id^="home-bag-details-btn-"] {
+    background: transparent;
+    color: var(--text-dark) !important;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    padding: 8px 20px;
+    font-size: 13px;
+    transition: var(--tran-03);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+    text-decoration: none;
+}
+
+[id^="home-shoe-details-btn-"]:hover,
+[id^="home-bag-details-btn-"]:hover {
+    background: var(--primary-color);
+    color: var(--bg-body-light) !important;
+    border-color: var(--primary-color);
+    text-decoration: none;
+}
+
+[id^="home-shoe-details-btn-"] i,
+[id^="home-bag-details-btn-"] i {
+    font-size: 14px;
+}
+
+/* ===========================================
+   ESTADOS ESPECIALES
+=========================================== */
+/* Producto en favoritos */
+[id^="home-shoe-favorite-btn-"] .bi-heart-fill,
+[id^="home-bag-favorite-btn-"] .bi-heart-fill {
+    color: #ff4757;
+    animation: heartBeat 0.5s ease;
+}
+
+/* ===========================================
+   ANIMACIONES
+=========================================== */
+@keyframes heartBeat {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.2); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===========================================
+   ESTILOS RESPONSIVE
+=========================================== */
+@media (max-width: 1200px) {
+    #home-container {
+        padding-top: 20%;
+    }
+    
+    [id^="home-shoe-title-"],
+    [id^="home-bag-title-"] {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 992px) {
+    #home-container {
+        padding-top: 22%;
+        margin-top: -12%;
+    }
+    
+    #home-bags-title,
+    #home-shoes-title {
+        font-size: 22px;
+    }
+    
+    [id^="home-shoe-image-container-"],
+    [id^="home-bag-image-container-"] {
+        height: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    #home-container {
+        padding-top: 25%;
+        margin-top: -10%;
+    }
+    
+    #home-body {
+        padding-bottom: 30px;
+    }
+    
+    #home-bags-title,
+    #home-shoes-title {
+        font-size: 20px;
+        padding-bottom: 10px;
+    }
+    
+    #home-shoes-section,
+    #home-bags-section {
+        padding: 15px;
+        margin-bottom: 30px;
+    }
+    
+    [id^="home-shoe-card-"],
+    [id^="home-bag-card-"] {
+        padding: 10px;
+    }
+    
+    [id^="home-shoe-image-container-"],
+    [id^="home-bag-image-container-"] {
+        height: 180px;
+    }
+    
+    [id^="home-shoe-favorite-btn-"],
+    [id^="home-bag-favorite-btn-"] {
+        width: 35px;
+        height: 35px;
+        top: 10px;
+        right: 10px;
+    }
+    
+    [id^="home-shoe-favorite-btn-"] i,
+    [id^="home-bag-favorite-btn-"] i {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    #home-container {
+        padding-top: 30%;
+        margin-top: -8%;
+    }
+    
+    #home-bags-title,
+    #home-shoes-title {
+        font-size: 18px;
+        text-align: center;
+    }
+    
+    [id^="home-shoe-card-container-"],
+    [id^="home-bag-card-container-"] {
+        margin-bottom: 20px;
+    }
+    
+    [id^="home-shoe-image-container-"],
+    [id^="home-bag-image-container-"] {
+        height: 160px;
+    }
+    
+    [id^="home-shoe-card-body-"],
+    [id^="home-bag-card-body-"] {
+        padding: 15px 10px;
+    }
+}
+
+/* ===========================================
+   ESTILOS PARA ESTADOS DE CARGA
+=========================================== */
+#home-container.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* ===========================================
+   ESTILOS PARA MENSAJES DE ERROR/VACÍO
+=========================================== */
+#home-shoes-section p.text-white,
+#home-bags-section p.text-white {
+    color: var(--text-dark) !important;
+    font-size: 16px;
+    padding: 20px;
+    text-align: center;
+    background: rgba(224, 178, 83, 0.1);
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+/* ===========================================
+   EFECTOS DE TRANSICIÓN ENTRE SECCIONES
+=========================================== */
+#home-shoes-section,
+#home-bags-section {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+#home-shoes-section {
+    animation-delay: 0.1s;
+}
+
+#home-bags-section {
+    animation-delay: 0.2s;
+}
+
+/* ===========================================
+   BADGE PARA CONTADOR DE CARRITO (opcional)
+=========================================== */
+.carrito-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--hover-color);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* ===========================================
+   EFECTO DE SOMBRA EN IMÁGENES
+=========================================== */
+.producto-imagen-container-home {
+    position: relative;
+}
+
+.producto-imagen-container-home::after {
+    content: '';
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 15px;
-    z-index: 2;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0,0,0,0.1), transparent);
+    pointer-events: none;
 }
 
-/* Imágenes */
-#home-bag-image-1, 
-#home-shoe-image-1 {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: var(--tran-04);
-}
-
-/* Títulos - encima de la imagen */
-#home-shoe-title-1, 
-#home-bag-title-1 {
-    position: absolute;
-    color: var(--primary-color);
-    font-weight: bold;
-    font-size: 1.3rem;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 10px 15px;
-    z-index: 3;
-    border-radius: 0 12px 12px 0;
-    margin-left: -18px;
-    opacity: 1 !important;
-    transition: var(--tran-03);
-}
-
-/* Descripciones - ocultas por defecto */
-#home-shoe-description-1, 
-#home-bag-description-1 {
-    color: var(--text-light);
-    font-size: 0.9rem;
-    margin: 0 0 10px 0;
-    opacity: 0 !important;
-    transform: translateY(20px);
-    transition: var(--tran-03);
-}
-
-/* Precios - ocultos por defecto */
-#home-shoe-hover-price-1, 
-#home-bag-hover-price-1 {
-    color: var(--primary-color);
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin: 0;
-    opacity: 0 !important;
-    transform: translateY(20px);
-    transition: var(--tran-03);
-}
-
-/* ===== EFECTOS HOVER ===== */
-
-/* Título desaparece al hover */
-#home-shoe-card-container-1:hover #home-shoe-title-1,
-#home-bag-card-container-1:hover #home-bag-title-1 {
-    opacity: 0 !important;
-    transform: translateY(-10px);
-}
-
-/* Descripción APARECE al hover */
-#home-shoe-card-container-1:hover #home-shoe-description-1,
-#home-bag-card-container-1:hover #home-bag-description-1 {
-    opacity: 1 !important;
-    transform: translateY(0);
-}
-
-/* Precio APARECE al hover */
-#home-shoe-card-container-1:hover #home-shoe-hover-price-1,
-#home-bag-card-container-1:hover #home-bag-hover-price-1 {
-    opacity: 1 !important;
-    transform: translateY(0);
-}
-
-/* Fondo para el texto al hover */
-#home-shoe-card-container-1:hover #home-shoe-card-body-1,
-#home-bag-card-container-1:hover #home-bag-card-body-1 {
-    background: rgba(0, 0, 0, 0.8) !important;
-    backdrop-filter: blur(5px);
-    margin: 12px;
-    transition: var(--tran-04);
-    border-radius: 2px;
-}
-
-#home-bags-title , #home-shoes-title{
-    color: var(--primary-color);
-    font-weight: bold;
-    margin: 20px 0 10px 15px;
+/* ===========================================
+   ESTILOS PARA BOTONES EN ESTADO ACTIVO
+=========================================== */
+[id^="home-shoe-cart-btn-"]:active,
+[id^="home-bag-cart-btn-"]:active,
+[id^="home-shoe-favorite-btn-"]:active,
+[id^="home-bag-favorite-btn-"]:active {
+    transform: scale(0.95);
 }

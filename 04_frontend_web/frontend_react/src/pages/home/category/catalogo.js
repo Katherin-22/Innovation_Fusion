@@ -10,13 +10,7 @@ const Catalogo = () => {
   const { filtro } = useFiltro();
   const [productosFiltrados, setProductosFiltrados] = useState([]);
 
-  // DEBUG - Ver qué está pasando
-  console.log("🎯 Filtro actual:", filtro);
-  console.log("📦 Total productos:", stock.length);
-
   useEffect(() => {
-    console.log("🔄 Aplicando filtro:", filtro);
-    
     if (filtro === 'todos') {
       setProductosFiltrados(stock);
     } else {
@@ -25,8 +19,6 @@ const Catalogo = () => {
         const tipoLower = producto.nombreTipoProducto?.toLowerCase() || '';
         const nombreLower = producto.nombreProducto?.toLowerCase() || '';
         
-        console.log("📝 Producto:", producto.nombreProducto, "| Público:", publicoLower);
-
         switch(filtro) {
           case 'mujer':
             return publicoLower.includes('mujer') || nombreLower.includes('mujer');
@@ -42,20 +34,19 @@ const Catalogo = () => {
             return true;
         }
       });
-      console.log("✅ Productos después de filtrar:", filtrados.length);
       setProductosFiltrados(filtrados);
     }
   }, [stock, filtro]);
 
   return (
-    <div className="catalogo-container">
+    <div className="catalogo-container" id="catalogo-container">
       <MenuHome />
-      <div className="catalogo-background">
-        <div className="catalogo-wrapper">
+      <div className="catalogo-background" id="catalogo-background">
+        <div className="catalogo-wrapper" id="catalogo-wrapper">
           
           {/* HEADER CON FILTRO ACTIVO */}
-          <div className="filtros-activos">
-            <h2 className="categoria-titulo">
+          <div className="filtros-activos" id="filtros-activos">
+            <h2 className="categoria-titulo" id="categoria-titulo">
               {filtro === 'todos' && 'Todos los productos'}
               {filtro === 'mujer' && 'Calzado para Mujer'}
               {filtro === 'hombre' && 'Calzado para Hombre'} 
@@ -63,31 +54,32 @@ const Catalogo = () => {
               {filtro === 'calzado' && 'Todo el Calzado'}
               {filtro === 'bolsos' && 'Bolsos'}
             </h2>
-            <p className="contador-productos">
+            <p className="contador-productos" id="contador-productos">
               {productosFiltrados.length} producto{productosFiltrados.length !== 1 ? 's' : ''} encontrado{productosFiltrados.length !== 1 ? 's' : ''}
             </p>
           </div>
 
           {/* GRILLA DE PRODUCTOS */}
-          <div className="products-grid">
-            {productosFiltrados.map(producto => (
-              <div key={producto.codigoReferencia} className="product-card-wrapper">
-                <div className="product-card">
-                  <div className="product-image-container">
+          <div className="products-grid" id="products-grid">
+            {productosFiltrados.map((producto, index) => (
+              <div key={producto.codigoReferencia} className="product-card-wrapper" id={`product-card-wrapper-${index}`}>
+                <div className="product-card" id={`product-card-${index}`}>
+                  <div className="product-image-container" id={`product-image-container-${index}`}>
                     <img
                       src={producto.imagen || "/imagenes_prueba/default.jpg"}
                       className="product-image"
                       alt={producto.nombreProducto}
+                      id={`product-image-${index}`}
                     />
                   </div>
-                  <div className="product-info">
-                    <h3 className="product-name">{producto.nombreProducto}</h3>
-                    <p className="product-category">{producto.nombreTipoProducto}</p>
-                    <p className="product-gender">{producto.nombrePublico}</p>
-                    <p className="product-price">
-                      Precio: <span className="price-value">${producto.precio}</span>
+                  <div className="product-info" id={`product-info-${index}`}>
+                    <h3 className="product-name" id={`product-name-${index}`}>{producto.nombreProducto}</h3>
+                    <p className="product-category" id={`product-category-${index}`}>{producto.nombreTipoProducto}</p>
+                    <p className="product-gender" id={`product-gender-${index}`}>{producto.nombrePublico}</p>
+                    <p className="product-price" id={`product-price-${index}`}>
+                      Precio: <span className="price-value" id={`price-value-${index}`}>${producto.precio?.toLocaleString()}</span>
                     </p>
-                    <Link to={`/home/${producto.codigoReferencia}`} className="product-link">
+                    <Link to={`/home/${producto.codigoReferencia}`} className="product-link" id={`product-link-${index}`}>
                       Ver producto
                     </Link>
                   </div>
@@ -98,8 +90,8 @@ const Catalogo = () => {
 
           {/* MENSAJE SI NO HAY PRODUCTOS */}
           {productosFiltrados.length === 0 && (
-            <div className="no-productos">
-              <p>No se encontraron productos para esta categoría.</p>
+            <div className="no-productos" id="no-productos">
+              <p id="no-productos-message">No se encontraron productos para esta categoría.</p>
             </div>
           )}
 

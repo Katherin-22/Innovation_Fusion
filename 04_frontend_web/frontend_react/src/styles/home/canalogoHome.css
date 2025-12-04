@@ -1,19 +1,26 @@
+/* styles/home/catalogoHome.css */
 :root {
-  --body-color: #e4e9f7;
-  --slidebar-color: #fff;
-  --primary-color: #E0B253;
-  --toggle-color: #ddd;
-  --text-color: #000000;
-  --Menu-color: #2B3035;
+    --primary-color: #E0B253;
+    --secondary-color: #000000;
+    --bg-body-dark: #000000;
+    --bg-body-light: #ffffff;
+    --text-light: #e4e9f7;
+    --text-dark: #000000;
+    --hover-color: #c89c3f;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.4s ease;
+    --tran-05: all 0.5s ease;
 }
 
+/* CONTENEDORES PRINCIPALES - SOLO CAMBIO DE COLOR */
 .catalogo-container {
   width: 100%;
   min-height: 100vh;
+  background: var(--bg-body-light); /* CAMBIADO: de negro a blanco */
 }
 
 .catalogo-background {
-  background-color: var(--text-color) !important;
+  background-color: var(--bg-body-light) !important; /* CAMBIADO: de negro a blanco */
   padding: 2rem ;
   height: 100vh !important;
   width: 100% !important;
@@ -25,30 +32,33 @@
   padding: 0 1rem;
 }
 
+/* FILTROS ACTIVOS - SOLO CAMBIO DE COLOR */
 .filtros-activos {
     margin-top: 5%;
   margin-bottom: 2rem;
   text-align: center;
   padding: 1rem;
-  background: var(--Menu-color);
+  background: var(--bg-body-light); /* CAMBIADO: de Menu-color a blanco */
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  border: 1px solid rgba(224, 178, 83, 0.2); /* Añadido borde sutil */
 }
 
 .categoria-titulo {
-  color: var(--slidebar-color);
+  color: var(--text-dark); /* CAMBIADO: de slidebar-color a text-dark */
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
 }
 
 .contador-productos {
-  color: var(--slidebar-color);
+  color: var(--text-dark); /* CAMBIADO: de slidebar-color a text-dark */
   opacity: 0.7;
   font-size: 1rem;
   margin: 0;
 }
 
+/* PRODUCTS GRID - MANTENIDO IGUAL */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -59,18 +69,20 @@
   width: 100%;
 }
 
+/* PRODUCT CARD - SOLO CAMBIO DE COLOR DE FONDO */
 .product-card {
-  background: var(--Menu-color);
+  background: var(--bg-body-light); /* CAMBIADO: de Menu-color a blanco */
   border-radius: 12px;
   overflow: hidden;
   transition: all 0.3s ease;
   border: 1px solid rgba(224, 178, 83, 0.8);
   height: 100%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Añadido sombra sutil */
 }
 
 .product-card:hover {
   transform: translateY(-5px);
-    box-shadow: 0 4px 15px rgba(224, 178, 83, 0.8);
+  box-shadow: 0 4px 15px rgba(224, 178, 83, 0.8);
   border-color: var(--primary-color);
 }
 
@@ -98,10 +110,11 @@
   height: calc(100% - 250px);
 }
 
+/* TEXTO DE PRODUCTO - SOLO CAMBIO DE COLOR */
 .product-name {
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--slidebar-color);
+  color: var(--text-dark); /* CAMBIADO: de slidebar-color a text-dark */
   margin-bottom: 0.5rem;
   line-height: 1.4;
   display: -webkit-box;
@@ -111,7 +124,7 @@
 }
 
 .product-category {
-  color: var(--slidebar-color);
+  color: var(--text-dark); /* CAMBIADO: de slidebar-color a text-dark */
   opacity: 0.6;
   font-size: 0.9rem;
   margin-bottom: 0.25rem;
@@ -125,7 +138,7 @@
 }
 
 .product-price {
-  color: var(--slidebar-color);
+  color: var(--text-dark); /* CAMBIADO: de slidebar-color a text-dark */
   margin-bottom: 1rem;
   font-size: 0.95rem;
 }
@@ -136,9 +149,10 @@
   font-size: 1.1rem;
 }
 
+/* BOTÓN - MANTENIDO IGUAL */
 .product-link {
   background: var(--primary-color);
-  color: var(--slidebar-color);
+  color: var(--bg-body-light); /* CAMBIADO: de slidebar-color a bg-body-light */
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   text-decoration: none;
@@ -150,23 +164,25 @@
 }
 
 .product-link:hover {
-  background: var(--slidebar-color);
+  background: var(--bg-body-light); /* CAMBIADO: de slidebar-color a bg-body-light */
   color: var(--primary-color);
   transform: scale(1.05);
 }
 
+/* MENSAJE SIN PRODUCTOS - SOLO CAMBIO DE COLOR */
 .no-productos {
   text-align: center;
   padding: 3rem;
-  color: var(--text-color);
+  color: var(--text-dark); /* CAMBIADO: de text-color a text-dark */
   opacity: 0.7;
   font-size: 1.1rem;
-  background: var(--slidebar-color);
+  background: var(--bg-body-light); /* CAMBIADO: de slidebar-color a bg-body-light */
   border-radius: 10px;
   margin-top: 2rem;
+  border: 1px solid rgba(224, 178, 83, 0.2);
 }
 
-/* Responsive */
+/* Responsive - MANTENIDO IGUAL */
 @media (max-width: 768px) {
   .products-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

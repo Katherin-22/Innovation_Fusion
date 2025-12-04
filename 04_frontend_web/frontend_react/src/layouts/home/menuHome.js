@@ -102,7 +102,7 @@ const MenuHome = () => {
                 <i className="bi bi-person-fill" id="navBarHome-profile-icon"></i>
               </button>
               <ul className="dropdown-menu dropdown-menu-end" id="navBarHome-profile-menu">
-                <li><Link className="dropdown-item" id="navBarHome-login" to="/login">Iniciar sesión</Link></li>
+                <li><Link className="dropdown-item" id="navBarHome-login" to="/loginpage">Iniciar sesión</Link></li>
                 <li><Link className="dropdown-item" id="navBarHome-profile" to="/profile">Perfil</Link></li>
                 <li><Link className="dropdown-item" id="navBarHome-orders" to="/profile">Pedidos</Link></li>
                 <li><hr className="dropdown-divider" id="navBarHome-profile-divider" /></li>

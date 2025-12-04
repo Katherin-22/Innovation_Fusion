@@ -3,7 +3,7 @@ import "../../styles/home/footer.css"
 
 const Footer = () => {
   return (
-    <footer className="bg-dark text-white mt-5 py-4 footer-container">
+    <footer className="bg-dark text-white mt-5 py-4 footer-container" id="footer-container">
       <div className="container-fluid footer-wrapper">
         <div className="row finPag footer-row">
           <div className="col-12 footer-main-col">
@@ -11,7 +11,7 @@ const Footer = () => {
               
               {/* Sobre nosotros */}
               <div className="col-4 footer-about">
-                <h4 className="text-center footer-title">Sobre Nosotros</h4>
+                <h4 className="text-center footer-title" id="sobre-nosotros" >Sobre Nosotros</h4>
                 <ul className="list-unstyled footer-list">
                   <li className="text-center footer-item">
                     <Link
@@ -26,7 +26,7 @@ const Footer = () => {
 
               {/* Contacto */}
               <div className="col-4 footer-contact">
-                <h4 className="text-center footer-title">Contacto</h4>
+                <h4 className="text-center footer-title" id="contacto-footer">Contacto</h4>
                 <ul className="list-unstyled footer-list">
                   <li className="text-center footer-item">
                     <a
@@ -49,7 +49,7 @@ const Footer = () => {
 
               {/* Redes Sociales */}
               <div className="col-4 footer-social">
-                <h4 className="text-center footer-title">Redes Sociales</h4>
+                <h4 className="text-center footer-title" id="redes-footer">Redes Sociales</h4>
                 <ul className="list-unstyled footer-list">
                   <li className="text-center footer-item">
                     <a
