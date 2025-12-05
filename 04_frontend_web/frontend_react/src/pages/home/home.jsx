@@ -3,6 +3,7 @@ import MenuHome from "../../layouts/home/menuHome";
 import Footer from "../../layouts/home/footer";
 import { useGetStock } from "../../hooks/stock/useGetStock";
 import { getImagenById } from "../../services/administrador/ImagenService.js";
+import { Link } from "react-router-dom";
 import "../../styles/home/paginaInicio.css";
 
 export default function Home() {
@@ -186,7 +187,7 @@ export default function Home() {
               alt={producto.nombreProducto} 
               id={`home-${tipo}-image-${index + 1}`}
               onError={(e) => {
-                e.target.src = "/imagenes_prueba/default.jpg";
+                e.target.src = "/iamgenes_prueba/zapato/im6.jpg"; // Imagen por defecto si falla la carga
               }}
             />
           </div>
@@ -219,7 +220,7 @@ export default function Home() {
             
             {/* Botón de ver detalles */}
             <div className="mt-2">
-              <button
+              <Link
                 className="btn btn-link text-decoration-none text-light btn-sm w-100 d-flex align-items-center justify-content-center gap-2"
                 onClick={() => {
                   console.log("Ver detalles:", producto);
@@ -227,10 +228,11 @@ export default function Home() {
                   // window.location.href = `/producto/${producto.codigoReferencia}`;
                 }}
                 id={`home-${tipo}-details-btn-${index + 1}`}
+                to={`/home/${producto.codigoReferencia}`}
               >
                 <i className="bi bi-eye"></i>
                 <span>Ver detalles</span>
-              </button>
+              </Link>
             </div>
           </div>
         </div>

@@ -3,13 +3,72 @@ import { useGetStock } from "../../../hooks/stock/useGetStock";
 import { Link } from "react-router-dom";
 import MenuHome from "../../../layouts/home/menuHome";
 import { useFiltro } from "../../../utils/FiltroContextx";
+import { getImagenById } from "../../../services/administrador/ImagenService.js";
 import "../../../styles/home/canalogoHome.css";
 
 const Catalogo = () => {
   const { stock } = useGetStock();
   const { filtro } = useFiltro();
   const [productosFiltrados, setProductosFiltrados] = useState([]);
+  const [imagenesProductos, setImagenesProductos] = useState({}); // Estado para almacenar imágenes
 
+  // Cargar imágenes para todos los productos filtrados
+  useEffect(() => {
+    const cargarImagenes = async () => {
+      if (stock && stock.length > 0) {
+        const todasImagenes = {};
+        
+        // Determinar qué productos necesitan imágenes
+        const productosParaCargar = filtro === 'todos' 
+          ? stock 
+          : stock.filter(producto => {
+            const publicoLower = producto.nombrePublico?.toLowerCase() || '';
+            const tipoLower = producto.nombreTipoProducto?.toLowerCase() || '';
+            const nombreLower = producto.nombreProducto?.toLowerCase() || '';
+            
+            switch(filtro) {
+              case 'mujer':
+                return publicoLower.includes('mujer') || nombreLower.includes('mujer');
+              case 'hombre':
+                return publicoLower.includes('hombre') || nombreLower.includes('hombre');
+              case 'nino':
+                return publicoLower.includes('niño') || publicoLower.includes('nino') || nombreLower.includes('niño');
+              case 'calzado':
+                return tipoLower.includes('zapato') || tipoLower.includes('calzado') || nombreLower.includes('zapato');
+              case 'bolsos':
+                return tipoLower.includes('bolso') || nombreLower.includes('bolso');
+              default:
+                return true;
+            }
+          });
+        
+        // Cargar imágenes para cada producto
+        for (const producto of productosParaCargar) {
+          if (producto.idProducto && !todasImagenes[producto.idProducto]) {
+            try {
+              const response = await getImagenById(producto.idProducto);
+              if (response.data && response.data.length > 0) {
+                // Tomar la primera imagen
+                todasImagenes[producto.idProducto] = `http://localhost:8080${response.data[0].urlImagen}`;
+              } else {
+                // Si no hay imágenes, usar la imagen por defecto
+                todasImagenes[producto.idProducto] = producto.imagen || "/imagenes_prueba/default.jpg";
+              }
+            } catch (error) {
+              console.error(`Error al cargar imagen para producto ${producto.idProducto}:`, error);
+              todasImagenes[producto.idProducto] = producto.imagen || "/imagenes_prueba/default.jpg";
+            }
+          }
+        }
+        
+        setImagenesProductos(todasImagenes);
+      }
+    };
+    
+    cargarImagenes();
+  }, [stock, filtro]);
+
+  // Filtrar productos
   useEffect(() => {
     if (filtro === 'todos') {
       setProductosFiltrados(stock);
@@ -38,6 +97,14 @@ const Catalogo = () => {
     }
   }, [stock, filtro]);
 
+  // Función para obtener la imagen de un producto
+  const obtenerImagenProducto = (producto) => {
+    if (producto.idProducto && imagenesProductos[producto.idProducto]) {
+      return imagenesProductos[producto.idProducto];
+    }
+    return producto.imagen || "/imagenes_prueba/default.jpg";
+  };
+
   return (
     <div className="catalogo-container" id="catalogo-container">
       <MenuHome />
@@ -61,31 +128,38 @@ const Catalogo = () => {
 
           {/* GRILLA DE PRODUCTOS */}
           <div className="products-grid" id="products-grid">
-            {productosFiltrados.map((producto, index) => (
-              <div key={producto.codigoReferencia} className="product-card-wrapper" id={`product-card-wrapper-${index}`}>
-                <div className="product-card" id={`product-card-${index}`}>
-                  <div className="product-image-container" id={`product-image-container-${index}`}>
-                    <img
-                      src={producto.imagen || "/imagenes_prueba/default.jpg"}
-                      className="product-image"
-                      alt={producto.nombreProducto}
-                      id={`product-image-${index}`}
-                    />
-                  </div>
-                  <div className="product-info" id={`product-info-${index}`}>
-                    <h3 className="product-name" id={`product-name-${index}`}>{producto.nombreProducto}</h3>
-                    <p className="product-category" id={`product-category-${index}`}>{producto.nombreTipoProducto}</p>
-                    <p className="product-gender" id={`product-gender-${index}`}>{producto.nombrePublico}</p>
-                    <p className="product-price" id={`product-price-${index}`}>
-                      Precio: <span className="price-value" id={`price-value-${index}`}>${producto.precio?.toLocaleString()}</span>
-                    </p>
-                    <Link to={`/home/${producto.codigoReferencia}`} className="product-link" id={`product-link-${index}`}>
-                      Ver producto
-                    </Link>
+            {productosFiltrados.map((producto, index) => {
+              const imagenProducto = obtenerImagenProducto(producto);
+              
+              return (
+                <div key={producto.codigoReferencia} className="product-card-wrapper" id={`product-card-wrapper-${index}`}>
+                  <div className="product-card" id={`product-card-${index}`}>
+                    <div className="product-image-container" id={`product-image-container-${index}`}>
+                      <img
+                        src={imagenProducto}
+                        className="product-image"
+                        alt={producto.nombreProducto}
+                        id={`product-image-${index}`}
+                        onError={(e) => {
+                          e.target.src = "/iamgenes_prueba/zapato/im6.jpg"; // Imagen por defecto si falla la carga
+                        }}
+                      />
+                    </div>
+                    <div className="product-info" id={`product-info-${index}`}>
+                      <h3 className="product-name" id={`product-name-${index}`}>{producto.nombreProducto}</h3>
+                      <p className="product-category" id={`product-category-${index}`}>{producto.nombreTipoProducto}</p>
+                      <p className="product-gender" id={`product-gender-${index}`}>{producto.nombrePublico}</p>
+                      <p className="product-price" id={`product-price-${index}`}>
+                        Precio: <span className="price-value" id={`price-value-${index}`}>${producto.precio?.toLocaleString()}</span>
+                      </p>
+                      <Link to={`/home/${producto.codigoReferencia}`} className="product-link" id={`product-link-${index}`}>
+                        Ver producto
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* MENSAJE SI NO HAY PRODUCTOS */}

@@ -98,15 +98,18 @@
     overflow: hidden;
     height: 100%;
     transition: var(--tran-04);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 22px rgba(0, 0, 0, 0.30);
     position: relative;
 }
 
 [id^="home-shoe-card-container-"]:hover,
 [id^="home-bag-card-container-"]:hover {
     transform: translateY(-8px);
-    box-shadow: 0 15px 30px rgba(224, 178, 83, 0.15);
+    box-shadow: 0 15px 30px rgba(224, 178, 83, 1);
     border-color: var(--primary-color);
+    transform: scale(1.1);
+    transition: var(--tran-03);
+    z-index: 10;
 }
 
 /* ===========================================

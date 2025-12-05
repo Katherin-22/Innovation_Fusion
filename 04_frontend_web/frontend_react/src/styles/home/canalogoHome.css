@@ -15,6 +15,7 @@
 /* CONTENEDORES PRINCIPALES - SOLO CAMBIO DE COLOR */
 .catalogo-container {
   width: 100%;
+  height: auto;
   min-height: 100vh;
   background: var(--bg-body-light); /* CAMBIADO: de negro a blanco */
 }
@@ -22,7 +23,7 @@
 .catalogo-background {
   background-color: var(--bg-body-light) !important; /* CAMBIADO: de negro a blanco */
   padding: 2rem ;
-  height: 100vh !important;
+  height: auto !important;
   width: 100% !important;
 }
 
