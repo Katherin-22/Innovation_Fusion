@@ -14,11 +14,9 @@ const ProductoGen = () => {
   const producto = stock.find(p => p.codigoReferencia === codigoReferencia);
 
   const [favorito, setFavorito] = useState(false);
-  const [imagenModal, setImagenModal] = useState(null); // Estado para el modal de imagen
-  const [imagenesProducto, setImagenesProducto] = useState([]); // Estado para las imágenes del producto
-  const [imagenPrincipal, setImagenPrincipal] = useState(""); // Imagen principal a mostrar
-
-  // 🟡 ESTADOS PARA COLORES Y TALLAS
+  const [imagenModal, setImagenModal] = useState(null);
+  const [imagenesProducto, setImagenesProducto] = useState([]);
+  const [imagenPrincipal, setImagenPrincipal] = useState("");
   const [colores, setColores] = useState([]);
   const [tallas, setTallas] = useState([]);
   const [colorSeleccionado, setColorSeleccionado] = useState("");
@@ -48,10 +46,8 @@ const ProductoGen = () => {
         const response = await getImagenById(producto.idProducto);
         if (response.data && response.data.length > 0) {
           setImagenesProducto(response.data);
-          // Establecer la primera imagen como principal
           setImagenPrincipal(`http://localhost:8080${response.data[0].urlImagen}`);
         } else {
-          // Si no hay imágenes, usar la imagen por defecto
           setImagenPrincipal(producto.imagen || "/imagenes_prueba/default.jpg");
         }
       } catch (error) {
@@ -76,7 +72,7 @@ const ProductoGen = () => {
     api_url.get(`/publico/stock/producto/${producto.idProducto}/color/${colorSeleccionado}/tallas`)
       .then(res => {
         setTallas(res.data);
-        setTallaSeleccionada(""); // Resetear talla al cambiar color
+        setTallaSeleccionada("");
       })
       .catch(err => console.error("Error al cargar tallas:", err));
   }, [producto, colorSeleccionado]);
@@ -88,7 +84,6 @@ const ProductoGen = () => {
     if (!colorSeleccionado || !tallaSeleccionada) return null;
     
     const stockItem = stock.find(item => {
-      // Convertir ambos a number para comparación segura
       const itemColorId = parseInt(item.idColor);
       const selectedColorId = parseInt(colorSeleccionado);
       
@@ -102,9 +97,6 @@ const ProductoGen = () => {
     return stockItem ? stockItem.stockActual : 0;
   };
 
-  // ============================
-  // FUNCIONES PARA MANEJO DE IMÁGENES
-  // ============================
   const abrirModalImagen = (imagenUrl = null) => {
     const imagenAMostrar = imagenUrl || imagenPrincipal;
     setImagenModal({
@@ -137,12 +129,9 @@ const ProductoGen = () => {
               <div className="producto-card-detalle shadow-sm" id="producto-card-detalle">
                 <div className="producto-card-body-detalle" id="producto-card-body-detalle">
 
-                  {/* ============================
-                      INFO PRINCIPAL
-                  ============================ */}
+                  {/* INFO PRINCIPAL */}
                   <div className="row producto-info-principal" id="producto-info-principal">  
                     <div className="col-md-6 producto-col-imagen" id="producto-col-imagen">
-                      {/* IMAGEN PRINCIPAL CON FUNCIONALIDAD DE CLICK */}
                       <div className="producto-imagen-container" id="producto-imagen-container">
                         <img
                           src={imagenPrincipal}
@@ -154,7 +143,6 @@ const ProductoGen = () => {
                         />
                       </div>
 
-                      {/* MINIATURAS DE IMÁGENES (si hay más de una) */}
                       {imagenesProducto.length > 1 && (
                         <div className="producto-miniaturas-container mt-3" id="producto-miniaturas-container">
                           <div className="row g-2 justify-content-center" id="producto-miniaturas-row">
@@ -177,43 +165,53 @@ const ProductoGen = () => {
 
                     <div className="col-md-6 producto-col-detalles" id="producto-col-detalles">
                       <div className="row" id="producto-detalles-row">
-                        <div className="col" id="producto-titulo-col">
-                          <h3 className="producto-titulo-detalle" id="producto-titulo-detalle">{producto.nombreProducto}</h3>
+                        <div className="col-12" id="producto-titulo-col">
+                          <h1 className="producto-titulo-detalle" id="producto-titulo-detalle">{producto.nombreProducto}</h1>
                         </div>
-                        <div className="col col-info" id="producto-info-col">
-                          <p className="producto-codigo-detalle text-muted" id="producto-codigo-detalle">
-                            Código: <b id="producto-codigo-valor">{producto.codigoReferencia}</b>
-                          </p>
-                          <p className="producto-precio-detalle text-muted" id="producto-precio-detalle">
-                            Precio: <b className="producto-precio-valor" id="producto-precio-valor">${producto.precio}</b>
-                          </p>
-                          <p className="producto-descripcion-detalle text-muted" id="producto-descripcion-detalle">
-                            Descripción: <b id="producto-descripcion-valor">{producto.Descripción}</b>
-                          </p>
+                        <div className="col-12" id="producto-info-col">
+                          <div className="producto-info-basica" id="producto-info-basica">
+                            <p className="producto-codigo-detalle" id="producto-codigo-detalle">
+                              Código: <span id="producto-codigo-valor">{producto.codigoReferencia}</span>
+                            </p>
+                            <p className="producto-precio-detalle" id="producto-precio-detalle">
+                              Precio: <span className="producto-precio-valor" id="producto-precio-valor">${producto.precio?.toLocaleString()}</span>
+                            </p>
+                            <p className="producto-descripcion-detalle" id="producto-descripcion-detalle">
+                              <span id="producto-descripcion-valor">{producto.descripcion}</span>
+                            </p>
+                          </div>
                         
-                          {/* Información adicional */}
-                          <div className="producto-info-adicional mt-3" id="producto-info-adicional">
-                            <p className="producto-categoria-detalle text-muted mb-1" id="producto-categoria-detalle">
-                              Categoría: <b id="producto-categoria-valor">{producto.nombreCategoria}</b>
-                            </p>
-                            <p className="producto-tipo-detalle text-muted mb-1" id="producto-tipo-detalle">
-                              Tipo: <b id="producto-tipo-valor">{producto.nombreTipoProducto}</b>
-                            </p>
-                            <p className="producto-genero-detalle text-muted" id="producto-genero-detalle">
-                              Género: <b id="producto-genero-valor">{producto.nombrePublico}</b>
-                            </p>
+                          <div className="producto-info-adicional mt-4" id="producto-info-adicional">
+                            <h2 className="producto-subtitulo-adicional" id="producto-subtitulo-adicional">Detalles del producto</h2>
+                            <div className="producto-detalles-grid" id="producto-detalles-grid">
+                              <p className="producto-categoria-detalle" id="producto-categoria-detalle">
+                                <span className="producto-detalle-label" id="producto-categoria-label">Categoría:</span>
+                                <span className="producto-detalle-valor" id="producto-categoria-valor">{producto.nombreCategoria}</span>
+                              </p>
+                              <p className="producto-tipo-detalle" id="producto-tipo-detalle">
+                                <span className="producto-detalle-label" id="producto-tipo-label">Tipo:</span>
+                                <span className="producto-detalle-valor" id="producto-tipo-valor">{producto.nombreTipoProducto}</span>
+                              </p>
+                              <p className="producto-genero-detalle" id="producto-genero-detalle">
+                                <span className="producto-detalle-label" id="producto-genero-label">Género:</span>
+                                <span className="producto-detalle-valor" id="producto-genero-valor">{producto.nombrePublico}</span>
+                              </p>
+                              <p className="producto-material-detalle" id="producto-material-detalle">
+                                <span className="producto-detalle-label" id="producto-material-label">Material:</span>
+                                <span className="producto-detalle-valor" id="producto-material-valor">{producto.nombreMaterial}</span>
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* ============================
-                      SELECTORES COLORES Y TALLAS
-                  ============================ */}
+                  {/* SELECTORES COLORES Y TALLAS */}
                   <div className="row producto-selectores-fila mt-4" id="producto-selectores-fila">
+                    <h2 className="producto-subtitulo-selectores" id="producto-subtitulo-selectores">Selecciona tus opciones</h2>
                     <div className="col-md-6" id="producto-selector-color-col">
-                      <label className="form-label producto-label-selector" id="producto-label-color"><b>Color:</b></label>
+                      <label className="form-label producto-label-selector" id="producto-label-color">Color:</label>
                       <select
                         className="form-select producto-select-color"
                         value={colorSeleccionado}
@@ -230,7 +228,7 @@ const ProductoGen = () => {
                     </div>
 
                     <div className="col-md-6" id="producto-selector-talla-col">
-                      <label className="form-label producto-label-selector" id="producto-label-talla"><b>Talla:</b></label>
+                      <label className="form-label producto-label-selector" id="producto-label-talla">Talla:</label>
                       <select 
                         className="form-select producto-select-talla" 
                         value={tallaSeleccionada}
@@ -248,54 +246,46 @@ const ProductoGen = () => {
                     </div>
                   </div>
 
-                  {/* ============================
-                      INFO STOCK DISPONIBLE
-                  ============================ */}
 
+                  {/* BOTONES DE ACCIÓN */}
+                  <div className="row producto-botones-fila justify-content-center mt-4" id="producto-botones-fila">
+                    <div className="col-auto" id="producto-boton-favorito-col">
+                      <button
+                        className={`btn producto-btn-favorito ${favorito ? "btn-danger" : "btn-outline-danger"}`}
+                        onClick={() => setFavorito(!favorito)}
+                        id="producto-btn-favorito"
+                      >
+                        <i className={`bi ${favorito ? "bi-heart-fill" : "bi-heart"} producto-icono-favorito`} id="producto-icono-favorito"></i>
+                        {favorito ? " Quitar favorito" : " Agregar a favoritos"}
+                      </button>
+                    </div>
 
-                  {/* ============================
-                      BOTONES DE ACCIÓN
-                  ============================ */}
-<div className="row producto-botones-fila justify-content-center mt-4" id="producto-botones-fila">
-  <div className="col-auto" id="producto-boton-favorito-col">
-    <button
-      className={`btn producto-btn-favorito ${favorito ? "btn-danger" : "btn-outline-danger"}`}
-      onClick={() => setFavorito(!favorito)}
-      id="producto-btn-favorito"
-    >
-      <i className={`bi ${favorito ? "bi-heart-fill" : "bi-heart"} producto-icono-favorito`} id="producto-icono-favorito"></i>
-      {favorito ? " Quitar favorito" : " Agregar a favoritos"}
-    </button>
-  </div>
+                    <div className="col-auto" id="producto-boton-comprar-col">
+                      <button 
+                        className="btn producto-btn-comprar btn-success"
+                        id="producto-btn-comprar"
+                      >
+                        <i className="bi bi-cart-plus producto-icono-comprar me-2" id="producto-icono-comprar"></i>
+                        Comprar Ahora
+                      </button>
+                    </div>
 
-  <div className="col-auto" id="producto-boton-comprar-col">
-    <button 
-      className="btn producto-btn-comprar btn-success"
-      id="producto-btn-comprar"
-    >
-      <i className="bi bi-cart-plus producto-icono-comprar me-2" id="producto-icono-comprar"></i>
-      Comprar Ahora
-    </button>
-  </div>
+                    <div className="col-auto" id="producto-boton-volver-col">
+                      <Link to="/Catalogo" className="btn producto-btn-volver btn-outline-secondary" id="producto-btn-volver">
+                        <i className="bi bi-arrow-left producto-icono-volver me-2" id="producto-icono-volver"></i>
+                        Volver al catálogo
+                      </Link>
+                    </div>
+                  </div>
 
-  <div className="col-auto" id="producto-boton-volver-col">
-    <Link to="/Catalogo" className="btn producto-btn-volver btn-outline-secondary" id="producto-btn-volver">
-      <i className="bi bi-arrow-left producto-icono-volver me-2" id="producto-icono-volver"></i>
-      Volver al catálogo
-    </Link>
-  </div>
-</div>
-
-                  {/* ============================
-                      SECCIÓN COMENTARIOS
-                  ============================ */}
+                  {/* SECCIÓN COMENTARIOS */}
                   <div className="row producto-comentarios-fila mt-5" id="producto-comentarios-fila">
                     <div className="col-12" id="producto-comentarios-col">
                       <div className="producto-seccion-comentarios" id="producto-seccion-comentarios">
-                        <h4 className="producto-titulo-comentarios text-center mb-4" id="producto-titulo-comentarios">
+                        <h2 className="producto-titulo-comentarios text-center mb-4" id="producto-titulo-comentarios">
                           <i className="bi bi-chat-dots me-2" id="producto-icono-comentarios"></i>
                           Opiniones del producto
-                        </h4>
+                        </h2>
                         
                         <form className="producto-form-comentario container" id="producto-form-comentario">
                           <div className="row align-items-end" id="producto-form-comentario-row">
@@ -322,7 +312,6 @@ const ProductoGen = () => {
                           </div>
                         </form>
 
-                        {/* Espacio para lista de comentarios */}
                         <div className="producto-lista-comentarios mt-4" id="producto-lista-comentarios">
                           <p className="text-muted text-center" id="producto-sin-comentarios-message">
                             <i className="bi bi-info-circle me-2" id="producto-icono-sin-comentarios"></i>
@@ -340,9 +329,7 @@ const ProductoGen = () => {
         </div> 
       </div>
 
-      {/* ============================
-          MODAL PARA VER IMAGEN
-      ============================ */}
+      {/* MODAL PARA VER IMAGEN */}
       {imagenModal && (
         <div className="modal-overlay" onClick={cerrarModalImagen} id="producto-modal-overlay">
           <div className="modal-content" onClick={(e) => e.stopPropagation()} id="producto-modal-content">
